@@ -1,0 +1,12 @@
+why offline conversions beat pixel-based ROAS
+the 60-day cohort maturity rule for ad spend decisions
+what AI-ready data actually means: a practical checklist
+how to reconcile Meta and Google ROAS against your CRM
+server-side conversions with Meta CAPI: what breaks and how to fix it
+true ROAS vs GA4 ecommerce ROAS for offline-close businesses
+predictive CAC: bidding on lead value instead of clicks
+why your dbt pipeline keeps breaking on API schema drift
+attribution when payment domains steal the credit
+when to move from spreadsheets to a data warehouse
+monitoring and alerting for data pipelines in production
+how DTC brands should measure blended ROAS
