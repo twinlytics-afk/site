@@ -11,58 +11,54 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blog — Twinslytics | Notes on data, revenue, and automation</title>
-<meta name="description" content="Practical writing on marketing attribution, true ROAS, data engineering, and operations automation for ecommerce and DTC teams." />
+<title>The 60-day cohort maturity rule for ad spend decisions — Twinslytics</title>
+<meta name="description" content="Most ecommerce brands kill winning campaigns and scale losing ones because they check the scoreboard before the game is over. A customer who converts on da" />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="canonical" href="https://twinslytics.com/blog.html" />
+<link rel="canonical" href="https://twinslytics.com/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html" />
 <meta name="robots" content="index, follow" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://twinslytics.com/blog.html" />
-<meta property="og:title" content="Twinslytics Blog — data, revenue, and automation" />
-<meta property="og:description" content="Practical writing on attribution, true ROAS, data engineering, and automation for ecommerce and DTC teams." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://twinslytics.com/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html" />
+<meta property="og:title" content="The 60-day cohort maturity rule for ad spend decisions" />
+<meta property="og:description" content="GA4 measures clicks, not closed revenue. Here's how to reconcile reported ROAS against what actually hit your bank account." />
 <meta property="og:image" content="https://twinslytics.com/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#fff;--bg-alt:#faf9ff;--bg-tint:#f5f2ff;--ink:#14122b;--body:#5a5675;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+  :root{--bg:#fff;--ink:#14122b;--body:#403c5c;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--ok:#12b981;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
-  a{color:inherit;text-decoration:none}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased}
+  a{color:var(--v);text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
-  h1,h2,h3{font-family:var(--disp);font-weight:600;line-height:1.1;letter-spacing:-.025em;color:var(--ink)}
-  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--v);background:#f2ecff;display:inline-block;padding:6px 12px;border-radius:20px}
   .btn{font-family:var(--disp);font-weight:600;font-size:14.5px;padding:12px 22px;border-radius:8px;display:inline-block;border:1px solid transparent}
   .btn-primary{background:var(--grad);color:#fff}
-  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
   .logo{font-family:var(--disp);font-weight:700;font-size:20px;letter-spacing:-.02em;display:inline-flex;align-items:center;gap:10px}
   .logo .brandmark{height:26px;width:auto;display:block}
   .logo .m{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .nav-links{display:flex;align-items:center;gap:30px;font-size:14.5px}
-  .nav-links a:not(.btn){color:var(--body)}
-  .nav-links a.active{color:var(--ink)}
+  .nav-links a:not(.btn){color:#5a5675}
   .nav .btn{padding:10px 18px}
-  .bloghero{text-align:center;padding:76px 0 48px;position:relative;overflow:hidden}
-  .bloghero::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:900px;height:600px;border-radius:50%;background:radial-gradient(circle at 45% 45%,rgba(108,76,240,.14),transparent 55%),radial-gradient(circle at 62% 55%,rgba(255,122,89,.1),transparent 55%);z-index:0}
-  .bloghero>*{position:relative;z-index:1}
-  .bloghero h1{font-size:clamp(34px,5vw,52px);margin:20px auto 14px;max-width:18ch}
-  .bloghero p{color:var(--body);font-size:19px;max-width:52ch;margin:0 auto}
-  .posts{max-width:var(--maxw);margin:0 auto;padding:20px 28px 96px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  .post{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px;transition:transform .18s,box-shadow .18s}
-  .post:hover{transform:translateY(-3px);box-shadow:0 20px 44px -28px rgba(108,76,240,.5)}
-  .post .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--v);margin-bottom:14px}
-  .post h3{font-size:20px;line-height:1.22;margin-bottom:10px}
-  .post p{color:var(--body);font-size:15px;flex:1}
-  .post .meta{font-family:var(--mono);font-size:11.5px;color:var(--mut);margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
-  .post.soon{opacity:.6}
-  .post.soon .tag{color:var(--mut)}
+  article{max-width:720px;margin:0 auto;padding:56px 28px 20px}
+  .back{font-family:var(--mono);font-size:13px;color:var(--mut);margin-bottom:26px;display:inline-block}
+  article h1{font-family:var(--disp);font-weight:600;font-size:clamp(30px,4.4vw,44px);line-height:1.12;letter-spacing:-.025em;margin:16px 0 18px}
+  .artmeta{font-family:var(--mono);font-size:13px;color:var(--mut);padding-bottom:26px;margin-bottom:36px;border-bottom:1px solid var(--line)}
+  article h2{font-family:var(--disp);font-weight:600;font-size:26px;letter-spacing:-.02em;margin:44px 0 14px}
+  article p{color:var(--body);margin-bottom:20px}
+  article ul{color:var(--body);margin:0 0 20px 22px}
+  article li{margin-bottom:8px}
+  article strong{color:var(--ink);font-weight:600}
+  .pull{border-left:3px solid;border-image:var(--grad) 1;padding:6px 0 6px 22px;margin:32px 0;font-family:var(--disp);font-weight:500;font-size:22px;line-height:1.35;color:var(--ink)}
+  .endcta{max-width:720px;margin:20px auto 90px;padding:34px 32px;background:linear-gradient(180deg,#faf8ff,#f5f2ff);border:1px solid var(--line);border-radius:16px;text-align:center}
+  .endcta h3{font-family:var(--disp);font-weight:600;font-size:24px;margin-bottom:10px}
+  .endcta p{color:var(--body);font-size:16px;margin-bottom:20px}
   footer{border-top:1px solid var(--line);padding:32px 0;background:#fff}
   .foot{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--mut);font-family:var(--mono);flex-wrap:wrap;gap:14px}
-  @media(max-width:900px){.posts{grid-template-columns:1fr}.nav-links a:not(.btn){display:none}}
+  @media(max-width:900px){.nav-links a:not(.btn){display:none}}
 </style>
 </head>
 <body>
@@ -78,50 +74,73 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="/#work">Work</a>
       <a href="/#services">Services</a>
       <a href="/#team">Team</a>
-      <a href="/blog.html" class="active">Blog</a>
+      <a href="/blog.html">Blog</a>
       <a href="/#contact" class="btn btn-primary">Book a call</a>
     </nav>
   </div>
 </header>
 
-<section class="bloghero">
-  <span class="eyebrow">Blog</span>
-  <h1>Notes on data, revenue, and <span class="grad-text">automation</span>.</h1>
-  <p>Practical writing on attribution, true ROAS, data engineering, and the automation that runs real businesses.</p>
-</section>
+<article>
+  <a class="back" href="/blog.html">← All posts</a>
+  <span class="eyebrow">Attribution</span>
+  <h1>The 60-day cohort maturity rule for ad spend decisions</h1>
+  <div class="artmeta">2026-07-25 · Twinslytics</div>
 
-<div class="posts">
-  <!-- POSTS -->
-  <a class="post" href="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html">
-    <div class="tag">Article</div>
-    <h3>The 60-day cohort maturity rule for ad spend decisions</h3>
-    <p>Most ecommerce brands kill winning campaigns and scale losing ones because they check the scoreboard before the game is over. A customer who converts on da</p>
-    <div class="meta">2026-07-25</div>
-  </a>
-  <a class="post" href="/blog-why-offline-conversions-beat-pixel-based-roas.html">
-    <div class="tag">Article</div>
-    <h3>Why offline conversions beat pixel-based ROAS</h3>
-    <p>Your dashboard says Meta is delivering a 4.2x ROAS. Your bank account says something else. If you've ever felt that gap, you're not imagining it. Pixel-bas</p>
-    <div class="meta">2026-07-24</div>
-  </a>
-  <a class="post" href="/blog-ga4-roas-lying.html">
-    <div class="tag">Attribution</div>
-    <h3>Why your GA4 ROAS is lying to you — and how to find the real number</h3>
-    <p>GA4 and your ad platforms measure clicks, not closed revenue. Here's why the gap exists, and how to reconcile it against what actually hit your bank account.</p>
-    <div class="meta">Feb 2026 · 6 min read</div>
-  </a>
-  <div class="post soon">
-    <div class="tag">Coming soon</div>
-    <h3>The 60-day maturity rule: stop judging campaigns too early</h3>
-    <p>Why cohort revenue needs time to mature before you kill a campaign — and the mistake that quietly wastes ad budget.</p>
-    <div class="meta">Draft</div>
-  </div>
-  <div class="post soon">
-    <div class="tag">Coming soon</div>
-    <h3>"AI-ready data" actually means these five things</h3>
-    <p>Most AI projects fail before the model. A plain-language checklist for whether your data can support automation at all.</p>
-    <div class="meta">Draft</div>
-  </div>
+  <p>Most ecommerce brands kill winning campaigns and scale losing ones because they check the scoreboard before the game is over. A customer who converts on day one doesn't finish paying you back until day 45, day 60, sometimes day 90. If you're making budget decisions off day-7 data, you're not reading results — you're reading noise.</p>
+
+<p>The 60-day cohort maturity rule is simple: don't finalize a verdict on ad spend performance until the customer cohort has had enough time to reveal its real behavior — repeat purchases, returns, refunds, subscription conversions, chargebacks. For most DTC businesses, that window is roughly 60 days. Cut it shorter and you're optimizing for a story that hasn't finished being written.</p>
+
+<h2>Why day-7 numbers lie</h2>
+
+<p>Platform dashboards default to 7-day click attribution because that's what makes the ad platform look good, not because it reflects your business. A $50 CAC campaign that looks break-even on day 7 might be your most profitable channel by day 60 once repeat orders and upsells kick in. Or it might look great on day 7 and fall apart once returns process and the "customers" turn out to be serial refunders.</p>
+
+<p>Here's the specific problem: your return window is probably 30 days. Your first subscription renewal probably hits around day 30-45. Your average time-to-second-purchase for non-subscription products is likely somewhere between 20 and 50 days depending on your category. If you're calling a campaign a winner or loser before any of that has happened, you're guessing with confidence.</p>
+
+<p>Retail and beauty brands see this constantly with influencer or affiliate traffic — day-7 ROAS looks mediocre, but that traffic converts to repeat buyers at a much higher rate than paid social, and it doesn't show up until the cohort matures.</p>
+
+<h2>What actually needs to mature</h2>
+
+<p>A cohort isn't "mature" just because time passed. It's mature when the events that determine true profitability have had room to happen:</p>
+
+<ul>
+<li><strong>Returns and refunds</strong> — if your return window is 30 days, your revenue numbers are provisional until it closes</li>
+<li><strong>Second purchase</strong> — this is the single best predictor of long-term customer value, and it rarely happens in week one</li>
+<li><strong>Subscription conversion or churn</strong> — first renewal is often the real test, not the initial signup</li>
+<li><strong>Chargebacks and fraud</strong> — these surface late and disproportionately hit certain acquisition channels</li>
+<li><strong>Discount and promo redemption</strong> — if a cohort came in on a deep first-order discount, their real margin doesn't show until you see what they pay full price for later</li>
+</ul>
+
+<p>None of this shows up in a same-day or 7-day dashboard. It shows up in a cohort table that tracks customers by acquisition date and lets their behavior accumulate.</p>
+
+<h2>Building the actual reporting</h2>
+
+<p>This isn't a philosophy — it's a data structure. You need order-level data joined to customer-level data, keyed by acquisition cohort (week or month the customer first purchased), tracked against a rolling window. That means:</p>
+
+<ul>
+<li>A warehouse table that assigns every customer to an acquisition cohort based on first order date and first-touch or last-touch channel</li>
+<li>A join between that cohort and every subsequent order, return, refund, and subscription event tied to that customer</li>
+<li>A rolling calculation — 30-day, 60-day, 90-day — of revenue, contribution margin, and repeat rate per cohort, per channel</li>
+</ul>
+
+<p>Most brands don't have this because their attribution lives in Meta's dashboard or a shopify app that only sees last-click, same-session behavior. You can't run cohort maturity analysis on top of tools built for real-time bidding decisions. You need it in a warehouse where customer identity is stitched correctly across orders — which is its own problem if you've got guest checkouts, multiple emails, or Shopify plus a subscription platform that doesn't share customer IDs cleanly.</p>
+
+<h2>How to make decisions in the meantime</h2
+
+<p>You still have to spend money every day, and you can't freeze budget decisions for 60 days while you wait for perfect data. The fix isn't paralysis — it's using leading indicators that correlate with the lagging truth.</p>
+
+<p>Track early-signal metrics that historically predict mature cohort performance: first-order AOV, whether the customer used a discount code, product category purchased, and day-1 to day-14 engagement (email opens, app opens, site returns). Build a simple model — even a basic regression or decile analysis — that maps early behavior to 60-day realized value. Once you've validated that model against a few cohorts that have already matured, you can use it to make faster calls on new campaigns without waiting two months every time.</p>
+
+<p>The key discipline: treat day-7 or day-14 ROAS as a hypothesis, not a verdict. Flag campaigns as "provisionally good" or "provisionally bad," keep spending within guardrails, and revisit the actual verdict once the cohort closes. Don't let a provisional read trigger an irreversible decision like killing a channel entirely or doubling budget 5x.</p>
+
+<h2>The takeaway</h2>
+
+<p>Ad platforms are optimized to report fast, not to report true. Your business runs on customer behavior that takes weeks to unfold — returns, repeat purchases, subscription renewals, chargebacks. If your reporting stack can't hold a cohort steady and watch it mature, you're making six-figure budget calls off a rounding error. Build the cohort table first. Then decide what to scale.</p>
+</article>
+
+<div class="endcta">
+  <h3>Want to see your real ROAS?</h3>
+  <p>We reconcile ad spend, platform conversions, and closed revenue into one true number you can actually optimize on.</p>
+  <a href="/#contact" class="btn btn-primary">Book a call</a>
 </div>
 
 <footer>
@@ -130,6 +149,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span>Data infrastructure that drives revenue.</span>
   </div>
 </footer>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BlogPosting",
+  "headline":"Why your GA4 ROAS is lying to you — and how to find the real number",
+  "description":"GA4 and ad platforms report ROAS from clicks and pixels, not closed revenue. How to reconcile reported ROAS against real money and optimize on a true number.",
+  "author":{"@type":"Organization","name":"Twinslytics"},
+  "publisher":{"@type":"Organization","name":"Twinslytics","url":"https://twinslytics.com"},
+  "mainEntityOfPage":"https://twinslytics.com/blog-ga4-roas-lying.html",
+  "datePublished":"2026-02-01"
+}
+</script>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
 </body>
 </html>
