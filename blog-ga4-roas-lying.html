@@ -58,7 +58,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .endcta p{color:var(--body);font-size:16px;margin-bottom:20px}
   footer{border-top:1px solid var(--line);padding:32px 0;background:#fff}
   .foot{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--mut);font-family:var(--mono);flex-wrap:wrap;gap:14px}
-  @media(max-width:900px){.nav-links a:not(.btn){display:none}}
+    .burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:none;border:0;cursor:pointer;padding:9px;border-radius:9px}
+  .burger span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:transform .2s,opacity .2s}
+  .burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .burger.is-open span:nth-child(2){opacity:0}
+  .burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  @media(max-width:900px){
+    .nav{position:relative}
+    .burger{display:flex}
+    .nav-links{position:absolute;top:70px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 24px 44px -26px rgba(20,20,50,.28);padding:6px 24px 18px;display:none}
+    .nav-links.open{display:flex}
+    .nav-links a:not(.btn){display:block;padding:14px 0;font-size:16px;color:var(--ink);border-bottom:1px solid var(--line)}
+    .nav-links .langsw{padding:14px 0;font-size:13px;border-bottom:1px solid var(--line)}
+    .nav-links .btn{margin-top:14px;width:100%;text-align:center;padding:13px}
+}
 </style>
 </head>
 <body>
@@ -77,6 +90,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="/blog.html">Blog</a>
       <a href="/#contact" class="btn btn-primary">Book a call</a>
     </nav>
+    <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -143,5 +157,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 }
 </script>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+<script>
+(function(){var b=document.querySelector(".burger"),m=document.querySelector(".nav-links");if(!b||!m)return;function close(){m.classList.remove("open");b.classList.remove("is-open");b.setAttribute("aria-expanded","false");}b.addEventListener("click",function(e){e.stopPropagation();var o=m.classList.toggle("open");b.classList.toggle("is-open",o);b.setAttribute("aria-expanded",o);});m.querySelectorAll("a").forEach(function(a){a.addEventListener("click",close);});document.addEventListener("click",function(e){if(m.classList.contains("open")&&!m.contains(e.target)&&!b.contains(e.target))close();});})();
+</script>
 </body>
 </html>
