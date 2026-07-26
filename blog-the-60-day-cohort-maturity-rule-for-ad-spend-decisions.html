@@ -163,5 +163,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 }
 </script>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+<script>try{fetch("/api/views?p="+encodeURIComponent(location.pathname),{method:"POST",keepalive:true})}catch(e){}</script>
 </body>
 </html>
