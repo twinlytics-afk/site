@@ -1,4 +1,3 @@
-what AI-ready data actually means: a practical checklist
 how to reconcile Meta and Google ROAS against your CRM
 server-side conversions with Meta CAPI: what breaks and how to fix it
 true ROAS vs GA4 ecommerce ROAS for offline-close businesses
