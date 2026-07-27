@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twinslytics — Live Reporting Example</title>
+<meta name="description" content="A live example of the reporting Twinslytics builds — real ROAS, real attribution, on-brand and interactive.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#FAF9FF;
+  --panel:#FFFFFF;
+  --panel-soft:#F5F2FE;
+  --panel-soft-2:#EFEAFC;
+  --line: rgba(19,18,42,0.08);
+  --line-strong: rgba(19,18,42,0.14);
+  --ink:#15142E;
+  --body-c:#5A5872;
+  --muted:#8B88A3;
+  --violet:#6D4EE0;
+  --violet-deep:#4E33C4;
+  --coral:#ED7A57;
+  --coral-deep:#DE5F3B;
+  --grad: linear-gradient(120deg, var(--violet), var(--coral));
+  --grad-soft: linear-gradient(120deg, rgba(109,78,224,0.12), rgba(237,122,87,0.10));
+  --radius: 18px;
+  --radius-sm: 12px;
+  --shadow-sm: 0 1px 2px rgba(21,20,46,0.04), 0 8px 24px -12px rgba(21,20,46,0.10);
+  --shadow-md: 0 8px 30px -8px rgba(21,20,46,0.14);
+  --shadow-glow: 0 20px 60px -20px rgba(109,78,224,0.35);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Plus Jakarta Sans', system-ui, sans-serif;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.55;
+  overflow-x:hidden;
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important;}
+}
+a{color:inherit; text-decoration:none;}
+.wrap{max-width:1180px; margin:0 auto; padding:0 24px; position:relative;}
+::selection{background:var(--violet); color:#fff;}
+.mono{font-family:'IBM Plex Mono', monospace;}
+
+/* ---------- floating gradient blobs ---------- */
+.blob{position:absolute; border-radius:50%; filter:blur(70px); opacity:.55; z-index:0; pointer-events:none;}
+.blob-1{width:520px; height:520px; background:radial-gradient(circle, rgba(109,78,224,0.35), transparent 70%); top:-220px; left:-160px; animation:drift1 22s ease-in-out infinite;}
+.blob-2{width:460px; height:460px; background:radial-gradient(circle, rgba(237,122,87,0.30), transparent 70%); top:-140px; right:-160px; animation:drift2 26s ease-in-out infinite;}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(40px,50px) scale(1.08);}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(-30px,40px) scale(1.05);}}
+
+/* ---------- NAV ---------- */
+.nav{position:sticky; top:0; z-index:50; backdrop-filter:blur(10px); background:rgba(250,249,255,0.78); border-bottom:1px solid var(--line);}
+.nav .wrap{display:flex; align-items:center; justify-content:space-between; padding:14px 24px;}
+.brand{display:flex; align-items:center; gap:10px;}
+.brand-mark{width:32px; height:32px; position:relative; flex-shrink:0;}
+.brand-mark span{position:absolute; width:19px; height:19px; border-radius:7px;}
+.brand-mark span:first-child{background:linear-gradient(135deg,var(--violet),var(--violet-deep)); top:2px; left:2px;}
+.brand-mark span:last-child{background:linear-gradient(135deg,var(--coral),var(--coral-deep)); bottom:2px; right:2px;}
+.brand-word{font-weight:700; font-size:16px; letter-spacing:-0.01em;}
+.nav-right{display:flex; align-items:center; gap:16px;}
+.nav-link{font-size:13.5px; color:var(--body-c); font-weight:500; transition:color .15s;}
+.nav-link:hover{color:var(--ink);}
+.btn-grad{
+  display:inline-flex; align-items:center; gap:8px; background:var(--grad); background-size:160% 160%;
+  color:#fff; font-weight:700; font-size:13.5px; padding:10px 18px; border-radius:100px;
+  box-shadow:0 6px 18px -6px rgba(109,78,224,0.5); transition:transform .2s, box-shadow .2s, background-position .4s;
+}
+.btn-grad:hover{transform:translateY(-2px); box-shadow:0 14px 30px -8px rgba(109,78,224,0.55); background-position:100% 0;}
+.btn-ghost{
+  display:inline-flex; align-items:center; gap:8px; border:1.5px solid var(--line-strong); color:var(--ink);
+  font-weight:600; font-size:13.5px; padding:10px 18px; border-radius:100px; transition:border-color .15s, background .15s;
+}
+.btn-ghost:hover{border-color:var(--violet); background:var(--panel-soft);}
+
+/* ---------- HERO ---------- */
+.hero{position:relative; padding:76px 0 40px; z-index:1;}
+.eyebrow-pill{
+  display:inline-flex; align-items:center; gap:8px; padding:7px 14px; border-radius:100px; background:var(--panel);
+  border:1px solid var(--line-strong); font-size:12.5px; font-weight:600; color:var(--body-c); box-shadow:var(--shadow-sm);
+}
+.eyebrow-pill .dot{width:7px; height:7px; border-radius:50%; background:var(--violet); animation:pulse 2s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(109,78,224,.55);} 70%{box-shadow:0 0 0 9px rgba(109,78,224,0);} 100%{box-shadow:0 0 0 0 rgba(109,78,224,0);}}
+h1.hero-title{
+  font-size:clamp(34px,5.6vw,58px); font-weight:800; line-height:1.06; letter-spacing:-0.02em; margin:22px 0 0; max-width:760px;
+}
+.grad-text{background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;}
+.hero-sub{color:var(--body-c); font-size:16.5px; max-width:520px; margin:20px 0 0;}
+.hero-ctas{display:flex; gap:14px; margin-top:30px; flex-wrap:wrap;}
+.hero-meta{margin-top:38px; display:flex; gap:28px; flex-wrap:wrap;}
+.hero-meta div{font-size:12.5px; color:var(--muted);}
+.hero-meta b{color:var(--ink); font-weight:700;}
+
+/* ---------- TOOLS TICKER ---------- */
+.ticker-wrap{border-top:1px solid var(--line); border-bottom:1px solid var(--line); overflow:hidden; margin-top:52px; position:relative; background:var(--panel-soft);}
+.ticker-wrap::before, .ticker-wrap::after{content:''; position:absolute; top:0; bottom:0; width:80px; z-index:2;}
+.ticker-wrap::before{left:0; background:linear-gradient(90deg, var(--panel-soft), transparent);}
+.ticker-wrap::after{right:0; background:linear-gradient(-90deg, var(--panel-soft), transparent);}
+.ticker-label{font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); text-align:center; padding:10px 0 0;}
+.ticker{display:flex; width:max-content; animation:scroll-x 26s linear infinite; padding:12px 0 16px;}
+.ticker:hover{animation-play-state:paused;}
+@keyframes scroll-x{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+.ticker-item{display:flex; align-items:center; gap:8px; padding:0 26px; font-weight:600; font-size:14px; color:var(--body-c); white-space:nowrap;}
+.ticker-item .sq{width:7px; height:7px; border-radius:2px; background:var(--grad);}
+
+/* ---------- SECTION ---------- */
+.section{padding:56px 0; position:relative; z-index:1;}
+.section-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:26px; gap:16px; flex-wrap:wrap;}
+.section-eyebrow{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--violet); margin:0 0 6px;}
+.section-title{font-size:24px; font-weight:800; margin:0; letter-spacing:-0.01em;}
+.section-note{font-size:12.5px; color:var(--muted);}
+
+/* ---------- KPI GRID ---------- */
+.kpi-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:14px;}
+.kpi{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px 20px 18px;
+  box-shadow:var(--shadow-sm); position:relative; overflow:hidden; transition:transform .25s, box-shadow .25s, border-color .25s;
+}
+.kpi::before{content:''; position:absolute; inset:0; border-radius:var(--radius); padding:1px; background:var(--grad);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude;
+  opacity:0; transition:opacity .25s;}
+.kpi:hover{transform:translateY(-4px); box-shadow:var(--shadow-glow); border-color:transparent;}
+.kpi:hover::before{opacity:1;}
+.kpi-label{font-size:11.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin:0 0 10px; font-weight:600;}
+.kpi-value{font-family:'IBM Plex Mono',monospace; font-size:25px; font-weight:600; margin:0; letter-spacing:-0.01em;}
+.kpi-delta{font-size:12px; font-weight:700; margin-top:6px; display:inline-flex; align-items:center; gap:4px;}
+.kpi-delta.up{color:var(--violet);}
+.kpi-delta.down{color:var(--coral-deep);}
+.kpi svg.spark{width:100%; height:32px; margin-top:10px; display:block;}
+.spark-path{stroke-dasharray:600; stroke-dashoffset:600; transition:stroke-dashoffset 1.6s cubic-bezier(.2,.7,.2,1);}
+.kpi.in .spark-path{stroke-dashoffset:0;}
+
+@media (max-width:900px){ .kpi-grid{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:520px){ .kpi-value{font-size:20px;} }
+
+/* ---------- SIGNAL / CHANNEL SPLIT ---------- */
+.signal-grid{display:grid; grid-template-columns:300px 1fr; gap:20px;}
+@media (max-width:800px){ .signal-grid{grid-template-columns:1fr;} }
+.panel-card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:24px; box-shadow:var(--shadow-sm);}
+.donut-wrap{display:flex; flex-direction:column; align-items:center; position:relative; justify-content:center; min-height:280px;}
+.donut-wrap canvas{max-width:220px;}
+.donut-center-label{font-family:'IBM Plex Mono',monospace; text-align:center; pointer-events:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);}
+.donut-center-label .n{font-size:22px; font-weight:700; display:block; color:var(--ink);}
+.donut-center-label .l{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em;}
+
+.rank-list{display:flex; flex-direction:column; gap:16px;}
+.rank-row{display:grid; grid-template-columns:24px 1fr auto; gap:12px; align-items:center;}
+.rank-num{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted);}
+.rank-name{font-size:13.5px; font-weight:600;}
+.rank-bar-track{height:7px; background:var(--panel-soft); border-radius:5px; margin-top:7px; overflow:hidden;}
+.rank-bar-fill{height:100%; border-radius:5px; background:var(--grad); width:0%; transition:width 1.2s cubic-bezier(.2,.7,.2,1);}
+.rank-value{font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--ink); text-align:right; white-space:nowrap; font-weight:600;}
+.rank-sub{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); text-align:right;}
+
+/* ---------- CONTROLS ---------- */
+.controls{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:22px;}
+.ctrl{
+  background:var(--panel); border:1px solid var(--line-strong); color:var(--ink);
+  font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:13px; padding:9px 14px; border-radius:var(--radius-sm);
+  cursor:pointer; display:flex; align-items:center; gap:8px; transition:border-color .15s, background .15s;
+}
+.ctrl:hover{border-color:var(--violet); background:var(--panel-soft);}
+select.ctrl{appearance:none; -webkit-appearance:none; padding-right:32px; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238B88A3'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center;}
+.search-wrap{position:relative; flex:1; min-width:180px;}
+.search-wrap input{
+  width:100%; background:var(--panel); border:1px solid var(--line-strong); color:var(--ink);
+  font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; padding:9px 14px 9px 34px; border-radius:var(--radius-sm);
+}
+.search-wrap input:focus, .ctrl:focus-visible, select:focus-visible{outline:2px solid var(--violet); outline-offset:1px;}
+.search-wrap svg{position:absolute; left:11px; top:50%; transform:translateY(-50%); width:14px; height:14px; color:var(--muted);}
+.date-pill{margin-left:auto; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--body-c); padding:9px 14px; border:1px solid var(--line); border-radius:var(--radius-sm); background:var(--panel);}
+
+/* ---------- TABLE ---------- */
+.table-scroll{overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius); background:var(--panel); box-shadow:var(--shadow-sm);}
+table{width:100%; border-collapse:collapse; font-size:13px; min-width:940px;}
+thead th{
+  position:sticky; top:0; background:var(--panel-soft); text-align:left; font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:700; font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--body-c);
+  padding:13px 16px; border-bottom:1px solid var(--line-strong); cursor:pointer; white-space:nowrap; user-select:none;
+}
+thead th:hover{color:var(--violet);}
+thead th .arrow{opacity:.35; font-size:10px; margin-left:4px;}
+thead th.sorted .arrow{opacity:1; color:var(--violet);}
+tbody td{padding:12px 16px; border-bottom:1px solid var(--line); font-family:'IBM Plex Mono',monospace; font-size:12.5px; white-space:nowrap; color:var(--ink);}
+tbody td:first-child{font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:13px; white-space:normal; min-width:210px;}
+tbody tr{transition:background .15s;}
+tbody tr:hover td{background:var(--panel-soft);}
+tbody tr.total-row td{font-weight:800; background:var(--panel-soft-2); border-top:1px solid var(--line-strong); border-bottom:none; position:sticky; bottom:0;}
+tbody tr.other-row td{color:var(--muted); font-style:italic; font-weight:400;}
+.pos{color:var(--violet-deep); font-weight:600;}
+.neg{color:var(--coral-deep); font-weight:600;}
+.dim{color:var(--muted);}
+.row-hidden{display:none;}
+.table-foot{padding:12px 16px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted); border-top:1px solid var(--line);}
+
+/* ---------- CHART CARD ---------- */
+.chart-card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:24px; box-shadow:var(--shadow-sm);}
+.chart-card canvas{max-height:280px;}
+.legend-row{display:flex; gap:20px; margin-bottom:16px; flex-wrap:wrap;}
+.legend-item{display:flex; align-items:center; gap:7px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--body-c);}
+.legend-dot{width:9px; height:9px; border-radius:2px;}
+
+/* ---------- CTA ---------- */
+.cta-band{
+  margin:16px 0 0; padding:56px 40px; border-radius:24px; text-align:center; position:relative; overflow:hidden;
+  background:var(--panel);
+  border:1px solid var(--line-strong);
+}
+.cta-band::before{content:''; position:absolute; inset:-2px; background:var(--grad-soft); z-index:0;}
+.cta-band > *{position:relative; z-index:1;}
+.cta-band h2{font-size:clamp(24px,3.4vw,36px); font-weight:800; margin:0 0 12px; max-width:640px; margin-inline:auto; letter-spacing:-0.01em;}
+.cta-band p{color:var(--body-c); max-width:480px; margin:0 auto 26px; font-size:15px;}
+.cta-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+
+footer{padding:36px 0 60px; text-align:center; font-size:12.5px; color:var(--muted); border-top:1px solid var(--line); margin-top:20px;}
+footer a{color:var(--body-c); text-decoration:underline; text-underline-offset:2px;}
+footer .foot-links{display:flex; gap:18px; justify-content:center; margin-top:10px; flex-wrap:wrap;}
+
+.fade-up{opacity:0; transform:translateY(16px); transition:opacity .7s ease, transform .7s ease;}
+.fade-up.in{opacity:1; transform:translateY(0);}
+.stagger > *{opacity:0; transform:translateY(14px); transition:opacity .55s ease, transform .55s ease;}
+.stagger.in > *{opacity:1; transform:translateY(0);}
+.stagger.in > *:nth-child(1){transition-delay:.02s;}
+.stagger.in > *:nth-child(2){transition-delay:.08s;}
+.stagger.in > *:nth-child(3){transition-delay:.14s;}
+.stagger.in > *:nth-child(4){transition-delay:.20s;}
+.stagger.in > *:nth-child(5){transition-delay:.26s;}
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="https://twinslytics.com/" target="_blank" rel="noopener">
+      <span class="brand-mark"><span></span><span></span></span>
+      <span class="brand-word">Twinslytics</span>
+    </a>
+    <div class="nav-right">
+      <a class="nav-link" href="https://twinslytics.com/" target="_blank" rel="noopener">← twinslytics.com</a>
+      <a class="btn-grad" href="https://cal.com/twinlytics-vcua0p/30min" target="_blank" rel="noopener">Book a call</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow-pill fade-up in"><span class="dot"></span> Live example · sample data</span>
+    <h1 class="hero-title fade-up in">This is the report your <span class="grad-text">clients actually read.</span></h1>
+    <p class="hero-sub fade-up in">Clear, real-time, on-brand dashboards that answer one question — where the money comes from. Live on desktop and phone, built on the data you already have.</p>
+    <div class="hero-ctas fade-up in">
+      <a class="btn-grad" href="https://cal.com/twinlytics-vcua0p/30min" target="_blank" rel="noopener">
+        Book a call
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn-ghost" href="#table">See the full ledger ↓</a>
+    </div>
+    <div class="hero-meta fade-up in">
+      <div>Account &nbsp;<b>Sample Retail Co.</b></div>
+      <div>Period &nbsp;<b>Feb 1 – Feb 28, 2023</b></div>
+      <div>Built with &nbsp;<b>GA4 · Google Ads · Meta Ads · BigQuery</b></div>
+    </div>
+  </div>
+</header>
+
+<div class="ticker-wrap">
+  <p class="ticker-label mono">Built on the tools you already run</p>
+  <div class="ticker" id="ticker"></div>
+</div>
+
+<div class="wrap">
+
+  <section class="section" id="kpis">
+    <div class="section-head">
+      <div>
+        <p class="section-eyebrow">The month at a glance</p>
+        <h2 class="section-title">Where the money actually went</h2>
+      </div>
+      <span class="section-note mono">vs. previous 28 days</span>
+    </div>
+    <div class="kpi-grid stagger" id="kpiGrid"></div>
+  </section>
+
+  <section class="section" id="signal">
+    <div class="section-head">
+      <div>
+        <p class="section-eyebrow">Attribution</p>
+        <h2 class="section-title">Where the sessions come from</h2>
+      </div>
+      <span class="section-note mono">Revenue share by channel</span>
+    </div>
+    <div class="signal-grid fade-up">
+      <div class="panel-card donut-wrap">
+        <canvas id="donutChart" width="220" height="220"></canvas>
+        <div class="donut-center-label"><span class="n" id="donutTotal">$20.2K</span><span class="l">Revenue</span></div>
+      </div>
+      <div class="panel-card">
+        <div class="rank-list" id="rankList"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="table">
+    <div class="section-head">
+      <div>
+        <p class="section-eyebrow">The ledger</p>
+        <h2 class="section-title">Source / medium, line by line</h2>
+      </div>
+      <span class="section-note mono">Click a header to sort</span>
+    </div>
+    <div class="controls fade-up">
+      <select class="ctrl" id="channelFilter" aria-label="Filter by source / medium">
+        <option value="">Source / Medium — all</option>
+      </select>
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="text" id="tableSearch" placeholder="Search channel…" aria-label="Search table">
+      </div>
+      <button class="ctrl" id="resetBtn" type="button">Reset filters</button>
+      <span class="date-pill">Feb 1 – Feb 28, 2023</span>
+    </div>
+    <div class="table-scroll fade-up">
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th data-key="source">Source / Medium <span class="arrow">↕</span></th>
+            <th data-key="sessions">Sessions <span class="arrow">↕</span></th>
+            <th data-key="impressions">Impressions <span class="arrow">↕</span></th>
+            <th data-key="clicks">Clicks <span class="arrow">↕</span></th>
+            <th data-key="ctr">CTR <span class="arrow">↕</span></th>
+            <th data-key="purchases">Purchases <span class="arrow">↕</span></th>
+            <th data-key="new_buyers">New buyers <span class="arrow">↕</span></th>
+            <th data-key="cost">Cost <span class="arrow">↕</span></th>
+            <th data-key="revenue">Revenue <span class="arrow">↕</span></th>
+            <th data-key="cpa">CPA <span class="arrow">↕</span></th>
+            <th data-key="conv_rate">Conv. rate <span class="arrow">↕</span></th>
+            <th data-key="roas">ROAS <span class="arrow">↕</span></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+      <div class="table-foot" id="tableFoot"></div>
+    </div>
+  </section>
+
+  <section class="section" id="costs">
+    <div class="section-head">
+      <div>
+        <p class="section-eyebrow">Efficiency</p>
+        <h2 class="section-title">Daily cost &amp; CPA</h2>
+      </div>
+      <span class="section-note mono">Illustrative daily trend</span>
+    </div>
+    <div class="chart-card fade-up">
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-dot" style="background:var(--violet)"></span> Cost</span>
+        <span class="legend-item"><span class="legend-dot" style="background:var(--coral)"></span> CPA</span>
+      </div>
+      <canvas id="costsChart"></canvas>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="cta-band fade-up">
+      <h2>Let's find your real numbers.</h2>
+      <p>Tell us where your data hurts — the untrusted dashboard, the number that never matches, the report you're still building by hand.</p>
+      <div class="cta-row">
+        <a class="btn-grad" href="https://cal.com/twinlytics-vcua0p/30min" target="_blank" rel="noopener">Book a call directly</a>
+        <a class="btn-ghost" href="mailto:twinslytics@gmail.com?subject=Reporting%20-%20let%27s%20talk">Send an email</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Demo report built on anonymized sample data for illustration purposes only.
+  <div class="foot-links">
+    <a href="mailto:twinslytics@gmail.com">twinslytics@gmail.com</a>
+    <a href="https://t.me/vhalstian" target="_blank" rel="noopener">Telegram</a>
+    <a href="https://www.linkedin.com/in/vladislav-halstyan-03586b131/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://twinslytics.com/" target="_blank" rel="noopener">twinslytics.com</a>
+  </div>
+</footer>
+
+<script>
+const DATA = [{"source": "(direct) / (none)", "sessions": 8988, "impressions": 0, "clicks": 0, "purchases": 149, "new_buyers": 141, "cost": 0.0, "revenue": 7854.76, "ctr": null, "cpa": 0, "conv_rate": 1.66, "roas": null}, {"source": "google / cpc", "sessions": 3625, "impressions": 331865, "clicks": 3929, "purchases": 146, "new_buyers": 142, "cost": 3560.15, "revenue": 5619.5, "ctr": 1.18, "cpa": 24.38, "conv_rate": 4.03, "roas": 157.84}, {"source": "Klaviyo / campaign", "sessions": 3109, "impressions": 0, "clicks": 0, "purchases": 74, "new_buyers": 71, "cost": 0.0, "revenue": 3273.73, "ctr": null, "cpa": 0, "conv_rate": 2.38, "roas": null}, {"source": "google / organic", "sessions": 2019, "impressions": 0, "clicks": 0, "purchases": 58, "new_buyers": 56, "cost": 0.0, "revenue": 2479.6, "ctr": null, "cpa": 0, "conv_rate": 2.87, "roas": null}, {"source": "facebook / cpc", "sessions": 250, "impressions": 24586, "clicks": 407, "purchases": 1, "new_buyers": 1, "cost": 556.72, "revenue": 20.25, "ctr": 1.66, "cpa": 556.72, "conv_rate": 0.4, "roas": 3.64}, {"source": "review.intern.facebook.com / referral", "sessions": 196, "impressions": 0, "clicks": 0, "purchases": 0, "new_buyers": 0, "cost": 0.0, "revenue": 0.0, "ctr": null, "cpa": 0, "conv_rate": 0.0, "roas": null}, {"source": "bing / cpc", "sessions": 182, "impressions": 0, "clicks": 0, "purchases": 7, "new_buyers": 7, "cost": 0.0, "revenue": 284.77, "ctr": null, "cpa": 0, "conv_rate": 3.85, "roas": null}, {"source": "www.frugalconfessions.com / referral", "sessions": 141, "impressions": 0, "clicks": 0, "purchases": 0, "new_buyers": 0, "cost": 0.0, "revenue": 0.0, "ctr": null, "cpa": 0, "conv_rate": 0.0, "roas": null}, {"sessions": 593, "impressions": 0, "clicks": 0, "purchases": 19, "new_buyers": 18, "cost": 0.0, "revenue": 669.82, "source": "Other channels (108)", "ctr": null, "cpa": 0, "conv_rate": 3.2, "roas": null}, {"sessions": 19103, "impressions": 356451, "clicks": 4336, "purchases": 454, "new_buyers": 436, "cost": 4116.87, "revenue": 20202.43, "source": "Grand total", "ctr": 1.22, "cpa": 9.07, "conv_rate": 2.38, "roas": 490.72}];
+
+const fmtMoney = v => '$' + Number(v).toLocaleString('en-US', {maximumFractionDigits:0});
+const fmtMoney2 = v => '$' + Number(v).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+const fmtNum = v => Number(v).toLocaleString('en-US');
+const fmtPct = v => v === null || v === undefined ? '–' : Number(v).toFixed(2) + '%';
+
+/* ---------------- TOOLS TICKER ---------------- */
+const tools = ['Google Analytics 4','Google Ads','Meta Ads','NetSuite','Shopify','BigQuery','dbt','Looker Studio','Cloud Run'];
+const tickerEl = document.getElementById('ticker');
+[...tools, ...tools].forEach(t=>{
+  const s = document.createElement('span');
+  s.className = 'ticker-item';
+  s.innerHTML = `<span class="sq"></span>${t}`;
+  tickerEl.appendChild(s);
+});
+
+/* ---------------- KPI STRIP ---------------- */
+const totals = DATA.find(d => d.source === 'Grand total');
+const kpiDefs = [
+  {label:'Cost', target: totals.cost, fmt:v=>fmtMoney(v), delta:'-12.1%', dir:'down', seed:1},
+  {label:'Purchases', target: totals.purchases, fmt:v=>fmtNum(Math.round(v)), delta:'-14.8%', dir:'down', seed:2},
+  {label:'Revenue', target: totals.revenue, fmt:v=>fmtMoney(v), delta:'-9.8%', dir:'down', seed:3},
+  {label:'Conversion rate', target: totals.conv_rate, fmt:v=>v.toFixed(2)+'%', delta:'-44.8%', dir:'down', seed:4},
+  {label:'ROAS', target: totals.roas, fmt:v=>v.toFixed(2)+'%', delta:'+2.7%', dir:'up', seed:5},
+];
+
+function sparkPath(seed, w, h){
+  let pts = []; let v = 0.5; let s = seed*97;
+  for(let i=0;i<24;i++){
+    s = (s*9301+49297)%233280;
+    const r = s/233280;
+    v += (r-0.5)*0.35;
+    v = Math.max(0.08, Math.min(0.95, v));
+    pts.push(v);
+  }
+  const step = w/(pts.length-1);
+  return pts.map((p,i)=> `${i===0?'M':'L'} ${(i*step).toFixed(1)},${(h-p*h).toFixed(1)}`).join(' ');
+}
+
+const kpiGrid = document.getElementById('kpiGrid');
+kpiDefs.forEach((k,idx)=>{
+  const el = document.createElement('div');
+  el.className = 'kpi';
+  el.innerHTML = `
+    <p class="kpi-label">${k.label}</p>
+    <p class="kpi-value" data-target="${k.target}" data-idx="${idx}">0</p>
+    <span class="kpi-delta ${k.dir}">${k.dir==='up'?'▲':'▼'} ${k.delta}</span>
+    <svg class="spark" viewBox="0 0 200 34" preserveAspectRatio="none"><path class="spark-path" d="${sparkPath(k.seed,200,34)}" fill="none" stroke="${k.dir==='up'?'#6D4EE0':'#ED7A57'}" stroke-width="1.8"/></svg>
+  `;
+  kpiGrid.appendChild(el);
+});
+
+function animateCount(el, target, fmt, duration=1400){
+  const start = performance.now();
+  function step(now){
+    const p = Math.min(1, (now-start)/duration);
+    const eased = 1 - Math.pow(1-p, 3);
+    el.textContent = fmt(target*eased);
+    if(p<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+/* ---------------- DONUT + RANK LIST ---------------- */
+const otherRow = DATA.find(d => d.source.startsWith('Other channels'));
+const channelRows = DATA.filter(d => d.source !== 'Grand total' && d !== otherRow);
+const donutSource = [...channelRows, otherRow];
+const palette = ['#6D4EE0','#ED7A57','#8B6FF0','#F2A65E','#4E33C4','#C77BE0','#B7ACF0','#F0A98A'];
+
+const donutCtx = document.getElementById('donutChart');
+new Chart(donutCtx, {
+  type:'doughnut',
+  data:{
+    labels: donutSource.map(d=>d.source),
+    datasets:[{
+      data: donutSource.map(d=>d.revenue),
+      backgroundColor: palette,
+      borderColor:'#FFFFFF',
+      borderWidth:3,
+      hoverOffset:6
+    }]
+  },
+  options:{
+    cutout:'72%',
+    plugins:{ legend:{display:false}, tooltip:{
+      callbacks:{ label: ctx => ` ${ctx.label}: ${fmtMoney(ctx.parsed)}` },
+      backgroundColor:'#15142E', titleColor:'#fff', bodyColor:'#fff', borderColor:'#6D4EE0', borderWidth:1, padding:10
+    }},
+    animation:{ duration:1300, easing:'easeOutCubic' }
+  }
+});
+document.getElementById('donutTotal').textContent = fmtMoney(totals.revenue);
+
+const rankList = document.getElementById('rankList');
+const maxSessions = Math.max(...donutSource.map(d=>d.sessions));
+donutSource
+  .slice()
+  .sort((a,b)=>b.sessions-a.sessions)
+  .forEach((d,i)=>{
+    const row = document.createElement('div');
+    row.className='rank-row';
+    row.innerHTML = `
+      <span class="rank-num">${String(i+1).padStart(2,'0')}</span>
+      <div>
+        <span class="rank-name">${d.source}</span>
+        <div class="rank-bar-track"><div class="rank-bar-fill" data-w="${(d.sessions/maxSessions*100).toFixed(1)}" style="background:${palette[i%palette.length]}"></div></div>
+      </div>
+      <div>
+        <div class="rank-value">${fmtNum(d.sessions)}</div>
+        <div class="rank-sub">${fmtMoney(d.revenue)}</div>
+      </div>
+    `;
+    rankList.appendChild(row);
+  });
+
+/* ---------------- TABLE ---------------- */
+const tableBody = document.getElementById('tableBody');
+const rowsData = DATA.filter(d=>d.source!=='Grand total');
+const grandTotal = totals;
+let sortKey = 'sessions', sortDir = -1;
+
+function renderTable(){
+  const sorted = rowsData.slice().sort((a,b)=>{
+    let av=a[sortKey], bv=b[sortKey];
+    if(av===null||av===undefined) av = -Infinity;
+    if(bv===null||bv===undefined) bv = -Infinity;
+    if(typeof av==='string') return sortDir*av.localeCompare(bv);
+    return sortDir*(av-bv);
+  });
+  tableBody.innerHTML = sorted.map(d=>{
+    const isOther = d.source.startsWith('Other channels');
+    return `<tr class="${isOther?'other-row':''}" data-source="${d.source.toLowerCase()}">
+      <td>${d.source}</td>
+      <td>${fmtNum(d.sessions)}</td>
+      <td>${d.impressions? fmtNum(d.impressions):'–'}</td>
+      <td>${d.clicks? fmtNum(d.clicks):'–'}</td>
+      <td>${fmtPct(d.ctr)}</td>
+      <td>${d.purchases? fmtNum(d.purchases):'–'}</td>
+      <td>${d.new_buyers? fmtNum(d.new_buyers):'–'}</td>
+      <td class="${d.cost>0?'neg':'dim'}">${d.cost>0?fmtMoney2(d.cost):'$0'}</td>
+      <td class="pos">${fmtMoney2(d.revenue)}</td>
+      <td>${d.cpa>0?fmtMoney2(d.cpa):'–'}</td>
+      <td>${fmtPct(d.conv_rate)}</td>
+      <td class="${d.roas? 'pos':''}">${d.roas? fmtPct(d.roas):'–'}</td>
+    </tr>`;
+  }).join('') + `
+    <tr class="total-row">
+      <td>Grand total</td>
+      <td>${fmtNum(grandTotal.sessions)}</td>
+      <td>${fmtNum(grandTotal.impressions)}</td>
+      <td>${fmtNum(grandTotal.clicks)}</td>
+      <td>${fmtPct(grandTotal.ctr)}</td>
+      <td>${fmtNum(grandTotal.purchases)}</td>
+      <td>${fmtNum(grandTotal.new_buyers)}</td>
+      <td>${fmtMoney2(grandTotal.cost)}</td>
+      <td>${fmtMoney2(grandTotal.revenue)}</td>
+      <td>${fmtMoney2(grandTotal.cpa)}</td>
+      <td>${fmtPct(grandTotal.conv_rate)}</td>
+      <td>${fmtPct(grandTotal.roas)}</td>
+    </tr>`;
+  document.querySelectorAll('thead th').forEach(th=>{
+    th.classList.toggle('sorted', th.dataset.key===sortKey);
+    th.querySelector('.arrow').textContent = th.dataset.key===sortKey ? (sortDir===1?'↑':'↓') : '↕';
+  });
+  applyFilters();
+  document.getElementById('tableFoot').textContent = `Showing ${rowsData.length} of 116 source / medium rows · full ledger available in the connected dashboard`;
+}
+document.querySelectorAll('#dataTable thead th').forEach(th=>{
+  th.addEventListener('click', ()=>{
+    const key = th.dataset.key;
+    if(sortKey===key){ sortDir *= -1; } else { sortKey = key; sortDir = -1; }
+    renderTable();
+  });
+});
+
+/* ---------------- FILTERS ---------------- */
+const channelFilter = document.getElementById('channelFilter');
+rowsData.forEach(d=>{
+  const opt = document.createElement('option');
+  opt.value = d.source.toLowerCase();
+  opt.textContent = d.source;
+  channelFilter.appendChild(opt);
+});
+const tableSearch = document.getElementById('tableSearch');
+
+function applyFilters(){
+  const chosen = channelFilter.value;
+  const q = tableSearch.value.trim().toLowerCase();
+  document.querySelectorAll('#tableBody tr:not(.total-row)').forEach(tr=>{
+    const src = tr.dataset.source;
+    const matchesChosen = !chosen || src === chosen;
+    const matchesSearch = !q || src.includes(q);
+    tr.classList.toggle('row-hidden', !(matchesChosen && matchesSearch));
+  });
+}
+channelFilter.addEventListener('change', ()=>{ tableSearch.value=''; applyFilters(); });
+tableSearch.addEventListener('input', applyFilters);
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  channelFilter.value=''; tableSearch.value=''; applyFilters();
+});
+
+renderTable();
+
+/* ---------------- COSTS CHART (illustrative daily trend) ---------------- */
+function seededSeries(total, n, seed){
+  let s = seed*131; let weights = [];
+  for(let i=0;i<n;i++){ s=(s*9301+49297)%233280; weights.push(0.4 + (s/233280)); }
+  const sum = weights.reduce((a,b)=>a+b,0);
+  return weights.map(w => +(total * w/sum).toFixed(2));
+}
+const days = Array.from({length:28}, (_,i)=> `Feb ${i+1}`);
+const costSeries = seededSeries(totals.cost, 28, 7);
+const cpaSeries = costSeries.map((c,i)=> +(c / (1.4 + Math.sin(i/4)*0.5 + 2)).toFixed(2));
+
+new Chart(document.getElementById('costsChart'), {
+  data:{
+    labels: days,
+    datasets:[
+      { type:'bar', label:'Cost', data: costSeries, backgroundColor:'rgba(109,78,224,0.55)', borderRadius:4, order:2, yAxisID:'y' },
+      { type:'line', label:'CPA', data: cpaSeries, borderColor:'#ED7A57', backgroundColor:'#ED7A57', tension:0.35, pointRadius:0, borderWidth:2.4, order:1, yAxisID:'y1' }
+    ]
+  },
+  options:{
+    responsive:true,
+    interaction:{ mode:'index', intersect:false },
+    plugins:{ legend:{display:false}, tooltip:{
+      backgroundColor:'#15142E', titleColor:'#fff', bodyColor:'#fff', borderColor:'#6D4EE0', borderWidth:1, padding:10,
+      callbacks:{ label: ctx => ` ${ctx.dataset.label}: ${fmtMoney2(ctx.parsed.y)}` }
+    }},
+    scales:{
+      x:{ ticks:{ color:'#8B88A3', font:{family:'IBM Plex Mono', size:10}, maxTicksLimit:9 }, grid:{ display:false } },
+      y:{ position:'left', ticks:{ color:'#8B88A3', font:{family:'IBM Plex Mono', size:10} }, grid:{ color:'rgba(21,20,46,0.06)' } },
+      y1:{ position:'right', ticks:{ color:'#8B88A3', font:{family:'IBM Plex Mono', size:10} }, grid:{ display:false } }
+    }
+  }
+});
+
+/* ---------------- REVEAL ON SCROLL ---------------- */
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      e.target.querySelectorAll('.rank-bar-fill').forEach(b=> b.style.width = b.dataset.w+'%');
+      io.unobserve(e.target);
+    }
+  });
+}, {threshold:0.15});
+document.querySelectorAll('.fade-up, .stagger').forEach(el=>io.observe(el));
+
+const kpiIo = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      const valEl = e.target.querySelector('.kpi-value');
+      const idx = +valEl.dataset.idx;
+      animateCount(valEl, kpiDefs[idx].target, kpiDefs[idx].fmt);
+      kpiIo.unobserve(e.target);
+    }
+  });
+}, {threshold:0.2});
+document.querySelectorAll('.kpi').forEach(el=>kpiIo.observe(el));
+</script>
+</body>
+</html>
