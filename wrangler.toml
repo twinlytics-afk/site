@@ -1,9 +1,0 @@
-name = "site"
-compatibility_date = "2024-11-01"
-
-[assets]
-directory = "."
-
-[[kv_namespaces]]
-binding = "VIEWS"
-id = "c19153af400b46f98235e350c524f947"
