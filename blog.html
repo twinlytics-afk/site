@@ -107,22 +107,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="posts">
   <!-- POSTS -->
   <a class="post" href="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html">
-    <div class="tag">Article</div>
+    <div class="tag">Marketing analytics</div>
     <h3>The 60-day cohort maturity rule for ad spend decisions</h3>
     <p>Most ecommerce brands kill winning campaigns and scale losing ones because they check the scoreboard before the game is over.</p>
-    <div class="meta">25 Jul 2026<span class="views" data-p="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html"></span></div>
+    <div class="meta">25 Jul 2026 · 4 min read<span class="views" data-p="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html"></span></div>
   </a>
   <a class="post" href="/blog-why-offline-conversions-beat-pixel-based-roas.html">
-    <div class="tag">Article</div>
+    <div class="tag">Attribution</div>
     <h3>Why offline conversions beat pixel-based ROAS</h3>
     <p>Your dashboard says Meta is delivering a 4.2x ROAS. Your bank account says something else. If you've ever felt that gap, you're not imagining it.</p>
-    <div class="meta">24 Jul 2026<span class="views" data-p="/blog-why-offline-conversions-beat-pixel-based-roas.html"></span></div>
+    <div class="meta">24 Jul 2026 · 5 min read<span class="views" data-p="/blog-why-offline-conversions-beat-pixel-based-roas.html"></span></div>
   </a>
   <a class="post" href="/blog-ga4-roas-lying.html">
     <div class="tag">Attribution</div>
     <h3>Why your GA4 ROAS is lying to you — and how to find the real number</h3>
     <p>GA4 and your ad platforms measure clicks, not closed revenue. Here's why the gap exists, and how to reconcile it against what actually hit your bank account.</p>
-    <div class="meta">1 Feb 2026 · 6 min read<span class="views" data-p="/blog-ga4-roas-lying.html"></span></div>
+    <div class="meta">1 Feb 2026 · 3 min read<span class="views" data-p="/blog-ga4-roas-lying.html"></span></div>
   </a>
 </div>
 
@@ -137,7 +137,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 (function(){var b=document.querySelector(".burger"),m=document.querySelector(".nav-links");if(!b||!m)return;function close(){m.classList.remove("open");b.classList.remove("is-open");b.setAttribute("aria-expanded","false");}b.addEventListener("click",function(e){e.stopPropagation();var o=m.classList.toggle("open");b.classList.toggle("is-open",o);b.setAttribute("aria-expanded",o);});m.querySelectorAll("a").forEach(function(a){a.addEventListener("click",close);});document.addEventListener("click",function(e){if(m.classList.contains("open")&&!m.contains(e.target)&&!b.contains(e.target))close();});})();
 </script>
 <script>
-fetch("/api/views").then(function(r){return r.json()}).then(function(v){document.querySelectorAll(".views[data-p]").forEach(function(el){var n=v[el.getAttribute("data-p")];if(n>0)el.textContent=" \u00b7 "+n+(n===1?" view":" views")})}).catch(function(){});
+fetch("/api/views").then(function(r){return r.json()}).then(function(v){
+  function get(p){p=p.replace(/\/$/,"");return v[p]||v[p+".html"]||v[p.replace(/\.html$/,"")]||0;}
+  document.querySelectorAll("a.post[href]").forEach(function(a){
+    var el=a.querySelector(".views");if(!el)return;
+    var n=get(a.getAttribute("href"));
+    if(n>0)el.textContent=" \u00b7 "+n+(n===1?" view":" views");
+  });
+}).catch(function(){});
 </script>
 </body>
 </html>

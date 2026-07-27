@@ -98,7 +98,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <a class="back" href="/blog.html">← All posts</a>
   <span class="eyebrow">Attribution</span>
   <h1>Why your GA4 ROAS is lying to you — and how to find the real number</h1>
-  <div class="artmeta">Feb 2026 · 6 min read · Twinslytics<span class="artviews"></span></div>
+  <div class="artmeta">1 Feb 2026 · 3 min read · Twinslytics<span class="artviews"></span></div>
 
   <p>Every few weeks a founder tells us some version of the same thing: "Google says we're at 3x, Meta says we're at 5x, and my accountant says we barely broke even. Who do I believe?"</p>
   <p>The uncomfortable answer is: none of them, exactly. Not because anyone is cheating, but because the ad platforms and GA4 are measuring something different from the number you actually care about — money that landed in your account.</p>
@@ -160,6 +160,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>
 (function(){var b=document.querySelector(".burger"),m=document.querySelector(".nav-links");if(!b||!m)return;function close(){m.classList.remove("open");b.classList.remove("is-open");b.setAttribute("aria-expanded","false");}b.addEventListener("click",function(e){e.stopPropagation();var o=m.classList.toggle("open");b.classList.toggle("is-open",o);b.setAttribute("aria-expanded",o);});m.querySelectorAll("a").forEach(function(a){a.addEventListener("click",close);});document.addEventListener("click",function(e){if(m.classList.contains("open")&&!m.contains(e.target)&&!b.contains(e.target))close();});})();
 </script>
-<script>try{fetch("/api/views?p="+encodeURIComponent(location.pathname),{method:"POST",keepalive:true})}catch(e){}</script>
+<script>try{fetch("/api/views?p="+encodeURIComponent(location.pathname.replace(/\.html$/,"")),{method:"POST",keepalive:true})}catch(e){}</script>
 </body>
 </html>

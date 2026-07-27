@@ -82,9 +82,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <article>
   <a class="back" href="/blog.html">← All posts</a>
-  <span class="eyebrow">Attribution</span>
+  <span class="eyebrow">Marketing analytics</span>
   <h1>The 60-day cohort maturity rule for ad spend decisions</h1>
-  <div class="artmeta">25 Jul 2026 · Twinslytics<span class="artviews"></span></div>
+  <div class="artmeta">25 Jul 2026 · 4 min read · Twinslytics<span class="artviews"></span></div>
 
   <p>Most ecommerce brands kill winning campaigns and scale losing ones because they check the scoreboard before the game is over. A customer who converts on day one doesn't finish paying you back until day 45, day 60, sometimes day 90. If you're making budget decisions off day-7 data, you're not reading results — you're reading noise.</p>
 
@@ -163,6 +163,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 }
 </script>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
-<script>try{fetch("/api/views?p="+encodeURIComponent(location.pathname),{method:"POST",keepalive:true})}catch(e){}</script>
+<script>try{fetch("/api/views?p="+encodeURIComponent(location.pathname.replace(/\.html$/,"")),{method:"POST",keepalive:true})}catch(e){}</script>
 </body>
 </html>

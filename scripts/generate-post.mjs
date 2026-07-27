@@ -69,22 +69,29 @@ if (!inner) { console.error("No content:", JSON.stringify(raw).slice(0, 400)); p
 const title = topic.charAt(0).toUpperCase() + topic.slice(1);
 const desc = inner.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 155);
 const M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];const _d=new Date();const date=`${_d.getDate()} ${M[_d.getMonth()]} ${_d.getFullYear()}`;
+const _words = inner.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+const mins = Math.max(1, Math.round(_words / 200));
+const CATS = ["Attribution","Marketing analytics","Data engineering","AI & automation","ML","Analytics"];
+const _cls = (await claude(`Classify this blog topic into EXACTLY one of: ${CATS.join(", ")}. Reply with only the category name, nothing else.`, `Topic: ${topic}`, 20)).text.trim().replace(/["'.]/g, "");
+const category = CATS.includes(_cls) ? _cls : "Data engineering";
+console.log("category:", category, "| read:", mins, "min");
 const tpl = fs.readFileSync("blog-ga4-roas-lying.html", "utf-8");
 let html = tpl
   .replace(/<title>[\s\S]*?<\/title>/, `<title>${title} — Twinslytics</title>`)
   .replace(/(name="description" content=")[^"]*(")/, `$1${desc}$2`)
   .replace(/(canonical" href=")[^"]*(")/, `$1${SITE}/${file}$2`)
   .replace(/(og:url" content=")[^"]*(")/, `$1${SITE}/${file}$2`)
-  .replace(/(og:title" content=")[^"]*(")/, `$1${title}$2`);
+  .replace(/(og:title" content=")[^"]*(")/, `$1${title}$2`)
+  .replace('<span class="eyebrow">Attribution</span>', `<span class="eyebrow">${category}</span>`);
 const head = html.slice(0, html.indexOf("<h1>"));
 const tail = html.slice(html.indexOf("</article>"));
-html = head + `<h1>${title}</h1>\n  <div class="artmeta">${date} · Twinslytics<span class="artviews"></span></div>\n\n  ${inner}\n` + tail;
+html = head + `<h1>${title}</h1>\n  <div class="artmeta">${date} · ${mins} min read · Twinslytics<span class="artviews"></span></div>\n\n  ${inner}\n` + tail;
 fs.writeFileSync(file, html);
 console.log("Wrote", file);
 
 try {
   let blog = fs.readFileSync("blog.html", "utf-8");
-  const card = `  <a class="post" href="/${file}">\n    <div class="tag">Article</div>\n    <h3>${title}</h3>\n    <p>${desc}</p>\n    <div class="meta">${date}<span class="views" data-p="/${file}"></span></div>\n  </a>`;
+  const card = `  <a class="post" href="/${file}">\n    <div class="tag">${category}</div>\n    <h3>${title}</h3>\n    <p>${desc}</p>\n    <div class="meta">${date} · ${mins} min read<span class="views" data-p="/${file}"></span></div>\n  </a>`;
   if (blog.includes("<!-- POSTS -->")) { blog = blog.replace("<!-- POSTS -->", "<!-- POSTS -->\n" + card); fs.writeFileSync("blog.html", blog); console.log("Card added"); }
 } catch (e) { console.error("blog.html skip:", e.message); }
 try {
