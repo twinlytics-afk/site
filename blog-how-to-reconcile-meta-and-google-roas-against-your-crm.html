@@ -11,55 +11,51 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blog — Twinslytics | Notes on data, revenue, and automation</title>
-<meta name="description" content="Practical writing on marketing attribution, true ROAS, data engineering, and operations automation for ecommerce and DTC teams." />
+<title>How to reconcile Meta and Google ROAS against your CRM — Twinslytics</title>
+<meta name="description" content="Meta says your campaign drove $40,000 in revenue. Google says its campaigns drove $35,000. Add those up and you've got $75,000 in attributed revenue. Excep" />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="canonical" href="https://twinslytics.com/blog.html" />
+<link rel="canonical" href="https://twinslytics.com/blog-how-to-reconcile-meta-and-google-roas-against-your-crm.html" />
 <meta name="robots" content="index, follow" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://twinslytics.com/blog.html" />
-<meta property="og:title" content="Twinslytics Blog — data, revenue, and automation" />
-<meta property="og:description" content="Practical writing on attribution, true ROAS, data engineering, and automation for ecommerce and DTC teams." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://twinslytics.com/blog-how-to-reconcile-meta-and-google-roas-against-your-crm.html" />
+<meta property="og:title" content="How to reconcile Meta and Google ROAS against your CRM" />
+<meta property="og:description" content="GA4 measures clicks, not closed revenue. Here's how to reconcile reported ROAS against what actually hit your bank account." />
 <meta property="og:image" content="https://twinslytics.com/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#fff;--bg-alt:#faf9ff;--bg-tint:#f5f2ff;--ink:#14122b;--body:#5a5675;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+  :root{--bg:#fff;--ink:#14122b;--body:#403c5c;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--ok:#12b981;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
-  a{color:inherit;text-decoration:none}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased}
+  a{color:var(--v);text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
-  h1,h2,h3{font-family:var(--disp);font-weight:600;line-height:1.1;letter-spacing:-.025em;color:var(--ink)}
-  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--v);background:#f2ecff;display:inline-block;padding:6px 12px;border-radius:20px}
   .btn{font-family:var(--disp);font-weight:600;font-size:14.5px;padding:12px 22px;border-radius:8px;display:inline-block;border:1px solid transparent}
   .btn-primary{background:var(--grad);color:#fff}
-  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
   .logo{font-family:var(--disp);font-weight:700;font-size:20px;letter-spacing:-.02em;display:inline-flex;align-items:center;gap:10px}
   .logo .brandmark{height:26px;width:auto;display:block}
   .logo .m{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .nav-links{display:flex;align-items:center;gap:30px;font-size:14.5px}
-  .nav-links a:not(.btn){color:var(--body)}
-  .nav-links a.active{color:var(--ink)}
+  .nav-links a:not(.btn){color:#5a5675}
   .nav .btn{padding:10px 18px}
-  .bloghero{text-align:center;padding:76px 0 48px;position:relative;overflow:hidden}
-  .bloghero::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:900px;height:600px;border-radius:50%;background:radial-gradient(circle at 45% 45%,rgba(108,76,240,.14),transparent 55%),radial-gradient(circle at 62% 55%,rgba(255,122,89,.1),transparent 55%);z-index:0}
-  .bloghero>*{position:relative;z-index:1}
-  .bloghero h1{font-size:clamp(34px,5vw,52px);margin:20px auto 14px;max-width:18ch}
-  .bloghero p{color:var(--body);font-size:19px;max-width:52ch;margin:0 auto}
-  .posts{max-width:var(--maxw);margin:0 auto;padding:20px 28px 96px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  .post{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px;transition:transform .18s,box-shadow .18s}
-  .post:hover{transform:translateY(-3px);box-shadow:0 20px 44px -28px rgba(108,76,240,.5)}
-  .post .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--v);margin-bottom:14px}
-  .post h3{font-size:20px;line-height:1.22;margin-bottom:10px}
-  .post p{color:var(--body);font-size:15px;flex:1}
-  .post .meta{font-family:var(--mono);font-size:11.5px;color:var(--mut);margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
-  .post.soon{opacity:.6}
-  .post.soon .tag{color:var(--mut)}
+  article{max-width:720px;margin:0 auto;padding:56px 28px 20px}
+  .back{font-family:var(--mono);font-size:13px;color:var(--mut);margin-bottom:26px;display:inline-block}
+  article h1{font-family:var(--disp);font-weight:600;font-size:clamp(30px,4.4vw,44px);line-height:1.12;letter-spacing:-.025em;margin:16px 0 18px}
+  .artmeta{font-family:var(--mono);font-size:13px;color:var(--mut);padding-bottom:26px;margin-bottom:36px;border-bottom:1px solid var(--line)}
+  article h2{font-family:var(--disp);font-weight:600;font-size:26px;letter-spacing:-.02em;margin:44px 0 14px}
+  article p{color:var(--body);margin-bottom:20px}
+  article ul{color:var(--body);margin:0 0 20px 22px}
+  article li{margin-bottom:8px}
+  article strong{color:var(--ink);font-weight:600}
+  .pull{border-left:3px solid;border-image:var(--grad) 1;padding:6px 0 6px 22px;margin:32px 0;font-family:var(--disp);font-weight:500;font-size:22px;line-height:1.35;color:var(--ink)}
+  .endcta{max-width:720px;margin:20px auto 90px;padding:34px 32px;background:linear-gradient(180deg,#faf8ff,#f5f2ff);border:1px solid var(--line);border-radius:16px;text-align:center}
+  .endcta h3{font-family:var(--disp);font-weight:600;font-size:24px;margin-bottom:10px}
+  .endcta p{color:var(--body);font-size:16px;margin-bottom:20px}
   footer{border-top:1px solid var(--line);padding:32px 0;background:#fff}
   .foot{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--mut);font-family:var(--mono);flex-wrap:wrap;gap:14px}
     .burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:none;border:0;cursor:pointer;padding:9px;border-radius:9px}
@@ -75,7 +71,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .nav-links a:not(.btn){display:block;padding:14px 0;font-size:16px;color:var(--ink);border-bottom:1px solid var(--line)}
     .nav-links .langsw{padding:14px 0;font-size:13px;border-bottom:1px solid var(--line)}
     .nav-links .btn{margin-top:14px;width:100%;text-align:center;padding:13px}
-.posts{grid-template-columns:1fr}}
+}
 </style>
 </head>
 <body>
@@ -91,51 +87,75 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="/#work">Work</a>
       <a href="/#services">Services</a>
       <a href="/#team">Team</a>
-      <a href="/blog.html" class="active">Blog</a>
+      <a href="/blog.html">Blog</a>
       <a href="/#contact" class="btn btn-primary">Book a call</a>
     </nav>
     <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
 
-<section class="bloghero">
-  <span class="eyebrow">Blog</span>
-  <h1>Notes on data, revenue, and <span class="grad-text">automation</span>.</h1>
-  <p>Practical writing on attribution, true ROAS, data engineering, and the automation that runs real businesses.</p>
-</section>
+<article>
+  <a class="back" href="/blog.html">← All posts</a>
+  <span class="eyebrow">Data engineering</span>
+  <h1>How to reconcile Meta and Google ROAS against your CRM</h1>
+  <div class="artmeta">29 Jul 2026 · 5 min read · Twinslytics<span class="artviews"></span></div>
 
-<div class="posts">
-  <!-- POSTS -->
-  <a class="post" href="/blog-how-to-reconcile-meta-and-google-roas-against-your-crm.html">
-    <div class="tag">Data engineering</div>
-    <h3>How to reconcile Meta and Google ROAS against your CRM</h3>
-    <p>Meta says your campaign drove $40,000 in revenue. Google says its campaigns drove $35,000. Add those up and you've got $75,000 in attributed revenue. Excep</p>
-    <div class="meta">29 Jul 2026 · 5 min read<span class="views" data-p="/blog-how-to-reconcile-meta-and-google-roas-against-your-crm.html"></span></div>
-  </a>
-  <a class="post" href="/blog-what-ai-ready-data-actually-means-a-practical-checklist.html">
-    <div class="tag">AI & automation</div>
-    <h3>What AI-ready data actually means: a practical checklist</h3>
-    <p>Every vendor pitch deck has a slide claiming their platform makes your data "AI-ready." Nobody defines what that means, and most teams find out the hard wa</p>
-    <div class="meta">27 Jul 2026 · 4 min read<span class="views" data-p="/blog-what-ai-ready-data-actually-means-a-practical-checklist.html"></span></div>
-  </a>
-  <a class="post" href="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>The 60-day cohort maturity rule for ad spend decisions</h3>
-    <p>Most ecommerce brands kill winning campaigns and scale losing ones because they check the scoreboard before the game is over.</p>
-    <div class="meta">25 Jul 2026 · 4 min read<span class="views" data-p="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html"></span></div>
-  </a>
-  <a class="post" href="/blog-why-offline-conversions-beat-pixel-based-roas.html">
-    <div class="tag">Attribution</div>
-    <h3>Why offline conversions beat pixel-based ROAS</h3>
-    <p>Your dashboard says Meta is delivering a 4.2x ROAS. Your bank account says something else. If you've ever felt that gap, you're not imagining it.</p>
-    <div class="meta">24 Jul 2026 · 5 min read<span class="views" data-p="/blog-why-offline-conversions-beat-pixel-based-roas.html"></span></div>
-  </a>
-  <a class="post" href="/blog-ga4-roas-lying.html">
-    <div class="tag">Attribution</div>
-    <h3>Why your GA4 ROAS is lying to you — and how to find the real number</h3>
-    <p>GA4 and your ad platforms measure clicks, not closed revenue. Here's why the gap exists, and how to reconcile it against what actually hit your bank account.</p>
-    <div class="meta">1 Feb 2026 · 3 min read<span class="views" data-p="/blog-ga4-roas-lying.html"></span></div>
-  </a>
+  <p>Meta says your campaign drove $40,000 in revenue. Google says its campaigns drove $35,000. Add those up and you've got $75,000 in attributed revenue. Except your CRM shows total revenue for the period was $60,000. Somebody's lying, and it's not your CRM.</p>
+
+<p>This is the most common data problem in ecommerce marketing, and almost nobody fixes it properly. They just pick whichever number makes the ad account look good and move on. That's how you end up scaling a channel that's actually losing money, or killing one that's quietly profitable. Reconciling platform-reported ROAS against your CRM isn't optional bookkeeping — it's the difference between spending based on reality and spending based on a story Meta's algorithm tells itself.</p>
+
+<h2>Why the numbers never match</h2>
+
+<p>Start with the mechanics. Meta and Google both use last-touch or data-driven attribution models that credit their own platform generously. Meta's pixel counts a conversion if someone saw an ad and purchased within a 7-day click or 1-day view window — even if that person also clicked a Google ad, read three emails, and typed your brand name into search before buying. Google Ads does the same thing in reverse. Both platforms are grading their own homework.</p>
+
+<p>Then there's the double-counting problem. If a customer clicks a Meta ad, doesn't buy, then later clicks a Google ad and converts, both platforms may claim that sale. Multiply this across thousands of customers and you get exactly what you saw above: attributed revenue that exceeds actual revenue. This isn't fraud. It's just how overlapping attribution windows work when nobody's reconciling the totals.</p>
+
+<p>Your CRM, on the other hand, only knows what actually happened — orders, refunds, subscription renewals, customer lifetime value. It doesn't care which platform thinks it deserves credit. That's why CRM data is your ground truth, and platform ROAS is a claim that needs to be checked against it.</p>
+
+<h2>Set up a clean source of truth first</h2>
+
+<p>You can't reconcile against messy CRM data any more than you can audit a spreadsheet with broken formulas. Before you touch attribution, make sure your CRM or order database has:</p>
+
+<ul>
+<li>A single customer ID that persists across guest checkout, account creation, and any POS or subscription system</li>
+<li>Order-level revenue net of refunds, not gross revenue that overstates what actually landed</li>
+<li>Timestamps in one consistent timezone — this sounds trivial until you're reconciling a Tuesday night order that Meta logged as Wednesday</li>
+<li>A clear separation between new customer revenue and returning customer revenue</li>
+</ul>
+
+<p>Most reconciliation failures trace back to this step. Teams try to match ad platform data against a CRM export that has duplicate orders, mismatched currencies, or test transactions still in the mix. Fix the foundation before you build the comparison on top of it.</p>
+
+<h2>Build the reconciliation, step by step</h2>
+
+<p>Once your CRM data is clean, the reconciliation itself is a matching exercise, not a mystery. Here's the sequence that actually works:</p>
+
+<ul>
+<li><strong>Pull raw platform data at the campaign level</strong>, not account level. You need granularity to see where the inflation is concentrated — usually it's prospecting campaigns, not retargeting.</li>
+<li><strong>Match by order ID or transaction ID</strong> wherever you can, using server-side conversion APIs (Meta CAPI, Google Enhanced Conversions) instead of pixel-only tracking. Server-side events tied to real order IDs are far harder to double-count than browser pixel fires.</li>
+<li><strong>Calculate a blended ROAS</strong> — total ad spend across all platforms divided by total CRM revenue for the same period. This is your reality check number. If Meta and Google combined claim more revenue than your blended ROAS implies, you have overlap to account for.</li>
+<li><strong>Apply a discount factor per channel</strong> based on how much each platform's claimed revenue exceeds its actual contribution. This isn't guesswork — you calculate it by comparing new-customer orders in your CRM (tagged with UTM or click ID) against what each platform claims for the same window.</li>
+<li><strong>Re-run this monthly, not quarterly.</strong> Platforms change their attribution models and windows without much warning, and a reconciliation that was accurate in January can drift by March.</li>
+</ul>
+
+<p>The goal isn't perfect precision — that's impossible with cross-device behavior and privacy restrictions limiting what you can track. The goal is a directionally honest number you can use to make budget decisions without lying to yourself.</p>
+
+<h2>Use a data warehouse to automate it</h2>
+
+<p>Doing this reconciliation by hand in spreadsheets works for one month. It falls apart the moment you're running five ad accounts, two CRMs from an acquisition, and a subscription platform with its own revenue events. This is where a proper data pipeline earns its keep.</p>
+
+<p>Pull raw data from Meta Ads, Google Ads, and your CRM into a warehouse — BigQuery, Snowflake, whatever fits your stack — using their APIs rather than manual CSV exports. Land the raw data first, then build a transformation layer that standardizes timestamps, deduplicates by order ID, and calculates blended ROAS automatically. Tools like dbt make this transformation auditable, so when someone asks "why does this month's number look different," you can trace exactly which join or filter changed it.</p>
+
+<p>Once this pipeline exists, reconciliation stops being a monthly fire drill and becomes a dashboard you check on Monday morning. That's the real payoff — not just more accurate numbers, but the ability to catch attribution drift before it costs you a quarter of wasted spend on a channel that stopped working two months before anyone noticed.</p>
+
+<h2>The takeaway</h2>
+
+<p>Platform-reported ROAS is a sales pitch from software that's incentivized to look good. Your CRM is the only system with no reason to lie. Reconciling the two isn't about picking sides — it's about building a repeatable process that turns two conflicting stories into one number you can actually plan around. Do it once by hand to understand the gaps, then automate it, because the gap between "attributed revenue" and "actual revenue" doesn't close itself.</p>
+</article>
+
+<div class="endcta">
+  <h3>Want to see your real ROAS?</h3>
+  <p>We reconcile ad spend, platform conversions, and closed revenue into one true number you can actually optimize on.</p>
+  <a href="/#contact" class="btn btn-primary">Book a call</a>
 </div>
 
 <footer>
@@ -144,19 +164,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span>Data infrastructure that drives revenue.</span>
   </div>
 </footer>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BlogPosting",
+  "headline":"Why your GA4 ROAS is lying to you — and how to find the real number",
+  "description":"GA4 and ad platforms report ROAS from clicks and pixels, not closed revenue. How to reconcile reported ROAS against real money and optimize on a true number.",
+  "author":{"@type":"Organization","name":"Twinslytics"},
+  "publisher":{"@type":"Organization","name":"Twinslytics","url":"https://twinslytics.com"},
+  "mainEntityOfPage":"https://twinslytics.com/blog-ga4-roas-lying.html",
+  "datePublished":"2026-02-01"
+}
+</script>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
 <script>
 (function(){var b=document.querySelector(".burger"),m=document.querySelector(".nav-links");if(!b||!m)return;function close(){m.classList.remove("open");b.classList.remove("is-open");b.setAttribute("aria-expanded","false");}b.addEventListener("click",function(e){e.stopPropagation();var o=m.classList.toggle("open");b.classList.toggle("is-open",o);b.setAttribute("aria-expanded",o);});m.querySelectorAll("a").forEach(function(a){a.addEventListener("click",close);});document.addEventListener("click",function(e){if(m.classList.contains("open")&&!m.contains(e.target)&&!b.contains(e.target))close();});})();
 </script>
-<script>
-fetch("/api/views").then(function(r){return r.json()}).then(function(v){
-  function get(p){p=p.replace(/\/$/,"");return v[p]||v[p+".html"]||v[p.replace(/\.html$/,"")]||0;}
-  document.querySelectorAll("a.post[href]").forEach(function(a){
-    var el=a.querySelector(".views");if(!el)return;
-    var n=get(a.getAttribute("href"));
-    if(n>0)el.textContent=" \u00b7 "+n+(n===1?" view":" views");
-  });
-}).catch(function(){});
-</script>
+<script>try{fetch("/api/views?p="+encodeURIComponent(location.pathname.replace(/\.html$/,"")),{method:"POST",keepalive:true})}catch(e){}</script>
 </body>
 </html>
