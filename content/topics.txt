@@ -1,4 +1,3 @@
-server-side conversions with Meta CAPI: what breaks and how to fix it
 true ROAS vs GA4 ecommerce ROAS for offline-close businesses
 predictive CAC: bidding on lead value instead of clicks
 why your dbt pipeline keeps breaking on API schema drift
