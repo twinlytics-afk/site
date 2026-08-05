@@ -1,4 +1,3 @@
-why your dbt pipeline keeps breaking on API schema drift
 attribution when payment domains steal the credit
 when to move from spreadsheets to a data warehouse
 monitoring and alerting for data pipelines in production
