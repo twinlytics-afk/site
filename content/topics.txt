@@ -1,2 +1,1 @@
-monitoring and alerting for data pipelines in production
 how DTC brands should measure blended ROAS

@@ -11,55 +11,51 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blog — Twinslytics | Notes on data, revenue, and automation</title>
-<meta name="description" content="Practical writing on marketing attribution, true ROAS, data engineering, and operations automation for ecommerce and DTC teams." />
+<title>Monitoring and alerting for data pipelines in production — Twinslytics</title>
+<meta name="description" content="Your ROAS dashboard says one thing on Monday and something completely different on Tuesday. Not because ad performance changed, but because a pipeline sile" />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="canonical" href="https://twinslytics.com/blog.html" />
+<link rel="canonical" href="https://twinslytics.com/blog-monitoring-and-alerting-for-data-pipelines-in-production.html" />
 <meta name="robots" content="index, follow" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://twinslytics.com/blog.html" />
-<meta property="og:title" content="Twinslytics Blog — data, revenue, and automation" />
-<meta property="og:description" content="Practical writing on attribution, true ROAS, data engineering, and automation for ecommerce and DTC teams." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://twinslytics.com/blog-monitoring-and-alerting-for-data-pipelines-in-production.html" />
+<meta property="og:title" content="Monitoring and alerting for data pipelines in production" />
+<meta property="og:description" content="GA4 measures clicks, not closed revenue. Here's how to reconcile reported ROAS against what actually hit your bank account." />
 <meta property="og:image" content="https://twinslytics.com/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#fff;--bg-alt:#faf9ff;--bg-tint:#f5f2ff;--ink:#14122b;--body:#5a5675;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+  :root{--bg:#fff;--ink:#14122b;--body:#403c5c;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--ok:#12b981;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
-  a{color:inherit;text-decoration:none}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased}
+  a{color:var(--v);text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
-  h1,h2,h3{font-family:var(--disp);font-weight:600;line-height:1.1;letter-spacing:-.025em;color:var(--ink)}
-  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--v);background:#f2ecff;display:inline-block;padding:6px 12px;border-radius:20px}
   .btn{font-family:var(--disp);font-weight:600;font-size:14.5px;padding:12px 22px;border-radius:8px;display:inline-block;border:1px solid transparent}
   .btn-primary{background:var(--grad);color:#fff}
-  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
   .logo{font-family:var(--disp);font-weight:700;font-size:20px;letter-spacing:-.02em;display:inline-flex;align-items:center;gap:10px}
   .logo .brandmark{height:26px;width:auto;display:block}
   .logo .m{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .nav-links{display:flex;align-items:center;gap:30px;font-size:14.5px}
-  .nav-links a:not(.btn){color:var(--body)}
-  .nav-links a.active{color:var(--ink)}
+  .nav-links a:not(.btn){color:#5a5675}
   .nav .btn{padding:10px 18px}
-  .bloghero{text-align:center;padding:76px 0 48px;position:relative;overflow:hidden}
-  .bloghero::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:900px;height:600px;border-radius:50%;background:radial-gradient(circle at 45% 45%,rgba(108,76,240,.14),transparent 55%),radial-gradient(circle at 62% 55%,rgba(255,122,89,.1),transparent 55%);z-index:0}
-  .bloghero>*{position:relative;z-index:1}
-  .bloghero h1{font-size:clamp(34px,5vw,52px);margin:20px auto 14px;max-width:18ch}
-  .bloghero p{color:var(--body);font-size:19px;max-width:52ch;margin:0 auto}
-  .posts{max-width:var(--maxw);margin:0 auto;padding:20px 28px 96px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  .post{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px;transition:transform .18s,box-shadow .18s}
-  .post:hover{transform:translateY(-3px);box-shadow:0 20px 44px -28px rgba(108,76,240,.5)}
-  .post .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--v);margin-bottom:14px}
-  .post h3{font-size:20px;line-height:1.22;margin-bottom:10px}
-  .post p{color:var(--body);font-size:15px;flex:1}
-  .post .meta{font-family:var(--mono);font-size:11.5px;color:var(--mut);margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
-  .post.soon{opacity:.6}
-  .post.soon .tag{color:var(--mut)}
+  article{max-width:720px;margin:0 auto;padding:56px 28px 20px}
+  .back{font-family:var(--mono);font-size:13px;color:var(--mut);margin-bottom:26px;display:inline-block}
+  article h1{font-family:var(--disp);font-weight:600;font-size:clamp(30px,4.4vw,44px);line-height:1.12;letter-spacing:-.025em;margin:16px 0 18px}
+  .artmeta{font-family:var(--mono);font-size:13px;color:var(--mut);padding-bottom:26px;margin-bottom:36px;border-bottom:1px solid var(--line)}
+  article h2{font-family:var(--disp);font-weight:600;font-size:26px;letter-spacing:-.02em;margin:44px 0 14px}
+  article p{color:var(--body);margin-bottom:20px}
+  article ul{color:var(--body);margin:0 0 20px 22px}
+  article li{margin-bottom:8px}
+  article strong{color:var(--ink);font-weight:600}
+  .pull{border-left:3px solid;border-image:var(--grad) 1;padding:6px 0 6px 22px;margin:32px 0;font-family:var(--disp);font-weight:500;font-size:22px;line-height:1.35;color:var(--ink)}
+  .endcta{max-width:720px;margin:20px auto 90px;padding:34px 32px;background:linear-gradient(180deg,#faf8ff,#f5f2ff);border:1px solid var(--line);border-radius:16px;text-align:center}
+  .endcta h3{font-family:var(--disp);font-weight:600;font-size:24px;margin-bottom:10px}
+  .endcta p{color:var(--body);font-size:16px;margin-bottom:20px}
   footer{border-top:1px solid var(--line);padding:32px 0;background:#fff}
   .foot{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--mut);font-family:var(--mono);flex-wrap:wrap;gap:14px}
     .burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:none;border:0;cursor:pointer;padding:9px;border-radius:9px}
@@ -75,7 +71,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .nav-links a:not(.btn){display:block;padding:14px 0;font-size:16px;color:var(--ink);border-bottom:1px solid var(--line)}
     .nav-links .langsw{padding:14px 0;font-size:13px;border-bottom:1px solid var(--line)}
     .nav-links .btn{margin-top:14px;width:100%;text-align:center;padding:13px}
-.posts{grid-template-columns:1fr}}
+}
 </style>
 </head>
 <body>
@@ -91,93 +87,86 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="/#work">Work</a>
       <a href="/#services">Services</a>
       <a href="/#team">Team</a>
-      <a href="/blog.html" class="active">Blog</a>
+      <a href="/blog.html">Blog</a>
       <a href="/#contact" class="btn btn-primary">Book a call</a>
     </nav>
     <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
 
-<section class="bloghero">
-  <span class="eyebrow">Blog</span>
-  <h1>Notes on data, revenue, and <span class="grad-text">automation</span>.</h1>
-  <p>Practical writing on attribution, true ROAS, data engineering, and the automation that runs real businesses.</p>
-</section>
+<article>
+  <a class="back" href="/blog.html">← All posts</a>
+  <span class="eyebrow">Data engineering</span>
+  <h1>Monitoring and alerting for data pipelines in production</h1>
+  <div class="artmeta">11 Aug 2026 · 5 min read · Twinslytics<span class="artviews"></span></div>
 
-<div class="posts">
-  <!-- POSTS -->
-  <a class="post" href="/blog-monitoring-and-alerting-for-data-pipelines-in-production.html">
-    <div class="tag">Data engineering</div>
-    <h3>Monitoring and alerting for data pipelines in production</h3>
-    <p>Your ROAS dashboard says one thing on Monday and something completely different on Tuesday. Not because ad performance changed, but because a pipeline sile</p>
-    <div class="meta">11 Aug 2026 · 5 min read<span class="views" data-p="/blog-monitoring-and-alerting-for-data-pipelines-in-production.html"></span></div>
-  </a>
-  <a class="post" href="/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html">
-    <div class="tag">Data engineering</div>
-    <h3>When to move from spreadsheets to a data warehouse</h3>
-    <p>Your marketing lead pulls Shopify data into Google Sheets every Monday. Someone else exports Klaviyo numbers into a different tab. Meta ad spend gets copy-</p>
-    <div class="meta">9 Aug 2026 · 5 min read<span class="views" data-p="/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html"></span></div>
-  </a>
-  <a class="post" href="/blog-attribution-when-payment-domains-steal-the-credit.html">
-    <div class="tag">Attribution</div>
-    <h3>Attribution when payment domains steal the credit</h3>
-    <p>Open your GA4 acquisition report and look for "paypal.com" or "checkout.shopify.com" sitting in your top referrers with a suspiciously high conversion rate</p>
-    <div class="meta">7 Aug 2026 · 4 min read<span class="views" data-p="/blog-attribution-when-payment-domains-steal-the-credit.html"></span></div>
-  </a>
-  <a class="post" href="/blog-why-your-dbt-pipeline-keeps-breaking-on-api-schema-drift.html">
-    <div class="tag">Data engineering</div>
-    <h3>Why your dbt pipeline keeps breaking on API schema drift</h3>
-    <p>Your dbt run was green yesterday. Today it's red because a marketing platform decided to rename a field, add a nested object, or quietly switch an integer </p>
-    <div class="meta">5 Aug 2026 · 5 min read<span class="views" data-p="/blog-why-your-dbt-pipeline-keeps-breaking-on-api-schema-drift.html"></span></div>
-  </a>
-  <a class="post" href="/blog-predictive-cac-bidding-on-lead-value-instead-of-clicks.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>Predictive CAC: bidding on lead value instead of clicks</h3>
-    <p>Most ad accounts are still optimizing for the wrong thing. You tell Google or Meta to chase clicks, or conversions, or even "leads" — but a lead form fill </p>
-    <div class="meta">3 Aug 2026 · 5 min read<span class="views" data-p="/blog-predictive-cac-bidding-on-lead-value-instead-of-clicks.html"></span></div>
-  </a>
-  <a class="post" href="/blog-true-roas-vs-ga4-ecommerce-roas-for-offline-close-businesses.html">
-    <div class="tag">Attribution</div>
-    <h3>True ROAS vs GA4 ecommerce ROAS for offline-close businesses</h3>
-    <p>GA4 tells you a campaign converted at 3.2 ROAS. Your finance team says the same campaign lost money. Both are right, and that gap is exactly why offline-cl</p>
-    <div class="meta">1 Aug 2026 · 5 min read<span class="views" data-p="/blog-true-roas-vs-ga4-ecommerce-roas-for-offline-close-businesses.html"></span></div>
-  </a>
-  <a class="post" href="/blog-server-side-conversions-with-meta-capi-what-breaks-and-how-t.html">
-    <div class="tag">Attribution</div>
-    <h3>Server-side conversions with Meta CAPI: what breaks and how to fix it</h3>
-    <p>Meta cut off third-party cookie tracking, so everyone rushed to implement Conversions API. Then ROAS numbers got weirder, not better. If you've deployed CA</p>
-    <div class="meta">31 Jul 2026 · 5 min read<span class="views" data-p="/blog-server-side-conversions-with-meta-capi-what-breaks-and-how-t.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-to-reconcile-meta-and-google-roas-against-your-crm.html">
-    <div class="tag">Data engineering</div>
-    <h3>How to reconcile Meta and Google ROAS against your CRM</h3>
-    <p>Meta says your campaign drove $40,000 in revenue. Google says its campaigns drove $35,000. Add those up and you've got $75,000 in attributed revenue. Excep</p>
-    <div class="meta">29 Jul 2026 · 5 min read<span class="views" data-p="/blog-how-to-reconcile-meta-and-google-roas-against-your-crm.html"></span></div>
-  </a>
-  <a class="post" href="/blog-what-ai-ready-data-actually-means-a-practical-checklist.html">
-    <div class="tag">AI & automation</div>
-    <h3>What AI-ready data actually means: a practical checklist</h3>
-    <p>Every vendor pitch deck has a slide claiming their platform makes your data "AI-ready." Nobody defines what that means, and most teams find out the hard wa</p>
-    <div class="meta">27 Jul 2026 · 4 min read<span class="views" data-p="/blog-what-ai-ready-data-actually-means-a-practical-checklist.html"></span></div>
-  </a>
-  <a class="post" href="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>The 60-day cohort maturity rule for ad spend decisions</h3>
-    <p>Most ecommerce brands kill winning campaigns and scale losing ones because they check the scoreboard before the game is over.</p>
-    <div class="meta">25 Jul 2026 · 4 min read<span class="views" data-p="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html"></span></div>
-  </a>
-  <a class="post" href="/blog-why-offline-conversions-beat-pixel-based-roas.html">
-    <div class="tag">Attribution</div>
-    <h3>Why offline conversions beat pixel-based ROAS</h3>
-    <p>Your dashboard says Meta is delivering a 4.2x ROAS. Your bank account says something else. If you've ever felt that gap, you're not imagining it.</p>
-    <div class="meta">24 Jul 2026 · 5 min read<span class="views" data-p="/blog-why-offline-conversions-beat-pixel-based-roas.html"></span></div>
-  </a>
-  <a class="post" href="/blog-ga4-roas-lying.html">
-    <div class="tag">Attribution</div>
-    <h3>Why your GA4 ROAS is lying to you — and how to find the real number</h3>
-    <p>GA4 and your ad platforms measure clicks, not closed revenue. Here's why the gap exists, and how to reconcile it against what actually hit your bank account.</p>
-    <div class="meta">1 Feb 2026 · 3 min read<span class="views" data-p="/blog-ga4-roas-lying.html"></span></div>
-  </a>
+  <p>Your ROAS dashboard says one thing on Monday and something completely different on Tuesday. Not because ad performance changed, but because a pipeline silently dropped 40% of your Meta conversion events overnight. Nobody noticed until finance asked why blended CAC looked impossible. This is the normal state of data pipelines without real monitoring, and it's costing DTC brands decisions made on garbage numbers.</p>
+
+<p>Most teams treat pipeline monitoring as an afterthought, something to bolt on after the "real" work of building the pipeline is done. That's backwards. In production, the pipeline isn't done until it can tell you when it's broken.</p>
+
+<h2>Why silent failures are the default</h2>
+
+<p>Data pipelines fail quietly by design. A source API changes a field name, and instead of erroring out, it just returns null. A rate limit kicks in, and instead of failing the job, it returns partial data. Shopify webhooks drop during high traffic and nothing retries them. None of these trigger a red alert. They just produce numbers that look plausible enough to pass a quick glance.</p>
+
+<p>This matters more in ecommerce than most industries because the stakes are attribution and spend decisions. If your warehouse undercounts orders by 8% for three days, your true ROAS calculation looks better than reality. Someone increases ad spend based on that number. The pipeline didn't crash. It just lied, and nobody was watching for lies.</p>
+
+<h2>Monitor data, not just jobs</h2>
+
+<p>Most teams start with infrastructure monitoring: did the job run, did it finish, did it throw an exception. That's necessary but insufficient. A job can succeed and still produce wrong data.</p>
+
+<p>You need three layers watching your pipelines:</p>
+
+<ul>
+<li><strong>Job-level monitoring</strong> — did the pipeline run, how long did it take, did it error out. This catches crashes and timeouts.</li>
+<li><strong>Data-level monitoring</strong> — row counts, null rates, distinct value counts, freshness of the most recent timestamp. This catches silent data loss.</li>
+<li><strong>Business-level monitoring</strong> — does total revenue in the warehouse match Shopify's own reported revenue for the day, does order count match, does spend match what the ad platform reports. This catches everything the first two layers miss.</li>
+</ul>
+
+<p>The third layer is the one almost everyone skips, and it's the one that actually protects your attribution model. A row count can look normal while the revenue field itself is wrong because of a currency conversion bug or a duplicate join. Reconciling against the source of truth — Shopify, Klaviyo, the ad platforms themselves — is the only way to catch that.</p>
+
+<h2>Set thresholds that mean something</h2>
+
+<p>Alert fatigue kills monitoring programs faster than any technical failure. If your Slack channel gets a warning every time row counts shift by 2%, people mute it within a week, and then the pipeline that actually breaks gets ignored along with the noise.</p>
+
+<p>Thresholds need to reflect actual business volatility, not arbitrary round numbers. If your daily order volume naturally swings 15% between a Tuesday and a Friday, don't alert on 10% swings. Instead:</p>
+
+<ul>
+<li>Build thresholds off trailing averages and standard deviation, not fixed percentages. A day that's three standard deviations off the 28-day rolling average is worth a page. A day that's 5% below yesterday probably isn't.</li>
+<li>Separate warning-level alerts (Slack message, check when convenient) from critical alerts (page someone, this blocks a report or a decision). Mixing them trains people to ignore both.</li>
+<li>Alert on freshness separately from volume. A table that hasn't updated in six hours is a different problem than a table that updated with 20% fewer rows than expected, and they need different urgency.</li>
+</ul>
+
+<p>The goal isn't zero alerts. It's alerts that people trust enough to act on immediately, because they know a false-positive rate close to zero.</p>
+
+<h2>Build alerts that point to the fix</h2>
+
+<p>An alert that says "pipeline failed" at 3am is nearly useless if it takes 45 minutes of log spelunking to find out why. Every alert should carry enough context to start diagnosing without opening five other tools first.</p>
+
+<p>Good alerts include the specific table or job name, the specific check that failed, the actual value versus the expected range, and a link straight to the relevant logs or run history. If a Meta Ads sync fails because of an auth token expiration, the alert should say exactly that, not just "task failed with exit code 1."</p>
+
+<p>This is also where lineage matters. If your orders table breaks, does anyone know that your CAC dashboard, your cohort retention model, and your email flow triggers all depend on it downstream? Without documented lineage, a single broken source table becomes a multi-day forensic exercise instead of a known, contained blast radius. Tools that track dependencies automatically save real hours here, but even a maintained spreadsheet of "this table feeds these five things" beats nothing.</p>
+
+<h2>Treat pipelines like production software</h2>
+
+<p>The teams that get monitoring right stop treating data pipelines as scripts and start treating them as production software with the same rigor as the checkout flow. That means:</p>
+
+<ul>
+<li>Every pipeline has an owner, not just a creator. Someone is on the hook when it breaks, even if they didn't write the original code.</li>
+<li>Every critical table has documented expectations: expected row count range, expected freshness, expected null rate, written down somewhere before the pipeline goes live, not reverse-engineered after an incident.</li>
+<li>Incidents get a short postmortem. Not a blame exercise, just: what broke, what alert caught it (or didn't), what check gets added so it's caught faster next time.</li>
+</ul>
+
+<p>Over time this builds a monitoring layer that actually reflects your specific failure history instead of generic best practices copied from a blog post. Your pipelines break in your specific ways — a particular API's quirks, a particular ETL tool's edge cases, a particular high-traffic sale day that stresses ingestion. The checks that matter are the ones tuned to those actual failure modes.</p>
+
+<h2>The real payoff</h2>
+
+<p>Monitoring doesn't make your pipelines more impressive. It makes them boring, which is the entire point. Boring pipelines mean your marketing team trusts the ROAS number without a footnote, your finance team doesn't need to reconcile revenue by hand every month-end, and nobody discovers a broken attribution join three weeks after it started skewing budget decisions. Build the alerts before you need them, tune them until people actually trust them, and the payoff shows up as decisions made on real numbers instead of confident guesses.</p>
+</article>
+
+<div class="endcta">
+  <h3>Want to see your real ROAS?</h3>
+  <p>We reconcile ad spend, platform conversions, and closed revenue into one true number you can actually optimize on.</p>
+  <a href="/#contact" class="btn btn-primary">Book a call</a>
 </div>
 
 <footer>
@@ -186,19 +175,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span>Data infrastructure that drives revenue.</span>
   </div>
 </footer>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BlogPosting",
+  "headline":"Why your GA4 ROAS is lying to you — and how to find the real number",
+  "description":"GA4 and ad platforms report ROAS from clicks and pixels, not closed revenue. How to reconcile reported ROAS against real money and optimize on a true number.",
+  "author":{"@type":"Organization","name":"Twinslytics"},
+  "publisher":{"@type":"Organization","name":"Twinslytics","url":"https://twinslytics.com"},
+  "mainEntityOfPage":"https://twinslytics.com/blog-ga4-roas-lying.html",
+  "datePublished":"2026-02-01"
+}
+</script>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
 <script>
 (function(){var b=document.querySelector(".burger"),m=document.querySelector(".nav-links");if(!b||!m)return;function close(){m.classList.remove("open");b.classList.remove("is-open");b.setAttribute("aria-expanded","false");}b.addEventListener("click",function(e){e.stopPropagation();var o=m.classList.toggle("open");b.classList.toggle("is-open",o);b.setAttribute("aria-expanded",o);});m.querySelectorAll("a").forEach(function(a){a.addEventListener("click",close);});document.addEventListener("click",function(e){if(m.classList.contains("open")&&!m.contains(e.target)&&!b.contains(e.target))close();});})();
 </script>
-<script>
-fetch("/api/views").then(function(r){return r.json()}).then(function(v){
-  function get(p){p=p.replace(/\/$/,"");return v[p]||v[p+".html"]||v[p.replace(/\.html$/,"")]||0;}
-  document.querySelectorAll("a.post[href]").forEach(function(a){
-    var el=a.querySelector(".views");if(!el)return;
-    var n=get(a.getAttribute("href"));
-    if(n>0)el.textContent=" \u00b7 "+n+(n===1?" view":" views");
-  });
-}).catch(function(){});
-</script>
+<script>try{fetch("/api/views?p="+encodeURIComponent(location.pathname.replace(/\.html$/,"")),{method:"POST",keepalive:true})}catch(e){}</script>
 </body>
 </html>

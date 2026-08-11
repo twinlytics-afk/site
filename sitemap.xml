@@ -13,4 +13,5 @@
   <url><loc>https://twinslytics.com/blog-why-your-dbt-pipeline-keeps-breaking-on-api-schema-drift.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
   <url><loc>https://twinslytics.com/blog-attribution-when-payment-domains-steal-the-credit.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
   <url><loc>https://twinslytics.com/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://twinslytics.com/blog-monitoring-and-alerting-for-data-pipelines-in-production.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
 </urlset>
