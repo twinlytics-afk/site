@@ -11,55 +11,51 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blog — Twinslytics | Notes on data, revenue, and automation</title>
-<meta name="description" content="Practical writing on marketing attribution, true ROAS, data engineering, and operations automation for ecommerce and DTC teams." />
+<title>How to build a marketing mix model without a data science team — Twinslytics</title>
+<meta name="description" content="Your CFO wants to know what happens to revenue if you cut paid social by 20%. Your last-click attribution can't answer that. Neither can your gut. What you" />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="canonical" href="https://twinslytics.com/blog.html" />
+<link rel="canonical" href="https://twinslytics.com/blog-how-to-build-a-marketing-mix-model-without-a-data-science-te.html" />
 <meta name="robots" content="index, follow" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://twinslytics.com/blog.html" />
-<meta property="og:title" content="Twinslytics Blog — data, revenue, and automation" />
-<meta property="og:description" content="Practical writing on attribution, true ROAS, data engineering, and automation for ecommerce and DTC teams." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://twinslytics.com/blog-how-to-build-a-marketing-mix-model-without-a-data-science-te.html" />
+<meta property="og:title" content="How to build a marketing mix model without a data science team" />
+<meta property="og:description" content="GA4 measures clicks, not closed revenue. Here's how to reconcile reported ROAS against what actually hit your bank account." />
 <meta property="og:image" content="https://twinslytics.com/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#fff;--bg-alt:#faf9ff;--bg-tint:#f5f2ff;--ink:#14122b;--body:#5a5675;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+  :root{--bg:#fff;--ink:#14122b;--body:#403c5c;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--ok:#12b981;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
-  a{color:inherit;text-decoration:none}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased}
+  a{color:var(--v);text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
-  h1,h2,h3{font-family:var(--disp);font-weight:600;line-height:1.1;letter-spacing:-.025em;color:var(--ink)}
-  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--v);background:#f2ecff;display:inline-block;padding:6px 12px;border-radius:20px}
   .btn{font-family:var(--disp);font-weight:600;font-size:14.5px;padding:12px 22px;border-radius:8px;display:inline-block;border:1px solid transparent}
   .btn-primary{background:var(--grad);color:#fff}
-  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
   .logo{font-family:var(--disp);font-weight:700;font-size:20px;letter-spacing:-.02em;display:inline-flex;align-items:center;gap:10px}
   .logo .brandmark{height:26px;width:auto;display:block}
   .logo .m{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .nav-links{display:flex;align-items:center;gap:30px;font-size:14.5px}
-  .nav-links a:not(.btn){color:var(--body)}
-  .nav-links a.active{color:var(--ink)}
+  .nav-links a:not(.btn){color:#5a5675}
   .nav .btn{padding:10px 18px}
-  .bloghero{text-align:center;padding:76px 0 48px;position:relative;overflow:hidden}
-  .bloghero::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:900px;height:600px;border-radius:50%;background:radial-gradient(circle at 45% 45%,rgba(108,76,240,.14),transparent 55%),radial-gradient(circle at 62% 55%,rgba(255,122,89,.1),transparent 55%);z-index:0}
-  .bloghero>*{position:relative;z-index:1}
-  .bloghero h1{font-size:clamp(34px,5vw,52px);margin:20px auto 14px;max-width:18ch}
-  .bloghero p{color:var(--body);font-size:19px;max-width:52ch;margin:0 auto}
-  .posts{max-width:var(--maxw);margin:0 auto;padding:20px 28px 96px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  .post{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px;transition:transform .18s,box-shadow .18s}
-  .post:hover{transform:translateY(-3px);box-shadow:0 20px 44px -28px rgba(108,76,240,.5)}
-  .post .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--v);margin-bottom:14px}
-  .post h3{font-size:20px;line-height:1.22;margin-bottom:10px}
-  .post p{color:var(--body);font-size:15px;flex:1}
-  .post .meta{font-family:var(--mono);font-size:11.5px;color:var(--mut);margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
-  .post.soon{opacity:.6}
-  .post.soon .tag{color:var(--mut)}
+  article{max-width:720px;margin:0 auto;padding:56px 28px 20px}
+  .back{font-family:var(--mono);font-size:13px;color:var(--mut);margin-bottom:26px;display:inline-block}
+  article h1{font-family:var(--disp);font-weight:600;font-size:clamp(30px,4.4vw,44px);line-height:1.12;letter-spacing:-.025em;margin:16px 0 18px}
+  .artmeta{font-family:var(--mono);font-size:13px;color:var(--mut);padding-bottom:26px;margin-bottom:36px;border-bottom:1px solid var(--line)}
+  article h2{font-family:var(--disp);font-weight:600;font-size:26px;letter-spacing:-.02em;margin:44px 0 14px}
+  article p{color:var(--body);margin-bottom:20px}
+  article ul{color:var(--body);margin:0 0 20px 22px}
+  article li{margin-bottom:8px}
+  article strong{color:var(--ink);font-weight:600}
+  .pull{border-left:3px solid;border-image:var(--grad) 1;padding:6px 0 6px 22px;margin:32px 0;font-family:var(--disp);font-weight:500;font-size:22px;line-height:1.35;color:var(--ink)}
+  .endcta{max-width:720px;margin:20px auto 90px;padding:34px 32px;background:linear-gradient(180deg,#faf8ff,#f5f2ff);border:1px solid var(--line);border-radius:16px;text-align:center}
+  .endcta h3{font-family:var(--disp);font-weight:600;font-size:24px;margin-bottom:10px}
+  .endcta p{color:var(--body);font-size:16px;margin-bottom:20px}
   footer{border-top:1px solid var(--line);padding:32px 0;background:#fff}
   .foot{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--mut);font-family:var(--mono);flex-wrap:wrap;gap:14px}
     .burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:none;border:0;cursor:pointer;padding:9px;border-radius:9px}
@@ -75,7 +71,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .nav-links a:not(.btn){display:block;padding:14px 0;font-size:16px;color:var(--ink);border-bottom:1px solid var(--line)}
     .nav-links .langsw{padding:14px 0;font-size:13px;border-bottom:1px solid var(--line)}
     .nav-links .btn{margin-top:14px;width:100%;text-align:center;padding:13px}
-.posts{grid-template-columns:1fr}}
+}
 </style>
 </head>
 <body>
@@ -91,117 +87,74 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="/#work">Work</a>
       <a href="/#services">Services</a>
       <a href="/#team">Team</a>
-      <a href="/blog.html" class="active">Blog</a>
+      <a href="/blog.html">Blog</a>
       <a href="/#contact" class="btn btn-primary">Book a call</a>
     </nav>
     <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
 
-<section class="bloghero">
-  <span class="eyebrow">Blog</span>
-  <h1>Notes on data, revenue, and <span class="grad-text">automation</span>.</h1>
-  <p>Practical writing on attribution, true ROAS, data engineering, and the automation that runs real businesses.</p>
-</section>
+<article>
+  <a class="back" href="/blog.html">← All posts</a>
+  <span class="eyebrow">Marketing analytics</span>
+  <h1>How to build a marketing mix model without a data science team</h1>
+  <div class="artmeta">19 Aug 2026 · 5 min read · Twinslytics<span class="artviews"></span></div>
 
-<div class="posts">
-  <!-- POSTS -->
-  <a class="post" href="/blog-how-to-build-a-marketing-mix-model-without-a-data-science-te.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>How to build a marketing mix model without a data science team</h3>
-    <p>Your CFO wants to know what happens to revenue if you cut paid social by 20%. Your last-click attribution can't answer that. Neither can your gut. What you</p>
-    <div class="meta">19 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-to-build-a-marketing-mix-model-without-a-data-science-te.html"></span></div>
-  </a>
-  <a class="post" href="/blog-why-your-subscription-revenue-makes-blended-roas-misleading.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>Why your subscription revenue makes blended roas misleading</h3>
-    <p>Your blended ROAS says 4.2x and everyone in the meeting nods. But if a third of that revenue comes from subscribers who resubscribed on autopilot, you're n</p>
-    <div class="meta">17 Aug 2026 · 5 min read<span class="views" data-p="/blog-why-your-subscription-revenue-makes-blended-roas-misleading.html"></span></div>
-  </a>
-  <a class="post" href="/blog-why-utm-parameters-break-at-checkout-redirects-and-how-to-fi.html">
-    <div class="tag">Attribution</div>
-    <h3>Why utm parameters break at checkout redirects and how to fix attribution</h3>
-    <p>You launch a campaign, spend real money, and three days later half your conversions show up as "direct" in GA4. Nobody typed your URL from memory. They cli</p>
-    <div class="meta">15 Aug 2026 · 5 min read<span class="views" data-p="/blog-why-utm-parameters-break-at-checkout-redirects-and-how-to-fi.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-dtc-brands-should-measure-blended-roas.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>How DTC brands should measure blended ROAS</h3>
-    <p>Most DTC brands calculate blended ROAS wrong, and the ones who calculate it right often use it wrong. It's not a marketing metric. It's not a Meta metric. </p>
-    <div class="meta">13 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-dtc-brands-should-measure-blended-roas.html"></span></div>
-  </a>
-  <a class="post" href="/blog-monitoring-and-alerting-for-data-pipelines-in-production.html">
-    <div class="tag">Data engineering</div>
-    <h3>Monitoring and alerting for data pipelines in production</h3>
-    <p>Your ROAS dashboard says one thing on Monday and something completely different on Tuesday. Not because ad performance changed, but because a pipeline sile</p>
-    <div class="meta">11 Aug 2026 · 5 min read<span class="views" data-p="/blog-monitoring-and-alerting-for-data-pipelines-in-production.html"></span></div>
-  </a>
-  <a class="post" href="/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html">
-    <div class="tag">Data engineering</div>
-    <h3>When to move from spreadsheets to a data warehouse</h3>
-    <p>Your marketing lead pulls Shopify data into Google Sheets every Monday. Someone else exports Klaviyo numbers into a different tab. Meta ad spend gets copy-</p>
-    <div class="meta">9 Aug 2026 · 5 min read<span class="views" data-p="/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html"></span></div>
-  </a>
-  <a class="post" href="/blog-attribution-when-payment-domains-steal-the-credit.html">
-    <div class="tag">Attribution</div>
-    <h3>Attribution when payment domains steal the credit</h3>
-    <p>Open your GA4 acquisition report and look for "paypal.com" or "checkout.shopify.com" sitting in your top referrers with a suspiciously high conversion rate</p>
-    <div class="meta">7 Aug 2026 · 4 min read<span class="views" data-p="/blog-attribution-when-payment-domains-steal-the-credit.html"></span></div>
-  </a>
-  <a class="post" href="/blog-why-your-dbt-pipeline-keeps-breaking-on-api-schema-drift.html">
-    <div class="tag">Data engineering</div>
-    <h3>Why your dbt pipeline keeps breaking on API schema drift</h3>
-    <p>Your dbt run was green yesterday. Today it's red because a marketing platform decided to rename a field, add a nested object, or quietly switch an integer </p>
-    <div class="meta">5 Aug 2026 · 5 min read<span class="views" data-p="/blog-why-your-dbt-pipeline-keeps-breaking-on-api-schema-drift.html"></span></div>
-  </a>
-  <a class="post" href="/blog-predictive-cac-bidding-on-lead-value-instead-of-clicks.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>Predictive CAC: bidding on lead value instead of clicks</h3>
-    <p>Most ad accounts are still optimizing for the wrong thing. You tell Google or Meta to chase clicks, or conversions, or even "leads" — but a lead form fill </p>
-    <div class="meta">3 Aug 2026 · 5 min read<span class="views" data-p="/blog-predictive-cac-bidding-on-lead-value-instead-of-clicks.html"></span></div>
-  </a>
-  <a class="post" href="/blog-true-roas-vs-ga4-ecommerce-roas-for-offline-close-businesses.html">
-    <div class="tag">Attribution</div>
-    <h3>True ROAS vs GA4 ecommerce ROAS for offline-close businesses</h3>
-    <p>GA4 tells you a campaign converted at 3.2 ROAS. Your finance team says the same campaign lost money. Both are right, and that gap is exactly why offline-cl</p>
-    <div class="meta">1 Aug 2026 · 5 min read<span class="views" data-p="/blog-true-roas-vs-ga4-ecommerce-roas-for-offline-close-businesses.html"></span></div>
-  </a>
-  <a class="post" href="/blog-server-side-conversions-with-meta-capi-what-breaks-and-how-t.html">
-    <div class="tag">Attribution</div>
-    <h3>Server-side conversions with Meta CAPI: what breaks and how to fix it</h3>
-    <p>Meta cut off third-party cookie tracking, so everyone rushed to implement Conversions API. Then ROAS numbers got weirder, not better. If you've deployed CA</p>
-    <div class="meta">31 Jul 2026 · 5 min read<span class="views" data-p="/blog-server-side-conversions-with-meta-capi-what-breaks-and-how-t.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-to-reconcile-meta-and-google-roas-against-your-crm.html">
-    <div class="tag">Data engineering</div>
-    <h3>How to reconcile Meta and Google ROAS against your CRM</h3>
-    <p>Meta says your campaign drove $40,000 in revenue. Google says its campaigns drove $35,000. Add those up and you've got $75,000 in attributed revenue. Excep</p>
-    <div class="meta">29 Jul 2026 · 5 min read<span class="views" data-p="/blog-how-to-reconcile-meta-and-google-roas-against-your-crm.html"></span></div>
-  </a>
-  <a class="post" href="/blog-what-ai-ready-data-actually-means-a-practical-checklist.html">
-    <div class="tag">AI & automation</div>
-    <h3>What AI-ready data actually means: a practical checklist</h3>
-    <p>Every vendor pitch deck has a slide claiming their platform makes your data "AI-ready." Nobody defines what that means, and most teams find out the hard wa</p>
-    <div class="meta">27 Jul 2026 · 4 min read<span class="views" data-p="/blog-what-ai-ready-data-actually-means-a-practical-checklist.html"></span></div>
-  </a>
-  <a class="post" href="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>The 60-day cohort maturity rule for ad spend decisions</h3>
-    <p>Most ecommerce brands kill winning campaigns and scale losing ones because they check the scoreboard before the game is over.</p>
-    <div class="meta">25 Jul 2026 · 4 min read<span class="views" data-p="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html"></span></div>
-  </a>
-  <a class="post" href="/blog-why-offline-conversions-beat-pixel-based-roas.html">
-    <div class="tag">Attribution</div>
-    <h3>Why offline conversions beat pixel-based ROAS</h3>
-    <p>Your dashboard says Meta is delivering a 4.2x ROAS. Your bank account says something else. If you've ever felt that gap, you're not imagining it.</p>
-    <div class="meta">24 Jul 2026 · 5 min read<span class="views" data-p="/blog-why-offline-conversions-beat-pixel-based-roas.html"></span></div>
-  </a>
-  <a class="post" href="/blog-ga4-roas-lying.html">
-    <div class="tag">Attribution</div>
-    <h3>Why your GA4 ROAS is lying to you — and how to find the real number</h3>
-    <p>GA4 and your ad platforms measure clicks, not closed revenue. Here's why the gap exists, and how to reconcile it against what actually hit your bank account.</p>
-    <div class="meta">1 Feb 2026 · 3 min read<span class="views" data-p="/blog-ga4-roas-lying.html"></span></div>
-  </a>
+  <p>Your CFO wants to know what happens to revenue if you cut paid social by 20%. Your last-click attribution can't answer that. Neither can your gut. What you need is a marketing mix model — and no, you don't need to hire a data scientist to build one.</p>
+
+<p>MMM has a reputation as an enterprise-only tool, something you buy from Nielsen for six figures or build with a team of PhDs. That reputation is outdated. Open-source libraries, cleaner data pipelines, and a decade of ecommerce-specific case studies have made MMM accessible to any team with a spreadsheet, a warehouse, and someone willing to learn the mechanics. Here's how to actually do it.</p>
+
+<h2>Start with what MMM actually needs</h2>
+<p>A marketing mix model regresses revenue (or conversions) against your marketing inputs — spend by channel, price changes, promotions, seasonality, and external factors like weather or macro trends. The output tells you the marginal contribution of each channel, adjusted for the fact that channels interact and diminish in effectiveness as you spend more.</p>
+
+<p>You don't need individual-level tracking data. That's the whole point — MMM works at the aggregate level, which means it sidesteps the cookie deprecation and iOS tracking problems that break attribution models. What you need instead is:</p>
+
+<ul>
+<li>Weekly (or daily) spend by channel, going back at least 2 years</li>
+<li>Revenue or orders at the same granularity</li>
+<li>Promotional calendar and pricing history</li>
+<li>Seasonality markers — holidays, product launches, stockouts</li>
+<li>Any major external shocks worth controlling for</li>
+</ul>
+
+<p>Most of this already lives in your ad platforms, your warehouse, and your ecommerce platform. The work isn't data science — it's data assembly.</p>
+
+<h2>Pick a tool built for non-specialists</h2>
+<p>You don't need to write a Bayesian hierarchical model from scratch. Meta's Robyn and Google's Meridian (formerly LightweightMMM) are both open source, both built specifically so marketing teams can run MMM without a research team behind them. They come with default priors, automated hyperparameter tuning, and documentation aimed at practitioners, not academics.</p>
+
+<p>Robyn runs in R but has enough automation that a technical marketer or analytics-minded ops person can get a working model in a few days. Meridian leans on Google's ad platform data structure, which makes it a natural fit if Google/YouTube is a major spend channel. Both handle the two hard parts of MMM math automatically: adstock (how ad effects decay and carry over time) and saturation (diminishing returns as spend increases).</p>
+
+<p>If you want to go even lighter, a regularized regression in Python (Ridge or Lasso) with manually engineered adstock transforms will get you 80% of the value with a fraction of the setup. It won't handle saturation curves as elegantly, but for a first pass, it's a legitimate starting point.</p>
+
+<h2>Build the pipeline before the model</h2>
+<p>The model is the easy part. The pipeline is where projects actually die. You need spend data from every platform — Meta, Google, TikTok, affiliate, email, direct mail if you run it — pulled consistently, at the same time grain, with consistent currency and date alignment. If your Meta data is in campaign-level daily spend and your Shopify revenue is weekly, you have a join problem before you have a modeling problem.</p>
+
+<p>Set this up as an actual pipeline, not a one-time export. Pull spend via each platform's API (or a connector tool) into your warehouse, land it in a raw layer, then build a transformation layer that aggregates everything to a common weekly grain. This is standard ELT work — nothing exotic, but it needs to be automated and repeatable, because you'll rerun this model quarterly, not once.</p>
+
+<p>Also pull in non-marketing variables early: price changes, out-of-stock periods, competitor promotions if you can get them, and holidays specific to your category. These are what separate a real MMM from a spend-vs-revenue scatterplot with a trend line drawn through it.</p>
+
+<h2>Validate before you trust it</h2>
+<p>The biggest risk with a self-built MMM isn't a bad model — it's an unchecked one. Before you present channel contribution numbers to leadership, run these checks:</p>
+
+<ul>
+<li><strong>Holdout validation:</strong> train on the first 80% of your time range, predict the last 20%, and see how far off you are</li>
+<li><strong>Sanity check against known events:</strong> if you ran a big TV push or a site outage, does the model reflect that in the residuals?</li>
+<li><strong>Compare to incrementality tests:</strong> if you've run geo holdouts or platform-level lift tests, your MMM's channel coefficients should roughly agree with them. Large disagreements mean bad priors or missing variables, not a broken test</li>
+<li><strong>Stability over refits:</strong> rerun the model with a slightly different date range. If channel contributions swing wildly, your model is overfit or underpowered</li>
+</ul>
+
+<p>Don't treat the first output as gospel. Treat it as a hypothesis you refine every quarter as you add more data and more shocks to the training set.</p>
+
+<h2>Where this actually pays off</h2>
+<p>The payoff of a self-built MMM isn't a perfect model — it's a directionally correct budget allocation tool that gets better every quarter. Teams that build this in-house get three things a black-box vendor tool can't give them: control over the input data, the ability to add custom variables specific to their business, and institutional knowledge of how the model works, which matters when a VP asks why TikTok's contribution dropped last quarter.</p>
+
+<p>Start small. Build the pipeline first, run Robyn or Meridian on six months of clean data, validate against whatever incrementality tests you already have, and expand from there. You don't need a data science team to get a usable marketing mix model — you need clean data, an honest validation process, and the discipline to treat it as a living tool instead of a one-off report.</p>
+</article>
+
+<div class="endcta">
+  <h3>Want to see your real ROAS?</h3>
+  <p>We reconcile ad spend, platform conversions, and closed revenue into one true number you can actually optimize on.</p>
+  <a href="/#contact" class="btn btn-primary">Book a call</a>
 </div>
 
 <footer>
@@ -210,19 +163,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span>Data infrastructure that drives revenue.</span>
   </div>
 </footer>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BlogPosting",
+  "headline":"Why your GA4 ROAS is lying to you — and how to find the real number",
+  "description":"GA4 and ad platforms report ROAS from clicks and pixels, not closed revenue. How to reconcile reported ROAS against real money and optimize on a true number.",
+  "author":{"@type":"Organization","name":"Twinslytics"},
+  "publisher":{"@type":"Organization","name":"Twinslytics","url":"https://twinslytics.com"},
+  "mainEntityOfPage":"https://twinslytics.com/blog-ga4-roas-lying.html",
+  "datePublished":"2026-02-01"
+}
+</script>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
 <script>
 (function(){var b=document.querySelector(".burger"),m=document.querySelector(".nav-links");if(!b||!m)return;function close(){m.classList.remove("open");b.classList.remove("is-open");b.setAttribute("aria-expanded","false");}b.addEventListener("click",function(e){e.stopPropagation();var o=m.classList.toggle("open");b.classList.toggle("is-open",o);b.setAttribute("aria-expanded",o);});m.querySelectorAll("a").forEach(function(a){a.addEventListener("click",close);});document.addEventListener("click",function(e){if(m.classList.contains("open")&&!m.contains(e.target)&&!b.contains(e.target))close();});})();
 </script>
-<script>
-fetch("/api/views").then(function(r){return r.json()}).then(function(v){
-  function get(p){p=p.replace(/\/$/,"");return v[p]||v[p+".html"]||v[p.replace(/\.html$/,"")]||0;}
-  document.querySelectorAll("a.post[href]").forEach(function(a){
-    var el=a.querySelector(".views");if(!el)return;
-    var n=get(a.getAttribute("href"));
-    if(n>0)el.textContent=" \u00b7 "+n+(n===1?" view":" views");
-  });
-}).catch(function(){});
-</script>
+<script>try{fetch("/api/views?p="+encodeURIComponent(location.pathname.replace(/\.html$/,"")),{method:"POST",keepalive:true})}catch(e){}</script>
 </body>
 </html>
