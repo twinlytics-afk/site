@@ -160,6 +160,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>That separation also changes who gets paged and when. A break in raw ingestion should alert the person who owns the extraction script. A break in staging casting should alert whoever owns the contract with that source. A dbt model failing in the marts layer, three hops downstream from the actual problem, should be rare — because if it's common, it means your pipeline has no shock absorbers and every API hiccup becomes a full-stack incident.</p>
 
 <p>Schema drift isn't a dbt problem. It's a pipeline design problem that shows up in dbt because dbt is usually the last thing to run and the first thing anyone looks at when numbers go wrong. Fix the layers before it, and dbt goes back to doing what it's actually good at: transforming data you can trust, instead of triaging data you can't.</p>
+
+  <h2>Further reading</h2>
+  <ul>
+    <li><a href="/blog-how-to-build-a-customer-data-warehouse-that-survives-ios-att.html">How to build a customer data warehouse that survives ios attribution loss</a></li>
+    <li><a href="/blog-how-to-reconcile-meta-and-google-roas-against-your-crm.html">How to reconcile Meta and Google ROAS against your CRM</a></li>
+  </ul>
 </article>
 
 <div class="endcta">
@@ -184,7 +190,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   "author":{"@type":"Organization","name":"Twinslytics"},
   "publisher":{"@type":"Organization","name":"Twinslytics","url":"https://twinslytics.com"},
   "mainEntityOfPage":"https://twinslytics.com/blog-ga4-roas-lying.html",
-  "datePublished":"2026-02-01"
+  "datePublished":"2026-08-05"
 }
 </script>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
