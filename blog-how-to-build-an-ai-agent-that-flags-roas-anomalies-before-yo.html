@@ -11,55 +11,51 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blog — Twinslytics | Notes on data, revenue, and automation</title>
-<meta name="description" content="Practical writing on marketing attribution, true ROAS, data engineering, and operations automation for ecommerce and DTC teams." />
+<title>Build an AI agent that catches ROAS anomalies before overspend — Twinslytics</title>
+<meta name="description" content="A practical build guide to an AI agent that watches spend hourly and flags true ROAS drops before budget is wasted, not after the weekly review." />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="canonical" href="https://twinslytics.com/blog.html" />
+<link rel="canonical" href="https://twinslytics.com/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo.html" />
 <meta name="robots" content="index, follow" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://twinslytics.com/blog.html" />
-<meta property="og:title" content="Twinslytics Blog — data, revenue, and automation" />
-<meta property="og:description" content="Practical writing on attribution, true ROAS, data engineering, and automation for ecommerce and DTC teams." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://twinslytics.com/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo.html" />
+<meta property="og:title" content="Build an AI agent that catches ROAS anomalies before overspend" />
+<meta property="og:description" content="A practical build guide to an AI agent that watches spend hourly and flags true ROAS drops before budget is wasted, not after the weekly review." />
 <meta property="og:image" content="https://twinslytics.com/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#fff;--bg-alt:#faf9ff;--bg-tint:#f5f2ff;--ink:#14122b;--body:#5a5675;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+  :root{--bg:#fff;--ink:#14122b;--body:#403c5c;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--ok:#12b981;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
-  a{color:inherit;text-decoration:none}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased}
+  a{color:var(--v);text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
-  h1,h2,h3{font-family:var(--disp);font-weight:600;line-height:1.1;letter-spacing:-.025em;color:var(--ink)}
-  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--v);background:#f2ecff;display:inline-block;padding:6px 12px;border-radius:20px}
   .btn{font-family:var(--disp);font-weight:600;font-size:14.5px;padding:12px 22px;border-radius:8px;display:inline-block;border:1px solid transparent}
   .btn-primary{background:var(--grad);color:#fff}
-  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
   .logo{font-family:var(--disp);font-weight:700;font-size:20px;letter-spacing:-.02em;display:inline-flex;align-items:center;gap:10px}
   .logo .brandmark{height:26px;width:auto;display:block}
   .logo .m{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .nav-links{display:flex;align-items:center;gap:30px;font-size:14.5px}
-  .nav-links a:not(.btn){color:var(--body)}
-  .nav-links a.active{color:var(--ink)}
+  .nav-links a:not(.btn){color:#5a5675}
   .nav .btn{padding:10px 18px}
-  .bloghero{text-align:center;padding:76px 0 48px;position:relative;overflow:hidden}
-  .bloghero::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:900px;height:600px;border-radius:50%;background:radial-gradient(circle at 45% 45%,rgba(108,76,240,.14),transparent 55%),radial-gradient(circle at 62% 55%,rgba(255,122,89,.1),transparent 55%);z-index:0}
-  .bloghero>*{position:relative;z-index:1}
-  .bloghero h1{font-size:clamp(34px,5vw,52px);margin:20px auto 14px;max-width:18ch}
-  .bloghero p{color:var(--body);font-size:19px;max-width:52ch;margin:0 auto}
-  .posts{max-width:var(--maxw);margin:0 auto;padding:20px 28px 96px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  .post{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px;transition:transform .18s,box-shadow .18s}
-  .post:hover{transform:translateY(-3px);box-shadow:0 20px 44px -28px rgba(108,76,240,.5)}
-  .post .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--v);margin-bottom:14px}
-  .post h3{font-size:20px;line-height:1.22;margin-bottom:10px}
-  .post p{color:var(--body);font-size:15px;flex:1}
-  .post .meta{font-family:var(--mono);font-size:11.5px;color:var(--mut);margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
-  .post.soon{opacity:.6}
-  .post.soon .tag{color:var(--mut)}
+  article{max-width:720px;margin:0 auto;padding:56px 28px 20px}
+  .back{font-family:var(--mono);font-size:13px;color:var(--mut);margin-bottom:26px;display:inline-block}
+  article h1{font-family:var(--disp);font-weight:600;font-size:clamp(30px,4.4vw,44px);line-height:1.12;letter-spacing:-.025em;margin:16px 0 18px}
+  .artmeta{font-family:var(--mono);font-size:13px;color:var(--mut);padding-bottom:26px;margin-bottom:36px;border-bottom:1px solid var(--line)}
+  article h2{font-family:var(--disp);font-weight:600;font-size:26px;letter-spacing:-.02em;margin:44px 0 14px}
+  article p{color:var(--body);margin-bottom:20px}
+  article ul{color:var(--body);margin:0 0 20px 22px}
+  article li{margin-bottom:8px}
+  article strong{color:var(--ink);font-weight:600}
+  .pull{border-left:3px solid;border-image:var(--grad) 1;padding:6px 0 6px 22px;margin:32px 0;font-family:var(--disp);font-weight:500;font-size:22px;line-height:1.35;color:var(--ink)}
+  .endcta{max-width:720px;margin:20px auto 90px;padding:34px 32px;background:linear-gradient(180deg,#faf8ff,#f5f2ff);border:1px solid var(--line);border-radius:16px;text-align:center}
+  .endcta h3{font-family:var(--disp);font-weight:600;font-size:24px;margin-bottom:10px}
+  .endcta p{color:var(--body);font-size:16px;margin-bottom:20px}
   footer{border-top:1px solid var(--line);padding:32px 0;background:#fff}
   .foot{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--mut);font-family:var(--mono);flex-wrap:wrap;gap:14px}
     .burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:none;border:0;cursor:pointer;padding:9px;border-radius:9px}
@@ -67,18 +63,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   .burger.is-open span:nth-child(2){opacity:0}
   .burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  .guides{max-width:var(--maxw);margin:0 auto;padding:8px 28px 0}
-  .guides .ghead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
-  .guides .ghead h2{font-family:var(--disp);font-weight:600;font-size:23px;letter-spacing:-.02em}
-  .guides .ghead span{font-family:var(--mono);font-size:12px;color:var(--mut)}
-  .guidesrow{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:14px}
-  .guide{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;padding:24px 22px;background:linear-gradient(180deg,#fdfcff,#faf8ff);transition:transform .18s,box-shadow .18s,border-color .18s}
-  .guide:hover{transform:translateY(-3px);border-color:var(--line-2);box-shadow:0 20px 44px -28px rgba(108,76,240,.5)}
-  .guide .gtag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--v);margin-bottom:12px}
-  .guide h3{font-size:18px;line-height:1.25;margin-bottom:9px}
-  .guide p{color:var(--body);font-size:14.5px;line-height:1.6;flex:1}
-  @media(max-width:1000px){.guidesrow{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:620px){.guidesrow{grid-template-columns:1fr}}
+  .figure{margin:34px 0}
+  .figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:14px;background:#fff}
+  .figure figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:10px;line-height:1.5}
   @media(max-width:900px){
     .nav{position:relative}
     .burger{display:flex}
@@ -87,7 +74,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .nav-links a:not(.btn){display:block;padding:14px 0;font-size:16px;color:var(--ink);border-bottom:1px solid var(--line)}
     .nav-links .langsw{padding:14px 0;font-size:13px;border-bottom:1px solid var(--line)}
     .nav-links .btn{margin-top:14px;width:100%;text-align:center;padding:13px}
-.posts{grid-template-columns:1fr}}
+}
 </style>
 </head>
 <body>
@@ -103,170 +90,86 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="/#work">Work</a>
       <a href="/#services">Services</a>
       <a href="/#team">Team</a>
-      <a href="/blog.html" class="active">Blog</a>
+      <a href="/blog.html">Blog</a>
       <a href="/#contact" class="btn btn-primary">Book a call</a>
     </nav>
     <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
 
-<section class="bloghero">
-  <span class="eyebrow">Blog</span>
-  <h1>Notes on data, revenue, and <span class="grad-text">automation</span>.</h1>
-  <p>Practical writing on attribution, true ROAS, data engineering, and the automation that runs real businesses.</p>
-</section>
+<article>
+  <a class="back" href="/blog.html">← All posts</a>
+  <span class="eyebrow">AI &amp; automation</span>
+  <h1>Build an AI agent that catches ROAS anomalies before overspend</h1>
+  <div class="artmeta">24 Aug 2026 · 6 min read · Twinslytics<span class="artviews"></span></div>
 
-<section class="guides">
-  <div class="ghead">
-    <h2>Start here</h2>
-    <span>Guides and tools</span>
-  </div>
-  <div class="guidesrow">
-    <a class="guide" href="/guide-attribution.html">
-      <div class="gtag">Guide</div>
-      <h3>Marketing attribution for ecommerce</h3>
-      <p>The four places a paid click loses its identity, and the order to fix them in.</p>
-    </a>
-    <a class="guide" href="/guide-true-roas.html">
-      <div class="gtag">Guide</div>
-      <h3>True ROAS</h3>
-      <p>Turning a platform's best-case number into one you can safely spend against.</p>
-    </a>
-    <a class="guide" href="/guide-data-pipelines.html">
-      <div class="gtag">Guide</div>
-      <h3>Revenue data pipelines</h3>
-      <p>Schema drift, loader lag, and frozen partitions — and how to survive them.</p>
-    </a>
-    <a class="guide" href="/true-roas-calculator.html">
-      <div class="gtag">Free tool</div>
-      <h3>True ROAS calculator</h3>
-      <p>Apply overlap, refunds and untracked revenue to see what your ROAS really is.</p>
-    </a>
-  </div>
-</section>
+  <figure class="figure">
+    <svg viewBox="0 0 720 176" width="100%" height="auto" role="img" aria-label="Building an AI Agent to Catch ROAS Anomalies Early" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto"><text x="8" y="24" font-family="'Space Grotesk',system-ui,sans-serif" font-size="15" font-weight="600" fill="#14122b">Building an AI Agent to Catch ROAS Anomalies Early</text><defs><marker id="dgArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#918da8"/></marker></defs><rect x="8" y="46" width="150" height="96" rx="11" fill="#faf8ff" stroke="#ece7f6"/><rect x="8" y="46" width="3.5" height="96" rx="2" fill="#6c4cf0"/><text x="23" y="71" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10" letter-spacing="1.4" fill="#6c4cf0">01</text><text x="23" y="93" font-family="'Space Grotesk',system-ui,sans-serif" font-size="13.5" font-weight="600" fill="#14122b">Hourly API Pulls</text><text x="23" y="129" font-family="'Space Grotesk',system-ui,sans-serif" font-size="11.5" fill="#918da8">Meta, Google, TikTo…</text><line x1="165" y1="94" x2="185" y2="94" stroke="#918da8" stroke-width="1.6" marker-end="url(#dgArrow)"/><rect x="192" y="46" width="150" height="96" rx="11" fill="#faf8ff" stroke="#ece7f6"/><rect x="192" y="46" width="3.5" height="96" rx="2" fill="#6c4cf0"/><text x="207" y="71" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10" letter-spacing="1.4" fill="#6c4cf0">02</text><text x="207" y="93" font-family="'Space Grotesk',system-ui,sans-serif" font-size="13.5" font-weight="600" fill="#14122b">Revenue Matching</text><text x="207" y="129" font-family="'Space Grotesk',system-ui,sans-serif" font-size="11.5" fill="#918da8">Orders via UTM/clic…</text><line x1="349" y1="94" x2="369" y2="94" stroke="#918da8" stroke-width="1.6" marker-end="url(#dgArrow)"/><rect x="376" y="46" width="150" height="96" rx="11" fill="#faf8ff" stroke="#ece7f6"/><rect x="376" y="46" width="3.5" height="96" rx="2" fill="#6c4cf0"/><text x="391" y="71" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10" letter-spacing="1.4" fill="#6c4cf0">03</text><text x="391" y="93" font-family="'Space Grotesk',system-ui,sans-serif" font-size="13.5" font-weight="600" fill="#14122b">Warehouse Model</text><text x="391" y="129" font-family="'Space Grotesk',system-ui,sans-serif" font-size="11.5" fill="#918da8">True ROAS, tested …</text><line x1="533" y1="94" x2="553" y2="94" stroke="#918da8" stroke-width="1.6" marker-end="url(#dgArrow)"/><rect x="560" y="46" width="150" height="96" rx="11" fill="#faf8ff" stroke="#ece7f6"/><rect x="560" y="46" width="3.5" height="96" rx="2" fill="#12b981"/><text x="575" y="71" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10" letter-spacing="1.4" fill="#12b981">04</text><text x="575" y="93" font-family="'Space Grotesk',system-ui,sans-serif" font-size="13.5" font-weight="600" fill="#14122b">Baseline Compare</text><text x="575" y="129" font-family="'Space Grotesk',system-ui,sans-serif" font-size="11.5" fill="#918da8">90-day channel …</text></svg>
+    <figcaption>A generic outline of the pipeline stages needed before an agent can reliably flag overspend.</figcaption>
+  </figure>
 
-<div class="posts">
-  <!-- POSTS -->
-  <a class="post" href="/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo.html">
-    <div class="tag">AI &amp; automation</div>
-    <h3>Build an AI agent that catches ROAS anomalies before overspend</h3>
-    <p>A practical build guide to an AI agent that watches spend hourly and flags true ROAS drops before budget is wasted, not after the weekly review.</p>
-    <div class="meta">24 Aug 2026 · 6 min read<span class="views" data-p="/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-to-build-an-ad-spend-decision-engine-from-warehouse-data.html">
-    <div class="tag">Data engineering</div>
-    <h3>Build an ad-spend decision engine on warehouse data</h3>
-    <p>Stop trusting platform ROAS. Learn how to join order and spend data in your warehouse to turn attribution into automated budget decisions.</p>
-    <div class="meta">24 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-to-build-an-ad-spend-decision-engine-from-warehouse-data.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-to-attribute-subscription-ltv-back-to-the-original-ad-cl.html">
-    <div class="tag">Attribution</div>
-    <h3>How to attribute subscription ltv back to the original ad click</h3>
-    <p>Most attribution setups stop working the moment a customer becomes a subscriber. Meta, Google, and your attribution tool all report the first-order value, </p>
-    <div class="meta">23 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-to-attribute-subscription-ltv-back-to-the-original-ad-cl.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-to-build-a-customer-data-warehouse-that-survives-ios-att.html">
-    <div class="tag">Data engineering</div>
-    <h3>How to build a customer data warehouse that survives ios attribution loss</h3>
-    <p>Apple didn't kill attribution. It killed your ability to trust a single platform's version of the truth. If your revenue reporting still lives inside Meta </p>
-    <div class="meta">21 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-to-build-a-customer-data-warehouse-that-survives-ios-att.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-to-build-a-marketing-mix-model-without-a-data-science-te.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>How to build a marketing mix model without a data science team</h3>
-    <p>Your CFO wants to know what happens to revenue if you cut paid social by 20%. Your last-click attribution can't answer that. Neither can your gut. What you</p>
-    <div class="meta">19 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-to-build-a-marketing-mix-model-without-a-data-science-te.html"></span></div>
-  </a>
-  <a class="post" href="/blog-why-your-subscription-revenue-makes-blended-roas-misleading.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>Why your subscription revenue makes blended roas misleading</h3>
-    <p>Your blended ROAS says 4.2x and everyone in the meeting nods. But if a third of that revenue comes from subscribers who resubscribed on autopilot, you're n</p>
-    <div class="meta">17 Aug 2026 · 5 min read<span class="views" data-p="/blog-why-your-subscription-revenue-makes-blended-roas-misleading.html"></span></div>
-  </a>
-  <a class="post" href="/blog-why-utm-parameters-break-at-checkout-redirects-and-how-to-fi.html">
-    <div class="tag">Attribution</div>
-    <h3>Why utm parameters break at checkout redirects and how to fix attribution</h3>
-    <p>You launch a campaign, spend real money, and three days later half your conversions show up as "direct" in GA4. Nobody typed your URL from memory. They cli</p>
-    <div class="meta">15 Aug 2026 · 5 min read<span class="views" data-p="/blog-why-utm-parameters-break-at-checkout-redirects-and-how-to-fi.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-dtc-brands-should-measure-blended-roas.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>How DTC brands should measure blended ROAS</h3>
-    <p>Most DTC brands calculate blended ROAS wrong, and the ones who calculate it right often use it wrong. It's not a marketing metric. It's not a Meta metric. </p>
-    <div class="meta">13 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-dtc-brands-should-measure-blended-roas.html"></span></div>
-  </a>
-  <a class="post" href="/blog-monitoring-and-alerting-for-data-pipelines-in-production.html">
-    <div class="tag">Data engineering</div>
-    <h3>Monitoring and alerting for data pipelines in production</h3>
-    <p>Your ROAS dashboard says one thing on Monday and something completely different on Tuesday. Not because ad performance changed, but because a pipeline sile</p>
-    <div class="meta">11 Aug 2026 · 5 min read<span class="views" data-p="/blog-monitoring-and-alerting-for-data-pipelines-in-production.html"></span></div>
-  </a>
-  <a class="post" href="/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html">
-    <div class="tag">Data engineering</div>
-    <h3>When to move from spreadsheets to a data warehouse</h3>
-    <p>Your marketing lead pulls Shopify data into Google Sheets every Monday. Someone else exports Klaviyo numbers into a different tab. Meta ad spend gets copy-</p>
-    <div class="meta">9 Aug 2026 · 5 min read<span class="views" data-p="/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html"></span></div>
-  </a>
-  <a class="post" href="/blog-attribution-when-payment-domains-steal-the-credit.html">
-    <div class="tag">Attribution</div>
-    <h3>Attribution when payment domains steal the credit</h3>
-    <p>Open your GA4 acquisition report and look for "paypal.com" or "checkout.shopify.com" sitting in your top referrers with a suspiciously high conversion rate</p>
-    <div class="meta">7 Aug 2026 · 4 min read<span class="views" data-p="/blog-attribution-when-payment-domains-steal-the-credit.html"></span></div>
-  </a>
-  <a class="post" href="/blog-why-your-dbt-pipeline-keeps-breaking-on-api-schema-drift.html">
-    <div class="tag">Data engineering</div>
-    <h3>Why your dbt pipeline keeps breaking on API schema drift</h3>
-    <p>Your dbt run was green yesterday. Today it's red because a marketing platform decided to rename a field, add a nested object, or quietly switch an integer </p>
-    <div class="meta">5 Aug 2026 · 5 min read<span class="views" data-p="/blog-why-your-dbt-pipeline-keeps-breaking-on-api-schema-drift.html"></span></div>
-  </a>
-  <a class="post" href="/blog-predictive-cac-bidding-on-lead-value-instead-of-clicks.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>Predictive CAC: bidding on lead value instead of clicks</h3>
-    <p>Most ad accounts are still optimizing for the wrong thing. You tell Google or Meta to chase clicks, or conversions, or even "leads" — but a lead form fill </p>
-    <div class="meta">3 Aug 2026 · 5 min read<span class="views" data-p="/blog-predictive-cac-bidding-on-lead-value-instead-of-clicks.html"></span></div>
-  </a>
-  <a class="post" href="/blog-true-roas-vs-ga4-ecommerce-roas-for-offline-close-businesses.html">
-    <div class="tag">Attribution</div>
-    <h3>True ROAS vs GA4 ecommerce ROAS for offline-close businesses</h3>
-    <p>GA4 tells you a campaign converted at 3.2 ROAS. Your finance team says the same campaign lost money. Both are right, and that gap is exactly why offline-cl</p>
-    <div class="meta">1 Aug 2026 · 5 min read<span class="views" data-p="/blog-true-roas-vs-ga4-ecommerce-roas-for-offline-close-businesses.html"></span></div>
-  </a>
-  <a class="post" href="/blog-server-side-conversions-with-meta-capi-what-breaks-and-how-t.html">
-    <div class="tag">Attribution</div>
-    <h3>Server-side conversions with Meta CAPI: what breaks and how to fix it</h3>
-    <p>Meta cut off third-party cookie tracking, so everyone rushed to implement Conversions API. Then ROAS numbers got weirder, not better. If you've deployed CA</p>
-    <div class="meta">31 Jul 2026 · 5 min read<span class="views" data-p="/blog-server-side-conversions-with-meta-capi-what-breaks-and-how-t.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-to-reconcile-meta-and-google-roas-against-your-crm.html">
-    <div class="tag">Data engineering</div>
-    <h3>How to reconcile Meta and Google ROAS against your CRM</h3>
-    <p>Meta says your campaign drove $40,000 in revenue. Google says its campaigns drove $35,000. Add those up and you've got $75,000 in attributed revenue. Excep</p>
-    <div class="meta">29 Jul 2026 · 5 min read<span class="views" data-p="/blog-how-to-reconcile-meta-and-google-roas-against-your-crm.html"></span></div>
-  </a>
-  <a class="post" href="/blog-what-ai-ready-data-actually-means-a-practical-checklist.html">
-    <div class="tag">AI & automation</div>
-    <h3>What AI-ready data actually means: a practical checklist</h3>
-    <p>Every vendor pitch deck has a slide claiming their platform makes your data "AI-ready." Nobody defines what that means, and most teams find out the hard wa</p>
-    <div class="meta">27 Jul 2026 · 4 min read<span class="views" data-p="/blog-what-ai-ready-data-actually-means-a-practical-checklist.html"></span></div>
-  </a>
-  <a class="post" href="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>The 60-day cohort maturity rule for ad spend decisions</h3>
-    <p>Most ecommerce brands kill winning campaigns and scale losing ones because they check the scoreboard before the game is over.</p>
-    <div class="meta">25 Jul 2026 · 4 min read<span class="views" data-p="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html"></span></div>
-  </a>
-  <a class="post" href="/blog-why-offline-conversions-beat-pixel-based-roas.html">
-    <div class="tag">Attribution</div>
-    <h3>Why offline conversions beat pixel-based ROAS</h3>
-    <p>Your dashboard says Meta is delivering a 4.2x ROAS. Your bank account says something else. If you've ever felt that gap, you're not imagining it.</p>
-    <div class="meta">24 Jul 2026 · 5 min read<span class="views" data-p="/blog-why-offline-conversions-beat-pixel-based-roas.html"></span></div>
-  </a>
-  <a class="post" href="/blog-ga4-roas-lying.html">
-    <div class="tag">Attribution</div>
-    <h3>Why your GA4 ROAS is lying to you — and how to find the real number</h3>
-    <p>GA4 and your ad platforms measure clicks, not closed revenue. Here's why the gap exists, and how to reconcile it against what actually hit your bank account.</p>
-    <div class="meta">1 Feb 2026 · 3 min read<span class="views" data-p="/blog-ga4-roas-lying.html"></span></div>
-  </a>
+  <p>By the time your Monday morning dashboard shows a ROAS crater, you've already spent Friday, Saturday, and Sunday's budget on a campaign that stopped converting. Nobody checks ad spend on a Saturday at 2am. An AI agent will. This is a practical build guide, not a pitch for a SaaS tool you don't need.</p>
+
+<h2>Why you find out too late</h2>
+<p>Most teams catch ROAS problems through a person: a media buyer glancing at Meta Ads Manager, a founder asking "why does this month look weak" in a Slack thread. That's a detection system with a 24-72 hour lag built in. Platforms report blended numbers that hide the collapse of a single ad set inside an otherwise healthy campaign. And attributed ROAS from ad platforms is inflated anyway, so the number you're staring at was already wrong before it started drifting.</p>
+<p>The fix isn't "check the dashboard more often." It's removing the human from the detection loop and keeping them for the decision loop. An agent watches spend and revenue continuously, flags deviations against a real baseline, and pushes an alert before the budget is gone — not after finance asks about it in the weekly review.</p>
+
+<h2>The data layer the agent needs</h2>
+<p>An anomaly detector is only as good as the numbers feeding it, and this is where most attempts break. You need a pipeline that pulls, at minimum:</p>
+<ul>
+<li><strong>Platform spend data</strong> at the campaign and ad set level, pulled hourly via the Meta, Google, and TikTok APIs — not the daily CSV export someone downloads manually.</li>
+<li><strong>Order and revenue data</strong> from your store or order management system, ideally with UTM or click ID matching so you're not relying solely on platform-attributed conversions.</li>
+<li><strong>A blended or true ROAS calculation</strong> that nets out discounts, refunds, and COGS where possible, computed in your warehouse, not trusted from the ad platform's dashboard.</li>
+<li><strong>Historical baselines</strong> going back at least 90 days per channel and campaign, so the agent has something real to compare against instead of an arbitrary threshold.</li>
+</ul>
+<p>This lives in a warehouse — BigQuery or Snowflake, with dbt models turning raw API pulls into a clean <code>daily_channel_performance</code> table isn't allowed as a tag here, so just: a clean, tested table joining spend to revenue by channel and day. If that pipeline doesn't exist yet, build it before you build the agent. An agent reasoning over garbage data will just automate garbage alerts faster.</p>
+
+<h2>Define anomaly, not just alert</h2>
+<p>The lazy version of this is a static rule: "alert if ROAS drops below 1.5." Static thresholds break constantly. A new product launch, a holiday promo, a deliberate top-of-funnel push — all of these tank short-term ROAS on purpose. A rule-based system floods you with false positives until someone mutes it, and then it's dead.</p>
+<p>What actually works is comparing current performance to a rolling statistical baseline, adjusted for known variance:</p>
+<ul>
+<li><strong>Rolling median and standard deviation</strong> per campaign over a trailing 14-30 day window, so the baseline moves with recent reality instead of a fixed number set six months ago.</li>
+<li><strong>Z-score or MAD-based deviation checks</strong> that flag when today's ROAS or CPA is a statistically meaningful outlier, not just "a little lower than yesterday."</li>
+<li><strong>Spend velocity checks</strong> that catch a campaign burning through its daily budget in three hours instead of eighteen — often the earliest signal something is broken, before ROAS even has time to move.</li>
+<li><strong>Seasonality and calendar context</strong> so the agent knows Black Friday week and a new SKU launch aren't anomalies, they're expected variance.</li>
+</ul>
+<p>This is the part people skip because it sounds like statistics homework. It's not optional. Without it, you're building an expensive way to get alerted about noise.</p>
+
+<h2>Build the detection loop</h2>
+<p>The agent itself doesn't need to be exotic. A practical version runs as a scheduled job — hourly is usually the right cadence for paid social, every 4-6 hours is fine for search — and does four things in sequence:</p>
+<ul>
+<li><strong>Pull</strong> fresh spend and revenue data from the warehouse tables you already built.</li>
+<li><strong>Score</strong> each active campaign or ad set against its rolling baseline using the deviation logic above.</li>
+<li><strong>Classify</strong> the anomaly by severity — a mild dip in ROAS gets logged, a spend spike with no matching revenue gets an immediate alert.</li>
+<li><strong>Notify</strong> through a channel people actually check — Slack or a text alert, with the specific campaign name, the deviation, and the dollar amount at risk, not a generic "something changed" message.</li>
+</ul>
+<p>This can run as a Python script on a cron schedule calling an LLM only for the summarization step — turning "campaign X, z-score -2.4, spend up 40% day-over-day, revenue flat" into a readable Slack message a media buyer can act on in ten seconds. The "AI" part doesn't need to be doing the statistics; language models are bad at math and good at explaining a number clearly. Let a proper statistical function do the detection, and let the agent handle interpretation, prioritization, and communication.</p>
+<p>For teams that want to go further, the agent can also take a first action — pausing an ad set automatically when spend velocity crosses a hard ceiling with zero attributed revenue, then notifying the team that it did so. That's the difference between an alert system and an agent: it acts, within guardrails you set, instead of just talking.</p>
+
+<h2>Keep it from crying wolf</h2>
+<p>The fastest way to kill this system is alert fatigue. If it pings the team five times a day for normal variance, everyone mutes the channel within a week and you're back to finding out on Monday. A few things keep it credible:</p>
+<ul>
+<li><strong>Tiered alerting</strong> — log minor deviations quietly, reserve pings for anomalies that cross a spend-at-risk threshold you actually care about, like $500 or more of unexplained spend.</li>
+<li><strong>Suppression windows</strong> during known events — launches, promos, platform-wide auction volatility during major shopping days — so the agent doesn't flag things you already expect.</li>
+<li><strong>Feedback loop</strong> — when someone marks an alert as a false positive, feed that back into the baseline logic so the model tightens over time instead of staying static.</li>
+<li><strong>A weekly accuracy review</strong> — track how many alerts were real problems versus noise, and adjust thresholds like you would any other model, because that's what this is.</li>
+</ul>
+<p>None of this needs to be perfect on day one. Start with spend velocity and one or two high-spend channels, get the alerting cadence right, then expand coverage once the team trusts what it's seeing.</p>
+
+<p>The goal isn't a dashboard with more charts. It's a system that catches the $2,000 you were about to waste on a broken ad set before Saturday turns into Sunday. Build the data pipeline first, define anomalies statistically instead of with arbitrary thresholds, and let the agent do the tedious watching so your team can do the deciding.</p>
+
+  <h2>Further reading</h2>
+  <ul>
+    <li><a href="/guide-data-pipelines.html">Guide: Revenue pipelines that survive production</a></li>
+    <li><a href="/blog-how-to-build-a-customer-data-warehouse-that-survives-ios-att.html">How to build a customer data warehouse that survives ios attribution loss</a></li>
+    <li><a href="/blog-how-to-build-an-ad-spend-decision-engine-from-warehouse-data.html">Build an ad-spend decision engine on warehouse data</a></li>
+  </ul>
+</article>
+
+<div class="endcta">
+  <h3>Want to see your real ROAS?</h3>
+  <p>We reconcile ad spend, platform conversions, and closed revenue into one true number you can actually optimize on.</p>
+  <a href="/#contact" class="btn btn-primary">Book a call</a>
 </div>
 
 <footer>
@@ -275,19 +178,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span>Data infrastructure that drives revenue.</span>
   </div>
 </footer>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BlogPosting",
+  "headline":"Build an AI agent that catches ROAS anomalies before overspend",
+  "description":"A practical build guide to an AI agent that watches spend hourly and flags true ROAS drops before budget is wasted, not after the weekly review.",
+  "author":{"@type":"Organization","name":"Twinslytics"},
+  "publisher":{"@type":"Organization","name":"Twinslytics","url":"https://twinslytics.com"},
+  "mainEntityOfPage":"https://twinslytics.com/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo.html",
+  "datePublished":"2026-08-24"
+}
+</script>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
 <script>
 (function(){var b=document.querySelector(".burger"),m=document.querySelector(".nav-links");if(!b||!m)return;function close(){m.classList.remove("open");b.classList.remove("is-open");b.setAttribute("aria-expanded","false");}b.addEventListener("click",function(e){e.stopPropagation();var o=m.classList.toggle("open");b.classList.toggle("is-open",o);b.setAttribute("aria-expanded",o);});m.querySelectorAll("a").forEach(function(a){a.addEventListener("click",close);});document.addEventListener("click",function(e){if(m.classList.contains("open")&&!m.contains(e.target)&&!b.contains(e.target))close();});})();
 </script>
-<script>
-fetch("/api/views").then(function(r){return r.json()}).then(function(v){
-  function get(p){p=p.replace(/\/$/,"");return v[p]||v[p+".html"]||v[p.replace(/\.html$/,"")]||0;}
-  document.querySelectorAll("a.post[href]").forEach(function(a){
-    var el=a.querySelector(".views");if(!el)return;
-    var n=get(a.getAttribute("href"));
-    if(n>0)el.textContent=" \u00b7 "+n+(n===1?" view":" views");
-  });
-}).catch(function(){});
-</script>
+<script>try{fetch("/api/views?p="+encodeURIComponent(location.pathname.replace(/\.html$/,"")),{method:"POST",keepalive:true})}catch(e){}</script>
 </body>
 </html>
