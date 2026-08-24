@@ -20,4 +20,11 @@
   <url><loc>https://twinslytics.com/blog-how-to-build-a-marketing-mix-model-without-a-data-science-te.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
   <url><loc>https://twinslytics.com/blog-how-to-build-a-customer-data-warehouse-that-survives-ios-att.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
   <url><loc>https://twinslytics.com/blog-how-to-attribute-subscription-ltv-back-to-the-original-ad-cl.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://twinslytics.com/guide-attribution.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://twinslytics.com/guide-true-roas.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://twinslytics.com/guide-data-pipelines.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://twinslytics.com/true-roas-calculator.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://twinslytics.com/blog-how-to-build-an-ad-spend-decision-engine-from-warehouse-data.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://twinslytics.com/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://twinslytics.com/blog-why-your-roas-looks-great-while-contribution-margin-keeps-sh.html</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
 </urlset>

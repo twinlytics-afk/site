@@ -25,9 +25,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=optional" rel="stylesheet">
 <style>
-  :root{--bg:#fff;--ink:#14122b;--body:#403c5c;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--ok:#12b981;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+  :root{--bg:#fff;--ink:#14122b;--body:#403c5c;--mut:#6f6a8a;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--ok:#12b981;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased}
   a{color:var(--v);text-decoration:none}
@@ -63,6 +63,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   .burger.is-open span:nth-child(2){opacity:0}
   .burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  .ctaproof{font-family:var(--mono);font-size:12px;color:var(--v);background:#fff;display:inline-block;padding:6px 14px;border-radius:20px;border:1px solid var(--line-2);margin-bottom:16px}
+  .ctabtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn-secondary{background:#fff;color:var(--ink);border:1px solid var(--line-2)}
   @media(max-width:900px){
     .nav{position:relative}
     .burger{display:flex}
@@ -93,6 +97,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
+<main>
 
 <article>
   <a class="back" href="/blog.html">← All posts</a>
@@ -138,14 +143,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <h2>The takeaway</h2>
 <p>iOS attribution loss isn't a problem you patch with a new pixel or a "privacy-friendly" tracking workaround. It's a permanent shift that rewards brands who own their data infrastructure and penalizes brands who rent their truth from ad platforms. Build the warehouse, resolve identity around first-party keys, blend your attribution methods, and automate the pipeline so it holds up under scale. The brands still confused about their real ROAS two years from now will be the ones who never made this move.</p>
+
+  <h2>Further reading</h2>
+  <ul>
+    <li><a href="/guide-data-pipelines.html">Guide: Revenue pipelines that survive production</a></li>
+    <li><a href="/blog-how-to-reconcile-meta-and-google-roas-against-your-crm.html">How to reconcile Meta and Google ROAS against your CRM</a></li>
+    <li><a href="/blog-monitoring-and-alerting-for-data-pipelines-in-production.html">Monitoring and alerting for data pipelines in production</a></li>
+  </ul>
 </article>
 
 <div class="endcta">
-  <h3>Want to see your real ROAS?</h3>
-  <p>We reconcile ad spend, platform conversions, and closed revenue into one true number you can actually optimize on.</p>
-  <a href="/#contact" class="btn btn-primary">Book a call</a>
+  <div class="ctaproof">154 dbt models · 4 brands — Multi-brand data platform</div>
+  <h3>Want a warehouse that survives schema drift?</h3>
+  <p>We build daily pipelines that alert on failure down to the file and row, not reporting that quietly breaks.</p>
+  <div class="ctabtns">
+    <a href="/#work" class="btn btn-secondary">See more work</a>
+    <a href="/#contact" class="btn btn-primary">Book a call</a>
+  </div>
 </div>
 
+</main>
 <footer>
   <div class="wrap foot">
     <span>© <span id="yr"></span> Twinslytics</span>
@@ -162,7 +179,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   "author":{"@type":"Organization","name":"Twinslytics"},
   "publisher":{"@type":"Organization","name":"Twinslytics","url":"https://twinslytics.com"},
   "mainEntityOfPage":"https://twinslytics.com/blog-ga4-roas-lying.html",
-  "datePublished":"2026-02-01"
+  "datePublished":"2026-08-21"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://twinslytics.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://twinslytics.com/blog.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "How to build a customer data warehouse that survives ios attribution loss",
+      "item": "https://twinslytics.com/blog-how-to-build-a-customer-data-warehouse-that-survives-ios-att.html"
+    }
+  ]
 }
 </script>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>

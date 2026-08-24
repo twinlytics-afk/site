@@ -11,51 +11,57 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>When to move from spreadsheets to a data warehouse — Twinslytics</title>
-<meta name="description" content="Your marketing lead pulls Shopify data into Google Sheets every Monday. Someone else exports Klaviyo numbers into a different tab. Meta ad spend gets copy-" />
+<title>Marketing attribution for ecommerce: a practical guide — Twinslytics</title>
+<meta name="description" content="Where ecommerce attribution actually breaks — redirects, payment domains, app tracking, and refunds — and the order to fix it in so your channel numbers stop disagreeing." />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="canonical" href="https://twinslytics.com/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html" />
+<link rel="canonical" href="https://twinslytics.com/guide-attribution.html" />
 <meta name="robots" content="index, follow" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://twinslytics.com/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html" />
-<meta property="og:title" content="When to move from spreadsheets to a data warehouse" />
-<meta property="og:description" content="GA4 measures clicks, not closed revenue. Here's how to reconcile reported ROAS against what actually hit your bank account." />
+<meta property="og:url" content="https://twinslytics.com/guide-attribution.html" />
+<meta property="og:title" content="Marketing attribution for ecommerce: a practical guide" />
+<meta property="og:description" content="Where ecommerce attribution actually breaks — redirects, payment domains, app tracking, and refunds — and the order to fix it in so your channel numbers stop disagreeing." />
 <meta property="og:image" content="https://twinslytics.com/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=optional" rel="stylesheet">
 <style>
-  :root{--bg:#fff;--ink:#14122b;--body:#403c5c;--mut:#6f6a8a;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--ok:#12b981;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+
+  :root{--bg:#fff;--bg-alt:#faf9ff;--bg-tint:#f5f2ff;--ink:#14122b;--body:#5a5675;--mut:#6f6a8a;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased}
-  a{color:var(--v);text-decoration:none}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  h1,h2,h3{font-family:var(--disp);font-weight:600;line-height:1.1;letter-spacing:-.025em;color:var(--ink)}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--v);background:#f2ecff;display:inline-block;padding:6px 12px;border-radius:20px}
   .btn{font-family:var(--disp);font-weight:600;font-size:14.5px;padding:12px 22px;border-radius:8px;display:inline-block;border:1px solid transparent}
   .btn-primary{background:var(--grad);color:#fff}
-  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
   .logo{font-family:var(--disp);font-weight:700;font-size:20px;letter-spacing:-.02em;display:inline-flex;align-items:center;gap:10px}
   .logo .brandmark{height:26px;width:auto;display:block}
   .logo .m{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .nav-links{display:flex;align-items:center;gap:30px;font-size:14.5px}
-  .nav-links a:not(.btn){color:#5a5675}
+  .nav-links a:not(.btn){color:var(--body)}
+  .nav-links a.active{color:var(--ink)}
   .nav .btn{padding:10px 18px}
-  article{max-width:720px;margin:0 auto;padding:56px 28px 20px}
-  .back{font-family:var(--mono);font-size:13px;color:var(--mut);margin-bottom:26px;display:inline-block}
-  article h1{font-family:var(--disp);font-weight:600;font-size:clamp(30px,4.4vw,44px);line-height:1.12;letter-spacing:-.025em;margin:16px 0 18px}
-  .artmeta{font-family:var(--mono);font-size:13px;color:var(--mut);padding-bottom:26px;margin-bottom:36px;border-bottom:1px solid var(--line)}
-  article h2{font-family:var(--disp);font-weight:600;font-size:26px;letter-spacing:-.02em;margin:44px 0 14px}
-  article p{color:var(--body);margin-bottom:20px}
-  article ul{color:var(--body);margin:0 0 20px 22px}
-  article li{margin-bottom:8px}
-  article strong{color:var(--ink);font-weight:600}
-  .pull{border-left:3px solid;border-image:var(--grad) 1;padding:6px 0 6px 22px;margin:32px 0;font-family:var(--disp);font-weight:500;font-size:22px;line-height:1.35;color:var(--ink)}
-  .endcta{max-width:720px;margin:20px auto 90px;padding:34px 32px;background:linear-gradient(180deg,#faf8ff,#f5f2ff);border:1px solid var(--line);border-radius:16px;text-align:center}
-  .endcta h3{font-family:var(--disp);font-weight:600;font-size:24px;margin-bottom:10px}
-  .endcta p{color:var(--body);font-size:16px;margin-bottom:20px}
+  .bloghero{text-align:center;padding:76px 0 48px;position:relative;overflow:hidden}
+  .bloghero::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:900px;height:600px;border-radius:50%;background:radial-gradient(circle at 45% 45%,rgba(108,76,240,.14),transparent 55%),radial-gradient(circle at 62% 55%,rgba(255,122,89,.1),transparent 55%);z-index:0}
+  .bloghero>*{position:relative;z-index:1}
+  .bloghero h1{font-size:clamp(34px,5vw,52px);margin:20px auto 14px;max-width:18ch}
+  .bloghero p{color:var(--body);font-size:19px;max-width:52ch;margin:0 auto}
+  .posts{max-width:var(--maxw);margin:0 auto;padding:20px 28px 96px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .post{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px;transition:transform .18s,box-shadow .18s}
+  .post:hover{transform:translateY(-3px);box-shadow:0 20px 44px -28px rgba(108,76,240,.5)}
+  .post .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--v);margin-bottom:14px}
+  .post h3{font-size:20px;line-height:1.22;margin-bottom:10px}
+  .post p{color:var(--body);font-size:15px;flex:1}
+  .post .meta{font-family:var(--mono);font-size:11.5px;color:var(--mut);margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+  .post.soon{opacity:.6}
+  .post.soon .tag{color:var(--mut)}
   footer{border-top:1px solid var(--line);padding:32px 0;background:#fff}
   .foot{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--mut);font-family:var(--mono);flex-wrap:wrap;gap:14px}
     .burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:none;border:0;cursor:pointer;padding:9px;border-radius:9px}
@@ -75,8 +81,136 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .nav-links a:not(.btn){display:block;padding:14px 0;font-size:16px;color:var(--ink);border-bottom:1px solid var(--line)}
     .nav-links .langsw{padding:14px 0;font-size:13px;border-bottom:1px solid var(--line)}
     .nav-links .btn{margin-top:14px;width:100%;text-align:center;padding:13px}
-}
+.posts{grid-template-columns:1fr}}
+
+  .hubwrap{max-width:860px;margin:0 auto;padding:56px 28px 20px}
+  .hubwrap h1{font-family:var(--disp);font-weight:600;font-size:clamp(31px,4.6vw,46px);line-height:1.1;letter-spacing:-.025em;margin:16px 0 18px}
+  .hubmeta{font-family:var(--mono);font-size:13px;color:var(--mut);padding-bottom:26px;margin-bottom:34px;border-bottom:1px solid var(--line)}
+  .hubwrap h2{font-family:var(--disp);font-weight:600;font-size:26px;letter-spacing:-.02em;margin:46px 0 14px}
+  .hubwrap h3{font-family:var(--disp);font-weight:600;font-size:18px;margin:0 0 6px}
+  .hubwrap p{color:var(--body);font-size:17.5px;line-height:1.7;margin-bottom:20px}
+  .hubwrap ul{color:var(--body);font-size:17.5px;line-height:1.7;margin:0 0 20px 22px}
+  .hubwrap li{margin-bottom:9px}
+  .hubwrap strong{color:var(--ink);font-weight:600}
+  .lede{font-size:20px !important;color:var(--ink) !important}
+  .figure{margin:34px 0}
+  .figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:14px;background:#fff}
+  .figure figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:10px;line-height:1.5}
+  .readlist{display:grid;gap:14px;margin:26px 0 8px}
+  .readitem{display:block;border:1px solid var(--line);border-radius:14px;padding:20px 22px;background:#fff;transition:transform .16s,box-shadow .16s,border-color .16s}
+  .readitem:hover{transform:translateY(-2px);border-color:var(--line-2);box-shadow:0 18px 40px -28px rgba(108,76,240,.5)}
+  .readitem .rtag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--v);display:block;margin-bottom:9px}
+  .readitem p{font-size:15.5px !important;color:var(--body) !important;margin:0 !important}
+  .endcta{max-width:860px;margin:44px auto 90px;padding:34px 32px;background:linear-gradient(180deg,#faf8ff,#f5f2ff);border:1px solid var(--line);border-radius:16px;text-align:center}
+  .endcta h3{font-family:var(--disp);font-weight:600;font-size:24px;margin-bottom:10px}
+  .endcta p{color:var(--body);font-size:16px;margin-bottom:20px}
+  .calc{border:1px solid var(--line);border-radius:16px;padding:26px 24px;background:#fdfcff;margin:30px 0}
+  .calcgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px}
+  .field label{display:block;font-family:var(--disp);font-weight:600;font-size:13.5px;color:var(--ink);margin-bottom:6px}
+  .field .hint{display:block;font-family:var(--mono);font-size:11px;color:var(--mut);margin-top:5px;line-height:1.45}
+  .field input{width:100%;font-family:var(--mono);font-size:15px;color:var(--ink);padding:11px 13px;border:1px solid var(--line-2);border-radius:9px;background:#fff}
+  .field input:focus{outline:2px solid rgba(108,76,240,.35);outline-offset:1px;border-color:var(--v)}
+  .calcout{margin-top:24px;padding-top:22px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .stat .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mut);display:block;margin-bottom:8px}
+  .stat .v{font-family:var(--disp);font-weight:600;font-size:26px;letter-spacing:-.02em;color:var(--ink);display:block;line-height:1.1}
+  .stat .s{font-family:var(--mono);font-size:11px;color:var(--mut);display:block;margin-top:6px}
+  .stat.key{border-color:#c9bdf5;background:#faf8ff}
+  .stat.key .v{color:var(--v)}
+  .verdict{margin-top:18px;font-family:var(--disp);font-size:16.5px;font-weight:500;color:var(--ink);line-height:1.5}
+
+  .faq{margin:44px 0}
+  .faqitem{border-bottom:1px solid var(--line);padding:20px 0}
+  .faqitem:first-child{border-top:1px solid var(--line)}
+  .faqitem h3{font-family:var(--disp);font-weight:600;font-size:17px;margin-bottom:9px;color:var(--ink)}
+  .faqitem p{color:var(--body);font-size:15.5px;margin:0}
+  @media(max-width:760px){.calcgrid{grid-template-columns:1fr}.calcout{grid-template-columns:1fr}}
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Marketing attribution for ecommerce: a practical guide",
+  "description": "Where ecommerce attribution actually breaks — redirects, payment domains, app tracking, and refunds — and the order to fix it in so your channel numbers stop disagreeing.",
+  "author": {
+    "@type": "Organization",
+    "name": "Twinslytics"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Twinslytics",
+    "url": "https://twinslytics.com"
+  },
+  "mainEntityOfPage": "https://twinslytics.com/guide-attribution.html",
+  "datePublished": "2026-08-24"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://twinslytics.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Guides",
+      "item": "https://twinslytics.com/blog.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Marketing attribution for ecommerce",
+      "item": "https://twinslytics.com/guide-attribution.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why do Meta and Google both claim credit for the same sale?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Each platform uses its own attribution window and its own view of the user, and both are graded on their own homework — a platform has no incentive to under-claim. Overlap is normal, not fraud; the fix is de-duplicating in your own warehouse, not trusting either platform's number in isolation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is last-click attribution actually wrong?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It's not wrong, it's incomplete. Last-click answers 'which touchpoint happened right before the order' — a real, useful question. It just isn't the same question as 'which spend actually drove incremental revenue,' and treating the two as interchangeable is where most attribution arguments start."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do we need a full CDP to fix this, or can it be simpler?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most of the value comes from three things: a first-party identifier that survives the checkout redirect, server-side conversion events, and a warehouse join between orders and clicks. That's a data engineering project, not necessarily a CDP purchase — a CDP can help operationalize it later, but it doesn't fix a broken identifier on its own."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long before a fix shows up in reported ROAS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Identifier and server-side fixes show up within days, once the new events start flowing. Attribution model changes take longer to read cleanly, because you're comparing against a cohort that matured under the old, broken measurement — give it at least one full cohort cycle before judging the before/after."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -99,72 +233,130 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </header>
 <main>
 
-<article>
-  <a class="back" href="/blog.html">← All posts</a>
-  <span class="eyebrow">Data engineering</span>
-  <h1>When to move from spreadsheets to a data warehouse</h1>
-  <div class="artmeta">9 Aug 2026 · 5 min read · Twinslytics<span class="artviews"></span></div>
+<div class="hubwrap">
+  <a class="back" href="/blog.html">← All writing</a>
+  <span class="eyebrow">Guide</span>
+  <h1>Marketing attribution for ecommerce</h1>
+  <div class="hubmeta">Guide · Attribution · Twinslytics</div>
 
-  <p>Your marketing lead pulls Shopify data into Google Sheets every Monday. Someone else exports Klaviyo numbers into a different tab. Meta ad spend gets copy-pasted from a third source. By Wednesday, three people have three versions of "true ROAS" and nobody trusts any of them. This is the moment most DTC teams realize spreadsheets stopped working — they just don't admit it for another six months.</p>
+  <p class="lede">Attribution arguments are rarely about models. They are about a broken chain
+  between the click you paid for and the money that finally cleared. Fix the chain and most of the
+  model debate evaporates.</p>
 
-<p>Spreadsheets aren't the enemy. They're a fine tool for a $500K/year brand with one founder checking numbers once a week. The problem is nobody sets a clear line for when to graduate, so teams stay stuck with broken formulas and manual exports long after the pain outweighs the switching cost.</p>
+  <h2>What attribution has to answer</h2>
+  <p>Every useful attribution setup answers one question: <strong>for this unit of spend, how much
+  revenue actually closed?</strong> Not sessions, not pixel-fired conversions, not a platform's
+  self-reported number — money that stayed after refunds, chargebacks, and failed renewals.</p>
+  <p>That framing matters because it tells you what to measure against. If your finance number and
+  your ad platform number describe different populations, no attribution model will reconcile them.
+  You have a data problem wearing an attribution costume.</p>
 
-<h2>The signs you're already behind</h2>
-<p>You don't need a data warehouse because it's trendy. You need one when specific, repeatable pain shows up:</p>
-<ul>
-<li><strong>Manual refresh takes real time.</strong> If someone spends more than 2-3 hours a week copying data between platforms and spreadsheets, that's a part-time job you're paying for with opportunity cost.</li>
-<li><strong>Numbers disagree and nobody knows why.</strong> Shopify says one revenue number, your ad platform says another ROAS, and finance has a third. Nobody can explain the gap because the logic lives in someone's head, not in documented code.</li>
-<li><strong>Formulas break when data grows.</strong> VLOOKUP and INDEX/MATCH choke past a few hundred thousand rows. If your sheet takes 30 seconds to recalculate, you're already paying a tax on every analysis.</li>
-<li><strong>One person is a single point of failure.</strong> If your ops person leaves and nobody else understands the spreadsheet's tangle of tabs and hidden formulas, you don't have a reporting system — you have a liability.</li>
-<li><strong>You're blending multiple data sources by hand.</strong> Attribution, LTV, cohort analysis — any of these that require joining ad spend, order data, and customer data across platforms will break spreadsheets fast. Manual joins don't scale and they introduce errors nobody catches.</li>
-</ul>
+  <figure class="figure">
+    <svg viewBox="0 0 720 176" width="100%" height="auto" role="img" aria-label="The four places a click loses its identity" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto"><text x="8" y="24" font-family="'Space Grotesk',system-ui,sans-serif" font-size="15" font-weight="600" fill="#14122b">The four places a click loses its identity</text><defs><marker id="dgArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#918da8"/></marker></defs><rect x="8" y="46" width="150" height="96" rx="11" fill="#faf8ff" stroke="#ece7f6"/><rect x="8" y="46" width="3.5" height="96" rx="2" fill="#6c4cf0"/><text x="23" y="71" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10" letter-spacing="1.4" fill="#6c4cf0">01</text><text x="23" y="93" font-family="'Space Grotesk',system-ui,sans-serif" font-size="13.5" font-weight="600" fill="#14122b">Ad click</text><text x="23" y="129" font-family="'Space Grotesk',system-ui,sans-serif" font-size="11.5" fill="#918da8">click id + utm set</text><line x1="165" y1="94" x2="185" y2="94" stroke="#918da8" stroke-width="1.6" marker-end="url(#dgArrow)"/><rect x="192" y="46" width="150" height="96" rx="11" fill="#faf8ff" stroke="#ece7f6"/><rect x="192" y="46" width="3.5" height="96" rx="2" fill="#6c4cf0"/><text x="207" y="71" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10" letter-spacing="1.4" fill="#6c4cf0">02</text><text x="207" y="93" font-family="'Space Grotesk',system-ui,sans-serif" font-size="13.5" font-weight="600" fill="#14122b">Site session</text><text x="207" y="129" font-family="'Space Grotesk',system-ui,sans-serif" font-size="11.5" fill="#918da8">cookie, consent gate</text><line x1="349" y1="94" x2="369" y2="94" stroke="#918da8" stroke-width="1.6" marker-end="url(#dgArrow)"/><rect x="376" y="46" width="150" height="96" rx="11" fill="#faf8ff" stroke="#ece7f6"/><rect x="376" y="46" width="3.5" height="96" rx="2" fill="#6c4cf0"/><text x="391" y="71" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10" letter-spacing="1.4" fill="#6c4cf0">03</text><text x="391" y="93" font-family="'Space Grotesk',system-ui,sans-serif" font-size="13.5" font-weight="600" fill="#14122b">Checkout</text><text x="391" y="110" font-family="'Space Grotesk',system-ui,sans-serif" font-size="13.5" font-weight="600" fill="#14122b">redirect</text><text x="391" y="129" font-family="'Space Grotesk',system-ui,sans-serif" font-size="11.5" fill="#918da8">params often dropped</text><line x1="533" y1="94" x2="553" y2="94" stroke="#918da8" stroke-width="1.6" marker-end="url(#dgArrow)"/><rect x="560" y="46" width="150" height="96" rx="11" fill="#faf8ff" stroke="#ece7f6"/><rect x="560" y="46" width="3.5" height="96" rx="2" fill="#12b981"/><text x="575" y="71" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10" letter-spacing="1.4" fill="#12b981">04</text><text x="575" y="93" font-family="'Space Grotesk',system-ui,sans-serif" font-size="13.5" font-weight="600" fill="#14122b">Closed revenue</text><text x="575" y="129" font-family="'Space Grotesk',system-ui,sans-serif" font-size="11.5" fill="#918da8">refunds, renewals</text></svg>
+    <figcaption>Each hop is a chance to drop the identifier that ties revenue back to spend.</figcaption>
+  </figure>
 
-<h2>What a warehouse actually fixes</h2>
-<p>A data warehouse isn't a fancier spreadsheet. It's a different model for how data moves and who touches it. Instead of manual exports, you set up pipelines that pull from Shopify, your ad platforms, your ESP, and your CRM automatically — usually daily, sometimes hourly. The data lands in one place, structured the same way every time.</p>
-<p>This solves three things spreadsheets can't:</p>
-<ul>
-<li><strong>Consistency.</strong> Everyone queries the same tables. Marketing and finance stop arguing about whose number is right because there's one source of truth.</li>
-<li><strong>Scale.</strong> A warehouse like BigQuery or Snowflake handles millions of rows without breaking a sweat. Your queries stay fast even as order volume grows.</li>
-<li><strong>Auditability.</strong> When logic lives in SQL and version-controlled transformations instead of nested spreadsheet formulas, you can actually trace how a number was calculated and who changed what.</li>
-</ul>
-<p>None of this requires a data team of five people. A lean setup — a pipeline tool, a warehouse, and a BI layer on top — can run on one analyst's time once it's built.</p>
-
-<h2>The real cost of waiting too long</h2>
-<p>Teams delay this move because it feels like overhead they don't need yet. But the cost of staying on spreadsheets isn't flat — it compounds. Every month you wait, more reports get built on the shaky foundation, more people get trained on broken workflows, and more decisions get made on numbers nobody has actually verified.</p>
-<p>The real cost shows up in decisions, not dashboards. If your true ROAS calculation is wrong because it's not accounting for returns, discounts, or multi-touch attribution properly, you're misallocating ad spend every single day that number goes unfixed. A warehouse doesn't just make reporting easier — it makes the underlying numbers correct, because you can actually implement the logic that spreadsheets can't handle: proper attribution windows, cohort-based LTV, blended CAC across channels.</p>
-<p>There's also a hiring cost. Growing teams eventually want a data analyst or growth marketer who can build real models. Good people don't want to inherit a spreadsheet held together with duct tape — they want a warehouse they can actually query.</p>
-
-<h2>What the transition actually looks like</h2>
-<p>You don't need to rip out spreadsheets overnight. The realistic path looks like this:</p>
-<ul>
-<li><strong>Start with the highest-pain data source.</strong> Usually it's ad platform spend or order data — whatever causes the most manual work or the most disagreement about numbers.</li>
-<li><strong>Set up a pipeline tool</strong> (Fivetran, Airbyte, or a custom script) to move that data into a warehouse automatically, on a schedule.</li>
-<li><strong>Rebuild your core reports as SQL queries</strong> instead of spreadsheet formulas. This is the part people underestimate — it forces you to actually document your logic instead of hiding it in a cell reference.</li>
-<li><strong>Layer a BI tool on top</strong> (Looker Studio, Metabase, or similar) so non-technical people still get dashboards, just built on solid ground.</li>
-<li><strong>Keep spreadsheets for what they're good at</strong> — quick one-off analysis, scenario modeling, ad hoc exports. Don't force everything into the warehouse if it doesn't need to live there.</li>
-</ul>
-<p>Most teams can get a basic version running in a few weeks, not months, if they pick one or two data sources to start instead of trying to migrate everything at once.</p>
-
-<h2>The takeaway</h2>
-<p>Spreadsheets are fine until they're not. The signal isn't a specific revenue number or order count — it's the pain: hours lost to manual work, numbers nobody trusts, and decisions made on data that might be wrong. If you're seeing two or more of those signs right now, you're not early. You're already paying the cost of waiting. The warehouse isn't the hard part — admitting the spreadsheet stopped working is.</p>
-
-  <h2>Further reading</h2>
+  <h2>The four places it breaks</h2>
   <ul>
-    <li><a href="/guide-data-pipelines.html">Guide: Revenue pipelines that survive production</a></li>
-    <li><a href="/blog-why-your-dbt-pipeline-keeps-breaking-on-api-schema-drift.html">Why your dbt pipeline keeps breaking on API schema drift</a></li>
-    <li><a href="/blog-how-to-build-a-customer-data-warehouse-that-survives-ios-att.html">How to build a customer data warehouse that survives ios attribution loss</a></li>
+    <li><strong>The click.</strong> A campaign renamed in the ad UI while the utm stays frozen, and
+    one campaign becomes two rows in your report.</li>
+    <li><strong>The session.</strong> Consent gates and blocked scripts mean the first-party
+    identifier is never set, so the session starts anonymous and stays that way.</li>
+    <li><strong>The checkout redirect.</strong> Payment providers on their own domain rewrite the
+    referrer and strip query parameters. The order arrives with no memory of the ad.</li>
+    <li><strong>The revenue.</strong> Refunds, chargebacks, and cancelled renewals land days or
+    months later, and most reports never subtract them.</li>
   </ul>
-</article>
 
-<div class="endcta">
-  <div class="ctaproof">154 dbt models · 4 brands — Multi-brand data platform</div>
-  <h3>Want a warehouse that survives schema drift?</h3>
-  <p>We build daily pipelines that alert on failure down to the file and row, not reporting that quietly breaks.</p>
+  <h2>Last-click, data-driven, and why they disagree</h2>
+  <p>Platform-reported conversions use their own attribution window and their own view of the user —
+  usually generous, because the platform is grading its own homework. Analytics tools apply
+  last-non-direct over whatever sessions they managed to observe. Neither sees the refund.</p>
+  <p>So the disagreement is structural, not a bug: three systems, three populations, three windows.
+  The only durable fix is to hold the join yourself, in a warehouse, keyed on an identifier you
+  control, with revenue that reconciles to your payment processor.</p>
+
+  <h2>What to fix first</h2>
+  <p>In order, because each step makes the next one measurable:</p>
+  <ul>
+    <li>Persist a first-party identifier through the checkout redirect.</li>
+    <li>Send server-side conversions so measurement survives browser-side loss.</li>
+    <li>Join orders back to clicks in the warehouse, not in a reporting tool.</li>
+    <li>Subtract refunds and failed renewals on the same cohort you attribute.</li>
+    <li>Only then argue about attribution models.</li>
+  </ul>
+
+  <h2>Questions people ask</h2>
+  <div class="faq">
+    <div class="faqitem">
+      <h3>Why do Meta and Google both claim credit for the same sale?</h3>
+      <p>Each platform uses its own attribution window and its own view of the user, and both are graded on their own homework — a platform has no incentive to under-claim. Overlap is normal, not fraud; the fix is de-duplicating in your own warehouse, not trusting either platform&#x27;s number in isolation.</p>
+    </div>
+    <div class="faqitem">
+      <h3>Is last-click attribution actually wrong?</h3>
+      <p>It&#x27;s not wrong, it&#x27;s incomplete. Last-click answers &#x27;which touchpoint happened right before the order&#x27; — a real, useful question. It just isn&#x27;t the same question as &#x27;which spend actually drove incremental revenue,&#x27; and treating the two as interchangeable is where most attribution arguments start.</p>
+    </div>
+    <div class="faqitem">
+      <h3>Do we need a full CDP to fix this, or can it be simpler?</h3>
+      <p>Most of the value comes from three things: a first-party identifier that survives the checkout redirect, server-side conversion events, and a warehouse join between orders and clicks. That&#x27;s a data engineering project, not necessarily a CDP purchase — a CDP can help operationalize it later, but it doesn&#x27;t fix a broken identifier on its own.</p>
+    </div>
+    <div class="faqitem">
+      <h3>How long before a fix shows up in reported ROAS?</h3>
+      <p>Identifier and server-side fixes show up within days, once the new events start flowing. Attribution model changes take longer to read cleanly, because you&#x27;re comparing against a cohort that matured under the old, broken measurement — give it at least one full cohort cycle before judging the before/after.</p>
+    </div>
+  </div>
+
+  <h2>Read next</h2>
+  <div class="readlist">
+    <a class="readitem" href="/blog-why-utm-parameters-break-at-checkout-redirects-and-how-to-fi.html">
+      <span class="rtag">Attribution</span>
+      <h3>Why utm parameters break at checkout redirects and how to fix attribution</h3>
+      <p>The single most common way a paid click loses its identity before the order is written.</p>
+    </a>
+    <a class="readitem" href="/blog-attribution-when-payment-domains-steal-the-credit.html">
+      <span class="rtag">Attribution</span>
+      <h3>Attribution when payment domains steal the credit</h3>
+      <p>Why your payment provider shows up as a traffic source, and how to stop it taking credit.</p>
+    </a>
+    <a class="readitem" href="/blog-server-side-conversions-with-meta-capi-what-breaks-and-how-t.html">
+      <span class="rtag">Attribution</span>
+      <h3>Server-side conversions with Meta CAPI: what breaks and how to fix it</h3>
+      <p>What actually breaks when you move conversions server-side, and the fixes that hold.</p>
+    </a>
+    <a class="readitem" href="/blog-ga4-roas-lying.html">
+      <span class="rtag">Attribution</span>
+      <h3>Why your GA4 ROAS is lying to you — and how to find the real number</h3>
+      <p>Why the ROAS on your dashboard disagrees with the money in your account.</p>
+    </a>
+    <a class="readitem" href="/blog-true-roas-vs-ga4-ecommerce-roas-for-offline-close-businesses.html">
+      <span class="rtag">Attribution</span>
+      <h3>True ROAS vs GA4 ecommerce ROAS for offline-close businesses</h3>
+      <p>When the sale closes off-site, GA4 ecommerce ROAS stops being a usable number.</p>
+    </a>
+    <a class="readitem" href="/blog-why-offline-conversions-beat-pixel-based-roas.html">
+      <span class="rtag">Attribution</span>
+      <h3>Why offline conversions beat pixel-based ROAS</h3>
+      <p>Uploading closed revenue back to the platforms beats trusting the pixel.</p>
+    </a>
+    <a class="readitem" href="/blog-how-to-attribute-subscription-ltv-back-to-the-original-ad-cl.html">
+      <span class="rtag">Attribution</span>
+      <h3>How to attribute subscription ltv back to the original ad click</h3>
+      <p>Attributing renewals and lifetime value to the click that started it.</p>
+    </a>
+  </div>
+
+</div>
+
+  <div class="endcta">
+  <div class="ctaproof">283/408 sessions reattributed — Fixed attribution, returned conversions to Google Ads</div>
+  <h3>Want your attribution reconciled like this?</h3>
+  <p>We patch the join between clicks and closed revenue so bidding optimizes on what actually happened, not what the checkout referrer claims.</p>
   <div class="ctabtns">
     <a href="/#work" class="btn btn-secondary">See more work</a>
     <a href="/#contact" class="btn btn-primary">Book a call</a>
   </div>
 </div>
+
 
 </main>
 <footer>
@@ -173,49 +365,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span>Data infrastructure that drives revenue.</span>
   </div>
 </footer>
-
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"BlogPosting",
-  "headline":"Why your GA4 ROAS is lying to you — and how to find the real number",
-  "description":"GA4 and ad platforms report ROAS from clicks and pixels, not closed revenue. How to reconcile reported ROAS against real money and optimize on a true number.",
-  "author":{"@type":"Organization","name":"Twinslytics"},
-  "publisher":{"@type":"Organization","name":"Twinslytics","url":"https://twinslytics.com"},
-  "mainEntityOfPage":"https://twinslytics.com/blog-ga4-roas-lying.html",
-  "datePublished":"2026-08-09"
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://twinslytics.com/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Blog",
-      "item": "https://twinslytics.com/blog.html"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "When to move from spreadsheets to a data warehouse",
-      "item": "https://twinslytics.com/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html"
-    }
-  ]
-}
-</script>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
 <script>
 (function(){var b=document.querySelector(".burger"),m=document.querySelector(".nav-links");if(!b||!m)return;function close(){m.classList.remove("open");b.classList.remove("is-open");b.setAttribute("aria-expanded","false");}b.addEventListener("click",function(e){e.stopPropagation();var o=m.classList.toggle("open");b.classList.toggle("is-open",o);b.setAttribute("aria-expanded",o);});m.querySelectorAll("a").forEach(function(a){a.addEventListener("click",close);});document.addEventListener("click",function(e){if(m.classList.contains("open")&&!m.contains(e.target)&&!b.contains(e.target))close();});})();
 </script>
-<script>try{fetch("/api/views?p="+encodeURIComponent(location.pathname.replace(/\.html$/,"")),{method:"POST",keepalive:true})}catch(e){}</script>
+<script>
+fetch("/api/views").then(function(r){return r.json()}).then(function(v){
+  function get(p){p=p.replace(/\/$/,"");return v[p]||v[p+".html"]||v[p.replace(/\.html$/,"")]||0;}
+  document.querySelectorAll("a.post[href]").forEach(function(a){
+    var el=a.querySelector(".views");if(!el)return;
+    var n=get(a.getAttribute("href"));
+    if(n>0)el.textContent=" \u00b7 "+n+(n===1?" view":" views");
+  });
+}).catch(function(){});
+</script>
 </body>
 </html>

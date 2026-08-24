@@ -11,16 +11,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>When to move from spreadsheets to a data warehouse — Twinslytics</title>
-<meta name="description" content="Your marketing lead pulls Shopify data into Google Sheets every Monday. Someone else exports Klaviyo numbers into a different tab. Meta ad spend gets copy-" />
+<title>Why ROAS can rise while contribution margin falls — Twinslytics</title>
+<meta name="description" content="See how discounts, returns and product costs quietly erode margin behind a healthy ROAS number, and what your reporting is missing." />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="canonical" href="https://twinslytics.com/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html" />
+<link rel="canonical" href="https://twinslytics.com/blog-why-your-roas-looks-great-while-contribution-margin-keeps-sh.html" />
 <meta name="robots" content="index, follow" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://twinslytics.com/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html" />
-<meta property="og:title" content="When to move from spreadsheets to a data warehouse" />
-<meta property="og:description" content="GA4 measures clicks, not closed revenue. Here's how to reconcile reported ROAS against what actually hit your bank account." />
+<meta property="og:url" content="https://twinslytics.com/blog-why-your-roas-looks-great-while-contribution-margin-keeps-sh.html" />
+<meta property="og:title" content="Why ROAS can rise while contribution margin falls" />
+<meta property="og:description" content="See how discounts, returns and product costs quietly erode margin behind a healthy ROAS number, and what your reporting is missing." />
 <meta property="og:image" content="https://twinslytics.com/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,6 +63,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   .burger.is-open span:nth-child(2){opacity:0}
   .burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .figure{margin:34px 0}
+  .figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:14px;background:#fff}
+  .figure figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:10px;line-height:1.5}
 
   .ctaproof{font-family:var(--mono);font-size:12px;color:var(--v);background:#fff;display:inline-block;padding:6px 14px;border-radius:20px;border:1px solid var(--line-2);margin-bottom:16px}
   .ctabtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
@@ -101,65 +104,71 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <article>
   <a class="back" href="/blog.html">← All posts</a>
-  <span class="eyebrow">Data engineering</span>
-  <h1>When to move from spreadsheets to a data warehouse</h1>
-  <div class="artmeta">9 Aug 2026 · 5 min read · Twinslytics<span class="artviews"></span></div>
+  <span class="eyebrow">Marketing analytics</span>
+  <h1>Why ROAS can rise while contribution margin falls</h1>
+  <div class="artmeta">24 Aug 2026 · 6 min read · Twinslytics<span class="artviews"></span></div>
 
-  <p>Your marketing lead pulls Shopify data into Google Sheets every Monday. Someone else exports Klaviyo numbers into a different tab. Meta ad spend gets copy-pasted from a third source. By Wednesday, three people have three versions of "true ROAS" and nobody trusts any of them. This is the moment most DTC teams realize spreadsheets stopped working — they just don't admit it for another six months.</p>
+  <figure class="figure">
+    <svg viewBox="0 0 720 224" width="100%" height="auto" role="img" aria-label="ROAS vs Contribution Margin: Why They Diverge" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto"><text x="8" y="24" font-family="'Space Grotesk',system-ui,sans-serif" font-size="15" font-weight="600" fill="#14122b">ROAS vs Contribution Margin: Why They Diverge</text><rect x="8" y="44" width="342" height="174" rx="12" fill="#fdfcff" stroke="#ece7f6"/><text x="24" y="69" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10.5" letter-spacing="1.3" fill="#ff7a59">WHAT ROAS IGNORES</text><line x1="24" y1="80" x2="334" y2="80" stroke="#ece7f6"/><circle cx="29" cy="98" r="2.6" fill="#ff7a59"/><text x="40" y="102" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">COGS &amp; shipping costs</text><circle cx="29" cy="128" r="2.6" fill="#ff7a59"/><text x="40" y="132" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Discounts &amp; promo codes</text><circle cx="29" cy="158" r="2.6" fill="#ff7a59"/><text x="40" y="162" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Returns &amp; chargebacks</text><circle cx="29" cy="188" r="2.6" fill="#ff7a59"/><text x="40" y="192" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Fulfillment costs</text><rect x="370" y="44" width="342" height="174" rx="12" fill="#fdfcff" stroke="#ece7f6"/><text x="386" y="69" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10.5" letter-spacing="1.3" fill="#12b981">WHAT FIXES IT</text><line x1="386" y1="80" x2="696" y2="80" stroke="#ece7f6"/><circle cx="391" cy="98" r="2.6" fill="#12b981"/><text x="402" y="102" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Split promo vs full-price revenue</text><circle cx="391" cy="128" r="2.6" fill="#12b981"/><text x="402" y="132" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Net down returns before reporting</text><circle cx="391" cy="158" r="2.6" fill="#12b981"/><text x="402" y="162" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Track contribution margin per ord…</text><circle cx="391" cy="188" r="2.6" fill="#12b981"/><text x="402" y="192" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Attribute true landed costs</text></svg>
+    <figcaption>ROAS and contribution margin measure different things, so they can move in opposite directions at the same time.</figcaption>
+  </figure>
 
-<p>Spreadsheets aren't the enemy. They're a fine tool for a $500K/year brand with one founder checking numbers once a week. The problem is nobody sets a clear line for when to graduate, so teams stay stuck with broken formulas and manual exports long after the pain outweighs the switching cost.</p>
+  <p>Your dashboard says ROAS hit 4.2x last month. Your CFO says margin dropped for the third straight quarter. Both numbers are correct. That's the problem.</p>
 
-<h2>The signs you're already behind</h2>
-<p>You don't need a data warehouse because it's trendy. You need one when specific, repeatable pain shows up:</p>
+<p>ROAS measures revenue against ad spend. It says nothing about what it cost you to make, ship, return, or discount that revenue. You can grow ROAS every month while your business quietly bleeds cash, because the metric was never built to catch that. It's an efficiency ratio for one line item in a much bigger cost stack, and treating it like a profit signal is how teams end up optimizing themselves into a margin hole.</p>
+
+<h2>ROAS ignores everything but ad spend</h2>
+<p>ROAS is revenue divided by media spend. That's it. It doesn't know your product costs went up, your carrier raised rates, or that a third of last month's "revenue" came back as returns. It doesn't know you gave away 20% off to close the sale. Every one of those costs hits contribution margin directly. None of them touch the ROAS calculation.</p>
+
+<p>This is why a channel can post a beautiful ROAS while contributing almost nothing to the bottom line. A campaign selling a low-margin SKU at a steep discount can generate revenue efficiently and profit barely at all. If your reporting stops at "revenue over spend," you'll keep feeding budget to the exact channels and campaigns that are hollowing out margin, because on paper they look like your best performers.</p>
+
+<h2>Discounts inflate revenue, not profit</h2>
+<p>Promo codes, site-wide sales, and bundle deals all boost the top of the ROAS equation. Revenue goes up, spend often stays flat or even drops as the discount does the conversion work instead of the ad dollar, and ROAS looks fantastic. Contribution margin sees the opposite: the discount comes straight off the top before you even get to COGS.</p>
+
+<p>Teams that don't split promo revenue from full-price revenue in their reporting end up with a blended ROAS that hides which chunk of the win was profitable and which chunk was margin given away to hit a revenue number. Over time, if promo-driven revenue keeps growing as a share of total revenue, ROAS can climb steadily while contribution margin per order falls just as steadily. It's not a coincidence. It's the same discount showing up as a positive in one metric and a negative in the other.</p>
+
+<h2>Returns show up late, if at all</h2>
+<p>Most attribution and ad platform reporting locks in revenue at the point of purchase. Returns, chargebacks, and refunds happen days or weeks later, often after the reporting window has closed and the campaign has been marked a success. If your data pipeline doesn't reconcile order data against return data on a rolling basis, your ROAS reporting is running on gross revenue that never actually arrived.</p>
+
+<p>Categories with high return rates — apparel with sizing issues, anything ordered in multiple variants "to try," high-consideration purchases people second-guess — are the worst offenders here. A campaign can look like your top performer for three weeks straight and then get quietly gutted by returns that never make it back into the ROAS calculation, but absolutely show up in contribution margin once real costs are booked.</p>
+
+<h2>Fulfillment costs move, ROAS doesn't notice</h2>
+<p>Shipping rates, warehousing fees, pick-and-pack costs, and payment processing fees all shift over time, sometimes month to month. None of these live inside your ad platform's reporting. ROAS treats every dollar of revenue as equally valuable regardless of what it cost to fulfill the order that generated it.</p>
+
+<p>This gets worse at the SKU level. A $60 order for a bulky, heavy item might cost twice as much to ship and fulfill as a $60 order for something small and light. Ad platforms and most attribution tools don't differentiate. They see two $60 conversions and report the same efficiency for both, even though one is dragging down contribution margin and the other is carrying it.</p>
+
+<p>If your data pipeline isn't pulling in real fulfillment and COGS data at the order or SKU level, you literally cannot see this gap. You need a warehouse where order-level revenue joins cleanly with order-level cost — product cost, shipping cost, payment fees, return provisions — so you can calculate contribution margin per order, per campaign, per SKU. Without that join, you're stuck comparing a media efficiency metric against a P&L metric and wondering why they disagree.</p>
+
+<h2>Attribution models overcount channels</h2>
+<p>Last-click and platform-reported attribution routinely take credit for revenue that would have happened anyway, or that another channel actually drove. Retargeting and branded search are the usual suspects — they mop up demand created elsewhere and post huge ROAS numbers for doing very little marginal work. Scaling budget into these "great ROAS" channels can genuinely increase spend without increasing real incremental revenue, let alone profit.</p>
+
+<p>When you layer this on top of everything above, you get a specific and common failure mode: teams shift budget toward channels with the best reported ROAS, those channels are disproportionately retargeting and brand campaigns with high overcounted attribution, the incremental revenue is smaller than reported, the margin on what revenue does show up is thin because of discounting and returns, and the net effect is spend goes up, blended ROAS goes up, and contribution margin goes down. Every individual metric in the chain can be technically accurate and the overall trend can still be actively harmful.</p>
+
+<h2>Fix the metric, not the campaign</h2>
+<p>The instinct when margin drops is to blame creative fatigue, audience saturation, or rising CPMs. Sometimes that's real. But before you touch a single campaign, check whether you're even measuring the right thing. A few fixes matter more than any bid adjustment:</p>
+
 <ul>
-<li><strong>Manual refresh takes real time.</strong> If someone spends more than 2-3 hours a week copying data between platforms and spreadsheets, that's a part-time job you're paying for with opportunity cost.</li>
-<li><strong>Numbers disagree and nobody knows why.</strong> Shopify says one revenue number, your ad platform says another ROAS, and finance has a third. Nobody can explain the gap because the logic lives in someone's head, not in documented code.</li>
-<li><strong>Formulas break when data grows.</strong> VLOOKUP and INDEX/MATCH choke past a few hundred thousand rows. If your sheet takes 30 seconds to recalculate, you're already paying a tax on every analysis.</li>
-<li><strong>One person is a single point of failure.</strong> If your ops person leaves and nobody else understands the spreadsheet's tangle of tabs and hidden formulas, you don't have a reporting system — you have a liability.</li>
-<li><strong>You're blending multiple data sources by hand.</strong> Attribution, LTV, cohort analysis — any of these that require joining ad spend, order data, and customer data across platforms will break spreadsheets fast. Manual joins don't scale and they introduce errors nobody catches.</li>
+<li>Build a data pipeline that joins order-level revenue with order-level cost — COGS, shipping, payment fees, discount amount — so contribution margin can be calculated per order, not estimated in aggregate.</li>
+<li>Reconcile returns and refunds against the original order and campaign on a rolling basis, not as a separate finance-only process that never feeds back into marketing reporting.</li>
+<li>Report contribution margin by channel and campaign next to ROAS, not instead of it. Let the team see both numbers on the same dashboard so a "win" that isn't actually profitable gets caught immediately.</li>
+<li>Separate promo-driven revenue from full-price revenue in every performance report so discount-fueled ROAS gains don't get read as organic channel improvement.</li>
+<li>Push attribution toward incrementality testing for your top-spend channels, especially retargeting and brand search, instead of trusting platform-reported last-click numbers at face value.</li>
 </ul>
 
-<h2>What a warehouse actually fixes</h2>
-<p>A data warehouse isn't a fancier spreadsheet. It's a different model for how data moves and who touches it. Instead of manual exports, you set up pipelines that pull from Shopify, your ad platforms, your ESP, and your CRM automatically — usually daily, sometimes hourly. The data lands in one place, structured the same way every time.</p>
-<p>This solves three things spreadsheets can't:</p>
-<ul>
-<li><strong>Consistency.</strong> Everyone queries the same tables. Marketing and finance stop arguing about whose number is right because there's one source of truth.</li>
-<li><strong>Scale.</strong> A warehouse like BigQuery or Snowflake handles millions of rows without breaking a sweat. Your queries stay fast even as order volume grows.</li>
-<li><strong>Auditability.</strong> When logic lives in SQL and version-controlled transformations instead of nested spreadsheet formulas, you can actually trace how a number was calculated and who changed what.</li>
-</ul>
-<p>None of this requires a data team of five people. A lean setup — a pipeline tool, a warehouse, and a BI layer on top — can run on one analyst's time once it's built.</p>
-
-<h2>The real cost of waiting too long</h2>
-<p>Teams delay this move because it feels like overhead they don't need yet. But the cost of staying on spreadsheets isn't flat — it compounds. Every month you wait, more reports get built on the shaky foundation, more people get trained on broken workflows, and more decisions get made on numbers nobody has actually verified.</p>
-<p>The real cost shows up in decisions, not dashboards. If your true ROAS calculation is wrong because it's not accounting for returns, discounts, or multi-touch attribution properly, you're misallocating ad spend every single day that number goes unfixed. A warehouse doesn't just make reporting easier — it makes the underlying numbers correct, because you can actually implement the logic that spreadsheets can't handle: proper attribution windows, cohort-based LTV, blended CAC across channels.</p>
-<p>There's also a hiring cost. Growing teams eventually want a data analyst or growth marketer who can build real models. Good people don't want to inherit a spreadsheet held together with duct tape — they want a warehouse they can actually query.</p>
-
-<h2>What the transition actually looks like</h2>
-<p>You don't need to rip out spreadsheets overnight. The realistic path looks like this:</p>
-<ul>
-<li><strong>Start with the highest-pain data source.</strong> Usually it's ad platform spend or order data — whatever causes the most manual work or the most disagreement about numbers.</li>
-<li><strong>Set up a pipeline tool</strong> (Fivetran, Airbyte, or a custom script) to move that data into a warehouse automatically, on a schedule.</li>
-<li><strong>Rebuild your core reports as SQL queries</strong> instead of spreadsheet formulas. This is the part people underestimate — it forces you to actually document your logic instead of hiding it in a cell reference.</li>
-<li><strong>Layer a BI tool on top</strong> (Looker Studio, Metabase, or similar) so non-technical people still get dashboards, just built on solid ground.</li>
-<li><strong>Keep spreadsheets for what they're good at</strong> — quick one-off analysis, scenario modeling, ad hoc exports. Don't force everything into the warehouse if it doesn't need to live there.</li>
-</ul>
-<p>Most teams can get a basic version running in a few weeks, not months, if they pick one or two data sources to start instead of trying to migrate everything at once.</p>
-
-<h2>The takeaway</h2>
-<p>Spreadsheets are fine until they're not. The signal isn't a specific revenue number or order count — it's the pain: hours lost to manual work, numbers nobody trusts, and decisions made on data that might be wrong. If you're seeing two or more of those signs right now, you're not early. You're already paying the cost of waiting. The warehouse isn't the hard part — admitting the spreadsheet stopped working is.</p>
+<p>ROAS isn't wrong, it's incomplete. It was designed to answer one question — how efficiently did this dollar of ad spend turn into revenue — and it answers that question fine. The mistake is asking it a different question: is this business making money. Only contribution margin, built from a pipeline that actually connects cost data to revenue data at the order level, can answer that. Until you build that connection, you'll keep hitting your ROAS targets and wondering where the profit went.</p>
 
   <h2>Further reading</h2>
   <ul>
-    <li><a href="/guide-data-pipelines.html">Guide: Revenue pipelines that survive production</a></li>
-    <li><a href="/blog-why-your-dbt-pipeline-keeps-breaking-on-api-schema-drift.html">Why your dbt pipeline keeps breaking on API schema drift</a></li>
-    <li><a href="/blog-how-to-build-a-customer-data-warehouse-that-survives-ios-att.html">How to build a customer data warehouse that survives ios attribution loss</a></li>
+    <li><a href="/guide-true-roas.html">Guide: True ROAS, and how to get to it</a></li>
+    <li><a href="/blog-how-dtc-brands-should-measure-blended-roas.html">How DTC brands should measure blended ROAS</a></li>
+    <li><a href="/blog-how-to-build-a-marketing-mix-model-without-a-data-science-te.html">How to build a marketing mix model without a data science team</a></li>
   </ul>
 </article>
 
 <div class="endcta">
-  <div class="ctaproof">154 dbt models · 4 brands — Multi-brand data platform</div>
-  <h3>Want a warehouse that survives schema drift?</h3>
-  <p>We build daily pipelines that alert on failure down to the file and row, not reporting that quietly breaks.</p>
+  <div class="ctaproof">400% blended ROAS target — Diagnosed a ROAS collapse, mapped the path to 400%</div>
+  <h3>Want to know what your ROAS is actually doing?</h3>
+  <p>We reconcile ad spend, platform conversions, and closed revenue into one number your team can spend against.</p>
   <div class="ctabtns">
     <a href="/#work" class="btn btn-secondary">See more work</a>
     <a href="/#contact" class="btn btn-primary">Book a call</a>
@@ -178,12 +187,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 {
   "@context":"https://schema.org",
   "@type":"BlogPosting",
-  "headline":"Why your GA4 ROAS is lying to you — and how to find the real number",
-  "description":"GA4 and ad platforms report ROAS from clicks and pixels, not closed revenue. How to reconcile reported ROAS against real money and optimize on a true number.",
+  "headline":"Why ROAS can rise while contribution margin falls",
+  "description":"See how discounts, returns and product costs quietly erode margin behind a healthy ROAS number, and what your reporting is missing.",
   "author":{"@type":"Organization","name":"Twinslytics"},
   "publisher":{"@type":"Organization","name":"Twinslytics","url":"https://twinslytics.com"},
-  "mainEntityOfPage":"https://twinslytics.com/blog-ga4-roas-lying.html",
-  "datePublished":"2026-08-09"
+  "mainEntityOfPage":"https://twinslytics.com/blog-why-your-roas-looks-great-while-contribution-margin-keeps-sh.html",
+  "datePublished":"2026-08-24"
 }
 </script>
 <script type="application/ld+json">
@@ -206,8 +215,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "When to move from spreadsheets to a data warehouse",
-      "item": "https://twinslytics.com/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html"
+      "name": "Why ROAS can rise while contribution margin falls",
+      "item": "https://twinslytics.com/blog-why-your-roas-looks-great-while-contribution-margin-keeps-sh.html"
     }
   ]
 }

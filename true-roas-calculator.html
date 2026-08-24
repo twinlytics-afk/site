@@ -11,51 +11,57 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>When to move from spreadsheets to a data warehouse — Twinslytics</title>
-<meta name="description" content="Your marketing lead pulls Shopify data into Google Sheets every Monday. Someone else exports Klaviyo numbers into a different tab. Meta ad spend gets copy-" />
+<title>True ROAS calculator — Twinslytics</title>
+<meta name="description" content="Free calculator: enter ad spend and platform-reported revenue, apply overlap, refunds and untracked revenue, and see the ROAS you can actually spend against." />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="canonical" href="https://twinslytics.com/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html" />
+<link rel="canonical" href="https://twinslytics.com/true-roas-calculator.html" />
 <meta name="robots" content="index, follow" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://twinslytics.com/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html" />
-<meta property="og:title" content="When to move from spreadsheets to a data warehouse" />
-<meta property="og:description" content="GA4 measures clicks, not closed revenue. Here's how to reconcile reported ROAS against what actually hit your bank account." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://twinslytics.com/true-roas-calculator.html" />
+<meta property="og:title" content="True ROAS calculator" />
+<meta property="og:description" content="Free calculator: enter ad spend and platform-reported revenue, apply overlap, refunds and untracked revenue, and see the ROAS you can actually spend against." />
 <meta property="og:image" content="https://twinslytics.com/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=optional" rel="stylesheet">
 <style>
-  :root{--bg:#fff;--ink:#14122b;--body:#403c5c;--mut:#6f6a8a;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--ok:#12b981;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+
+  :root{--bg:#fff;--bg-alt:#faf9ff;--bg-tint:#f5f2ff;--ink:#14122b;--body:#5a5675;--mut:#6f6a8a;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased}
-  a{color:var(--v);text-decoration:none}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  h1,h2,h3{font-family:var(--disp);font-weight:600;line-height:1.1;letter-spacing:-.025em;color:var(--ink)}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--v);background:#f2ecff;display:inline-block;padding:6px 12px;border-radius:20px}
   .btn{font-family:var(--disp);font-weight:600;font-size:14.5px;padding:12px 22px;border-radius:8px;display:inline-block;border:1px solid transparent}
   .btn-primary{background:var(--grad);color:#fff}
-  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
   .logo{font-family:var(--disp);font-weight:700;font-size:20px;letter-spacing:-.02em;display:inline-flex;align-items:center;gap:10px}
   .logo .brandmark{height:26px;width:auto;display:block}
   .logo .m{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .nav-links{display:flex;align-items:center;gap:30px;font-size:14.5px}
-  .nav-links a:not(.btn){color:#5a5675}
+  .nav-links a:not(.btn){color:var(--body)}
+  .nav-links a.active{color:var(--ink)}
   .nav .btn{padding:10px 18px}
-  article{max-width:720px;margin:0 auto;padding:56px 28px 20px}
-  .back{font-family:var(--mono);font-size:13px;color:var(--mut);margin-bottom:26px;display:inline-block}
-  article h1{font-family:var(--disp);font-weight:600;font-size:clamp(30px,4.4vw,44px);line-height:1.12;letter-spacing:-.025em;margin:16px 0 18px}
-  .artmeta{font-family:var(--mono);font-size:13px;color:var(--mut);padding-bottom:26px;margin-bottom:36px;border-bottom:1px solid var(--line)}
-  article h2{font-family:var(--disp);font-weight:600;font-size:26px;letter-spacing:-.02em;margin:44px 0 14px}
-  article p{color:var(--body);margin-bottom:20px}
-  article ul{color:var(--body);margin:0 0 20px 22px}
-  article li{margin-bottom:8px}
-  article strong{color:var(--ink);font-weight:600}
-  .pull{border-left:3px solid;border-image:var(--grad) 1;padding:6px 0 6px 22px;margin:32px 0;font-family:var(--disp);font-weight:500;font-size:22px;line-height:1.35;color:var(--ink)}
-  .endcta{max-width:720px;margin:20px auto 90px;padding:34px 32px;background:linear-gradient(180deg,#faf8ff,#f5f2ff);border:1px solid var(--line);border-radius:16px;text-align:center}
-  .endcta h3{font-family:var(--disp);font-weight:600;font-size:24px;margin-bottom:10px}
-  .endcta p{color:var(--body);font-size:16px;margin-bottom:20px}
+  .bloghero{text-align:center;padding:76px 0 48px;position:relative;overflow:hidden}
+  .bloghero::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:900px;height:600px;border-radius:50%;background:radial-gradient(circle at 45% 45%,rgba(108,76,240,.14),transparent 55%),radial-gradient(circle at 62% 55%,rgba(255,122,89,.1),transparent 55%);z-index:0}
+  .bloghero>*{position:relative;z-index:1}
+  .bloghero h1{font-size:clamp(34px,5vw,52px);margin:20px auto 14px;max-width:18ch}
+  .bloghero p{color:var(--body);font-size:19px;max-width:52ch;margin:0 auto}
+  .posts{max-width:var(--maxw);margin:0 auto;padding:20px 28px 96px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .post{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px;transition:transform .18s,box-shadow .18s}
+  .post:hover{transform:translateY(-3px);box-shadow:0 20px 44px -28px rgba(108,76,240,.5)}
+  .post .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--v);margin-bottom:14px}
+  .post h3{font-size:20px;line-height:1.22;margin-bottom:10px}
+  .post p{color:var(--body);font-size:15px;flex:1}
+  .post .meta{font-family:var(--mono);font-size:11.5px;color:var(--mut);margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+  .post.soon{opacity:.6}
+  .post.soon .tag{color:var(--mut)}
   footer{border-top:1px solid var(--line);padding:32px 0;background:#fff}
   .foot{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--mut);font-family:var(--mono);flex-wrap:wrap;gap:14px}
     .burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:none;border:0;cursor:pointer;padding:9px;border-radius:9px}
@@ -75,8 +81,131 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .nav-links a:not(.btn){display:block;padding:14px 0;font-size:16px;color:var(--ink);border-bottom:1px solid var(--line)}
     .nav-links .langsw{padding:14px 0;font-size:13px;border-bottom:1px solid var(--line)}
     .nav-links .btn{margin-top:14px;width:100%;text-align:center;padding:13px}
-}
+.posts{grid-template-columns:1fr}}
+
+  .hubwrap{max-width:860px;margin:0 auto;padding:56px 28px 20px}
+  .hubwrap h1{font-family:var(--disp);font-weight:600;font-size:clamp(31px,4.6vw,46px);line-height:1.1;letter-spacing:-.025em;margin:16px 0 18px}
+  .hubmeta{font-family:var(--mono);font-size:13px;color:var(--mut);padding-bottom:26px;margin-bottom:34px;border-bottom:1px solid var(--line)}
+  .hubwrap h2{font-family:var(--disp);font-weight:600;font-size:26px;letter-spacing:-.02em;margin:46px 0 14px}
+  .hubwrap h3{font-family:var(--disp);font-weight:600;font-size:18px;margin:0 0 6px}
+  .hubwrap p{color:var(--body);font-size:17.5px;line-height:1.7;margin-bottom:20px}
+  .hubwrap ul{color:var(--body);font-size:17.5px;line-height:1.7;margin:0 0 20px 22px}
+  .hubwrap li{margin-bottom:9px}
+  .hubwrap strong{color:var(--ink);font-weight:600}
+  .lede{font-size:20px !important;color:var(--ink) !important}
+  .figure{margin:34px 0}
+  .figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:14px;background:#fff}
+  .figure figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:10px;line-height:1.5}
+  .readlist{display:grid;gap:14px;margin:26px 0 8px}
+  .readitem{display:block;border:1px solid var(--line);border-radius:14px;padding:20px 22px;background:#fff;transition:transform .16s,box-shadow .16s,border-color .16s}
+  .readitem:hover{transform:translateY(-2px);border-color:var(--line-2);box-shadow:0 18px 40px -28px rgba(108,76,240,.5)}
+  .readitem .rtag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--v);display:block;margin-bottom:9px}
+  .readitem p{font-size:15.5px !important;color:var(--body) !important;margin:0 !important}
+  .endcta{max-width:860px;margin:44px auto 90px;padding:34px 32px;background:linear-gradient(180deg,#faf8ff,#f5f2ff);border:1px solid var(--line);border-radius:16px;text-align:center}
+  .endcta h3{font-family:var(--disp);font-weight:600;font-size:24px;margin-bottom:10px}
+  .endcta p{color:var(--body);font-size:16px;margin-bottom:20px}
+  .calc{border:1px solid var(--line);border-radius:16px;padding:26px 24px;background:#fdfcff;margin:30px 0}
+  .calcgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px}
+  .field label{display:block;font-family:var(--disp);font-weight:600;font-size:13.5px;color:var(--ink);margin-bottom:6px}
+  .field .hint{display:block;font-family:var(--mono);font-size:11px;color:var(--mut);margin-top:5px;line-height:1.45}
+  .field input{width:100%;font-family:var(--mono);font-size:15px;color:var(--ink);padding:11px 13px;border:1px solid var(--line-2);border-radius:9px;background:#fff}
+  .field input:focus{outline:2px solid rgba(108,76,240,.35);outline-offset:1px;border-color:var(--v)}
+  .calcout{margin-top:24px;padding-top:22px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .stat .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mut);display:block;margin-bottom:8px}
+  .stat .v{font-family:var(--disp);font-weight:600;font-size:26px;letter-spacing:-.02em;color:var(--ink);display:block;line-height:1.1}
+  .stat .s{font-family:var(--mono);font-size:11px;color:var(--mut);display:block;margin-top:6px}
+  .stat.key{border-color:#c9bdf5;background:#faf8ff}
+  .stat.key .v{color:var(--v)}
+  .verdict{margin-top:18px;font-family:var(--disp);font-size:16.5px;font-weight:500;color:var(--ink);line-height:1.5}
+
+  .faq{margin:44px 0}
+  .faqitem{border-bottom:1px solid var(--line);padding:20px 0}
+  .faqitem:first-child{border-top:1px solid var(--line)}
+  .faqitem h3{font-family:var(--disp);font-weight:600;font-size:17px;margin-bottom:9px;color:var(--ink)}
+  .faqitem p{color:var(--body);font-size:15.5px;margin:0}
+  @media(max-width:760px){.calcgrid{grid-template-columns:1fr}.calcout{grid-template-columns:1fr}}
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "True ROAS calculator",
+  "description": "Free calculator: enter ad spend and platform-reported revenue, apply overlap, refunds and untracked revenue, and see the ROAS you can actually spend against.",
+  "url": "https://twinslytics.com/true-roas-calculator.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Twinslytics",
+    "url": "https://twinslytics.com"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://twinslytics.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Guides",
+      "item": "https://twinslytics.com/blog.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "True ROAS calculator",
+      "item": "https://twinslytics.com/true-roas-calculator.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Where do the overlap and refund percentages actually come from?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Overlap comes from counting orders claimed by more than one ad platform in the same window — if you've never measured it, don't assume zero for a multi-channel account. Refund rate comes from your payment processor, attributed to the cohort that generated the order rather than the month the refund landed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why include untracked revenue in a ROAS calculation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because pixels only see what happens in a browser. Offline closes, phone orders, and anything finished outside the checkout flow are real revenue that platform-reported ROAS never had a chance to count — leaving it out understates channels that drive real, if invisible, demand."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this the same as what an agency or platform reports?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No — this is deliberately the number after de-duplication, refunds, and untracked revenue are applied, which is usually lower than what any single platform reports on its own. That's the point: it's the version you can safely spend against."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -99,72 +228,214 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </header>
 <main>
 
-<article>
-  <a class="back" href="/blog.html">← All posts</a>
-  <span class="eyebrow">Data engineering</span>
-  <h1>When to move from spreadsheets to a data warehouse</h1>
-  <div class="artmeta">9 Aug 2026 · 5 min read · Twinslytics<span class="artviews"></span></div>
+<div class="hubwrap">
+  <a class="back" href="/blog.html">← All writing</a>
+  <span class="eyebrow">Free tool</span>
+  <h1>True ROAS calculator</h1>
+  <div class="hubmeta">Runs in your browser · nothing is sent anywhere · Twinslytics</div>
 
-  <p>Your marketing lead pulls Shopify data into Google Sheets every Monday. Someone else exports Klaviyo numbers into a different tab. Meta ad spend gets copy-pasted from a third source. By Wednesday, three people have three versions of "true ROAS" and nobody trusts any of them. This is the moment most DTC teams realize spreadsheets stopped working — they just don't admit it for another six months.</p>
+  <p class="lede">Platform-reported ROAS is gross, de-duplicated by nobody, and blind to refunds.
+  Put your own numbers in and see what is left.</p>
 
-<p>Spreadsheets aren't the enemy. They're a fine tool for a $500K/year brand with one founder checking numbers once a week. The problem is nobody sets a clear line for when to graduate, so teams stay stuck with broken formulas and manual exports long after the pain outweighs the switching cost.</p>
+  <div class="calc">
+    <div class="calcgrid">
+      <div class="field">
+        <label for="spend">Ad spend</label>
+        <input id="spend" type="text" inputmode="decimal" value="50000" aria-describedby="spendHint" />
+        <span class="hint" id="spendHint">Total spend for the period, all channels.</span>
+      </div>
+      <div class="field">
+        <label for="reported">Platform-reported revenue</label>
+        <input id="reported" type="text" inputmode="decimal" value="220000" aria-describedby="repHint" />
+        <span class="hint" id="repHint">Sum of what every platform claims. Yes, it double-counts — that's the next field.</span>
+      </div>
+      <div class="field">
+        <label for="overlap">Cross-platform overlap %</label>
+        <input id="overlap" type="text" inputmode="decimal" value="18" aria-describedby="ovHint" />
+        <span class="hint" id="ovHint">Share of conversions claimed by more than one platform.</span>
+      </div>
+      <div class="field">
+        <label for="refund">Refunds &amp; chargebacks %</label>
+        <input id="refund" type="text" inputmode="decimal" value="9" aria-describedby="refHint" />
+        <span class="hint" id="refHint">Of gross revenue, including cancelled renewals.</span>
+      </div>
+      <div class="field">
+        <label for="untracked">Untracked closed revenue</label>
+        <input id="untracked" type="text" inputmode="decimal" value="15000" aria-describedby="untHint" />
+        <span class="hint" id="untHint">Offline closes, phone orders — real money no pixel saw.</span>
+      </div>
+    </div>
 
-<h2>The signs you're already behind</h2>
-<p>You don't need a data warehouse because it's trendy. You need one when specific, repeatable pain shows up:</p>
-<ul>
-<li><strong>Manual refresh takes real time.</strong> If someone spends more than 2-3 hours a week copying data between platforms and spreadsheets, that's a part-time job you're paying for with opportunity cost.</li>
-<li><strong>Numbers disagree and nobody knows why.</strong> Shopify says one revenue number, your ad platform says another ROAS, and finance has a third. Nobody can explain the gap because the logic lives in someone's head, not in documented code.</li>
-<li><strong>Formulas break when data grows.</strong> VLOOKUP and INDEX/MATCH choke past a few hundred thousand rows. If your sheet takes 30 seconds to recalculate, you're already paying a tax on every analysis.</li>
-<li><strong>One person is a single point of failure.</strong> If your ops person leaves and nobody else understands the spreadsheet's tangle of tabs and hidden formulas, you don't have a reporting system — you have a liability.</li>
-<li><strong>You're blending multiple data sources by hand.</strong> Attribution, LTV, cohort analysis — any of these that require joining ad spend, order data, and customer data across platforms will break spreadsheets fast. Manual joins don't scale and they introduce errors nobody catches.</li>
-</ul>
+    <div class="calcout">
+      <div class="stat">
+        <span class="k">Reported ROAS</span>
+        <span class="v" id="outReported">—</span>
+        <span class="s">what the platforms claim</span>
+      </div>
+      <div class="stat key">
+        <span class="k">True ROAS</span>
+        <span class="v" id="outTrue">—</span>
+        <span class="s" id="outTrueSub"></span>
+      </div>
+      <div class="stat">
+        <span class="k">Gap</span>
+        <span class="v" id="outGap">—</span>
+        <span class="s" id="outGapSub"></span>
+      </div>
+    </div>
+    <p class="verdict" id="verdict"></p>
+  </div>
 
-<h2>What a warehouse actually fixes</h2>
-<p>A data warehouse isn't a fancier spreadsheet. It's a different model for how data moves and who touches it. Instead of manual exports, you set up pipelines that pull from Shopify, your ad platforms, your ESP, and your CRM automatically — usually daily, sometimes hourly. The data lands in one place, structured the same way every time.</p>
-<p>This solves three things spreadsheets can't:</p>
-<ul>
-<li><strong>Consistency.</strong> Everyone queries the same tables. Marketing and finance stop arguing about whose number is right because there's one source of truth.</li>
-<li><strong>Scale.</strong> A warehouse like BigQuery or Snowflake handles millions of rows without breaking a sweat. Your queries stay fast even as order volume grows.</li>
-<li><strong>Auditability.</strong> When logic lives in SQL and version-controlled transformations instead of nested spreadsheet formulas, you can actually trace how a number was calculated and who changed what.</li>
-</ul>
-<p>None of this requires a data team of five people. A lean setup — a pipeline tool, a warehouse, and a BI layer on top — can run on one analyst's time once it's built.</p>
-
-<h2>The real cost of waiting too long</h2>
-<p>Teams delay this move because it feels like overhead they don't need yet. But the cost of staying on spreadsheets isn't flat — it compounds. Every month you wait, more reports get built on the shaky foundation, more people get trained on broken workflows, and more decisions get made on numbers nobody has actually verified.</p>
-<p>The real cost shows up in decisions, not dashboards. If your true ROAS calculation is wrong because it's not accounting for returns, discounts, or multi-touch attribution properly, you're misallocating ad spend every single day that number goes unfixed. A warehouse doesn't just make reporting easier — it makes the underlying numbers correct, because you can actually implement the logic that spreadsheets can't handle: proper attribution windows, cohort-based LTV, blended CAC across channels.</p>
-<p>There's also a hiring cost. Growing teams eventually want a data analyst or growth marketer who can build real models. Good people don't want to inherit a spreadsheet held together with duct tape — they want a warehouse they can actually query.</p>
-
-<h2>What the transition actually looks like</h2>
-<p>You don't need to rip out spreadsheets overnight. The realistic path looks like this:</p>
-<ul>
-<li><strong>Start with the highest-pain data source.</strong> Usually it's ad platform spend or order data — whatever causes the most manual work or the most disagreement about numbers.</li>
-<li><strong>Set up a pipeline tool</strong> (Fivetran, Airbyte, or a custom script) to move that data into a warehouse automatically, on a schedule.</li>
-<li><strong>Rebuild your core reports as SQL queries</strong> instead of spreadsheet formulas. This is the part people underestimate — it forces you to actually document your logic instead of hiding it in a cell reference.</li>
-<li><strong>Layer a BI tool on top</strong> (Looker Studio, Metabase, or similar) so non-technical people still get dashboards, just built on solid ground.</li>
-<li><strong>Keep spreadsheets for what they're good at</strong> — quick one-off analysis, scenario modeling, ad hoc exports. Don't force everything into the warehouse if it doesn't need to live there.</li>
-</ul>
-<p>Most teams can get a basic version running in a few weeks, not months, if they pick one or two data sources to start instead of trying to migrate everything at once.</p>
-
-<h2>The takeaway</h2>
-<p>Spreadsheets are fine until they're not. The signal isn't a specific revenue number or order count — it's the pain: hours lost to manual work, numbers nobody trusts, and decisions made on data that might be wrong. If you're seeing two or more of those signs right now, you're not early. You're already paying the cost of waiting. The warehouse isn't the hard part — admitting the spreadsheet stopped working is.</p>
-
-  <h2>Further reading</h2>
+  <h2>How the number is built</h2>
+  <p>Reported revenue is de-duplicated by the overlap you enter, then reduced by refunds and
+  cancelled renewals, then increased by revenue that closed where no pixel could see it. The result
+  is divided by spend:</p>
   <ul>
-    <li><a href="/guide-data-pipelines.html">Guide: Revenue pipelines that survive production</a></li>
-    <li><a href="/blog-why-your-dbt-pipeline-keeps-breaking-on-api-schema-drift.html">Why your dbt pipeline keeps breaking on API schema drift</a></li>
-    <li><a href="/blog-how-to-build-a-customer-data-warehouse-that-survives-ios-att.html">How to build a customer data warehouse that survives ios attribution loss</a></li>
+    <li><strong>De-duplicated</strong> = reported × (1 − overlap%)</li>
+    <li><strong>Net of refunds</strong> = de-duplicated × (1 − refund%)</li>
+    <li><strong>True revenue</strong> = net of refunds + untracked</li>
+    <li><strong>True ROAS</strong> = true revenue ÷ spend</li>
   </ul>
-</article>
+  <p>The arithmetic is the easy half. The hard half is knowing your real overlap and your real
+  refund rate by cohort — which is a data problem, not a spreadsheet problem.</p>
 
-<div class="endcta">
-  <div class="ctaproof">154 dbt models · 4 brands — Multi-brand data platform</div>
-  <h3>Want a warehouse that survives schema drift?</h3>
-  <p>We build daily pipelines that alert on failure down to the file and row, not reporting that quietly breaks.</p>
+  <h2>Where the inputs come from</h2>
+  <ul>
+    <li><strong>Overlap</strong>: count orders claimed by more than one platform in the same window.
+    If you can't, the honest starting assumption for a multi-channel account is not zero.</li>
+    <li><strong>Refund rate</strong>: from your payment processor, attributed to the cohort that
+    generated the order rather than the month the refund landed.</li>
+    <li><strong>Untracked revenue</strong>: total closed revenue minus what your analytics recorded.</li>
+  </ul>
+
+  <h2>Questions people ask</h2>
+  <div class="faq">
+    <div class="faqitem">
+      <h3>Where do the overlap and refund percentages actually come from?</h3>
+      <p>Overlap comes from counting orders claimed by more than one ad platform in the same window — if you&#x27;ve never measured it, don&#x27;t assume zero for a multi-channel account. Refund rate comes from your payment processor, attributed to the cohort that generated the order rather than the month the refund landed.</p>
+    </div>
+    <div class="faqitem">
+      <h3>Why include untracked revenue in a ROAS calculation?</h3>
+      <p>Because pixels only see what happens in a browser. Offline closes, phone orders, and anything finished outside the checkout flow are real revenue that platform-reported ROAS never had a chance to count — leaving it out understates channels that drive real, if invisible, demand.</p>
+    </div>
+    <div class="faqitem">
+      <h3>Is this the same as what an agency or platform reports?</h3>
+      <p>No — this is deliberately the number after de-duplication, refunds, and untracked revenue are applied, which is usually lower than what any single platform reports on its own. That&#x27;s the point: it&#x27;s the version you can safely spend against.</p>
+    </div>
+  </div>
+
+  <h2>Read next</h2>
+  <div class="readlist">
+    <a class="readitem" href="/blog-ga4-roas-lying.html">
+      <span class="rtag">Attribution</span>
+      <h3>Why your GA4 ROAS is lying to you — and how to find the real number</h3>
+      <p>Why the dashboard number and the bank number disagree in the first place.</p>
+    </a>
+    <a class="readitem" href="/blog-why-offline-conversions-beat-pixel-based-roas.html">
+      <span class="rtag">Attribution</span>
+      <h3>Why offline conversions beat pixel-based ROAS</h3>
+      <p>Feeding closed revenue back to the platforms so they optimise on real money.</p>
+    </a>
+    <a class="readitem" href="/blog-how-dtc-brands-should-measure-blended-roas.html">
+      <span class="rtag">Marketing analytics</span>
+      <h3>How DTC brands should measure blended ROAS</h3>
+      <p>The blended check that catches channel-level numbers overstating themselves.</p>
+    </a>
+  </div>
+
+</div>
+
+  <div class="endcta">
+  <div class="ctaproof">400% blended ROAS target — Diagnosed a ROAS collapse, mapped the path to 400%</div>
+  <h3>Want to know what your ROAS is actually doing?</h3>
+  <p>We reconcile ad spend, platform conversions, and closed revenue into one number your team can spend against.</p>
   <div class="ctabtns">
     <a href="/#work" class="btn btn-secondary">See more work</a>
     <a href="/#contact" class="btn btn-primary">Book a call</a>
   </div>
 </div>
+
+<script>
+(function(){
+  var ids = ["spend","reported","overlap","refund","untracked"];
+  var el = {};
+  ids.forEach(function(i){ el[i] = document.getElementById(i); });
+  var out = {
+    reported: document.getElementById("outReported"),
+    truth: document.getElementById("outTrue"),
+    gap: document.getElementById("outGap"),
+    gapSub: document.getElementById("outGapSub"),
+    trueSub: document.getElementById("outTrueSub"),
+    verdict: document.getElementById("verdict")
+  };
+
+  function num(v, min, max){
+    var n = parseFloat(String(v).replace(/[^0-9.\-]/g, ""));
+    if (!isFinite(n)) return null;
+    if (typeof min === "number" && n < min) n = min;
+    if (typeof max === "number" && n > max) n = max;
+    return n;
+  }
+  function money(n){
+    var abs = Math.abs(n);
+    if (abs >= 1e6) return (n/1e6).toFixed(2).replace(/\.00$/,"") + "M";
+    if (abs >= 1e3) return (n/1e3).toFixed(1).replace(/\.0$/,"") + "k";
+    return String(Math.round(n));
+  }
+
+  function calc(){
+    var spend = num(el.spend.value, 0);
+    var reported = num(el.reported.value, 0);
+    var overlap = num(el.overlap.value, 0, 90);
+    var refund = num(el.refund.value, 0, 90);
+    var untracked = num(el.untracked.value, 0);
+
+    if (spend === null || reported === null || spend <= 0) {
+      out.reported.textContent = "—";
+      out.truth.textContent = "—";
+      out.gap.textContent = "—";
+      out.gapSub.textContent = "";
+      out.trueSub.textContent = "";
+      out.verdict.textContent = "Enter ad spend and platform-reported revenue to see the gap.";
+      return;
+    }
+    overlap = overlap || 0; refund = refund || 0; untracked = untracked || 0;
+
+    var deduped = reported * (1 - overlap/100);
+    var netOfRefunds = deduped * (1 - refund/100);
+    var trueRevenue = netOfRefunds + untracked;
+
+    var reportedRoas = reported / spend;
+    var trueRoas = trueRevenue / spend;
+    var delta = trueRoas - reportedRoas;
+    var pct = reportedRoas > 0 ? (delta / reportedRoas) * 100 : 0;
+
+    out.reported.textContent = reportedRoas.toFixed(2) + "x";
+    out.truth.textContent = trueRoas.toFixed(2) + "x";
+    out.trueSub.textContent = money(trueRevenue) + " of closed revenue";
+    out.gap.textContent = (pct >= 0 ? "+" : "") + pct.toFixed(0) + "%";
+    out.gapSub.textContent = (delta >= 0 ? "+" : "") + delta.toFixed(2) + "x vs reported";
+
+    var breakeven = trueRoas < 1;
+    var msg;
+    if (breakeven) {
+      msg = "At these inputs the campaign returns less than it costs once overlap, refunds and untracked revenue are applied. Reported ROAS of " + reportedRoas.toFixed(2) + "x is hiding a loss.";
+    } else if (pct <= -10) {
+      msg = "Reported ROAS overstates return by roughly " + Math.abs(pct).toFixed(0) + "%. Decisions made on the platform number are being made on the wrong figure.";
+    } else if (pct >= 10) {
+      msg = "True ROAS is higher than reported — untracked revenue is carrying real return the platforms never see, so this channel is likely underfunded.";
+    } else {
+      msg = "Reported and true ROAS are within " + Math.abs(pct).toFixed(0) + "% of each other. Your measurement is roughly honest at this level of spend.";
+    }
+    out.verdict.textContent = msg;
+  }
+
+  ids.forEach(function(i){
+    el[i].addEventListener("input", calc);
+  });
+  calc();
+})();
+</script>
 
 </main>
 <footer>
@@ -173,49 +444,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span>Data infrastructure that drives revenue.</span>
   </div>
 </footer>
-
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"BlogPosting",
-  "headline":"Why your GA4 ROAS is lying to you — and how to find the real number",
-  "description":"GA4 and ad platforms report ROAS from clicks and pixels, not closed revenue. How to reconcile reported ROAS against real money and optimize on a true number.",
-  "author":{"@type":"Organization","name":"Twinslytics"},
-  "publisher":{"@type":"Organization","name":"Twinslytics","url":"https://twinslytics.com"},
-  "mainEntityOfPage":"https://twinslytics.com/blog-ga4-roas-lying.html",
-  "datePublished":"2026-08-09"
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://twinslytics.com/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Blog",
-      "item": "https://twinslytics.com/blog.html"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "When to move from spreadsheets to a data warehouse",
-      "item": "https://twinslytics.com/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html"
-    }
-  ]
-}
-</script>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
 <script>
 (function(){var b=document.querySelector(".burger"),m=document.querySelector(".nav-links");if(!b||!m)return;function close(){m.classList.remove("open");b.classList.remove("is-open");b.setAttribute("aria-expanded","false");}b.addEventListener("click",function(e){e.stopPropagation();var o=m.classList.toggle("open");b.classList.toggle("is-open",o);b.setAttribute("aria-expanded",o);});m.querySelectorAll("a").forEach(function(a){a.addEventListener("click",close);});document.addEventListener("click",function(e){if(m.classList.contains("open")&&!m.contains(e.target)&&!b.contains(e.target))close();});})();
 </script>
-<script>try{fetch("/api/views?p="+encodeURIComponent(location.pathname.replace(/\.html$/,"")),{method:"POST",keepalive:true})}catch(e){}</script>
+<script>
+fetch("/api/views").then(function(r){return r.json()}).then(function(v){
+  function get(p){p=p.replace(/\/$/,"");return v[p]||v[p+".html"]||v[p.replace(/\.html$/,"")]||0;}
+  document.querySelectorAll("a.post[href]").forEach(function(a){
+    var el=a.querySelector(".views");if(!el)return;
+    var n=get(a.getAttribute("href"));
+    if(n>0)el.textContent=" \u00b7 "+n+(n===1?" view":" views");
+  });
+}).catch(function(){});
+</script>
 </body>
 </html>

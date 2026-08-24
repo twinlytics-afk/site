@@ -25,9 +25,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=optional" rel="stylesheet">
 <style>
-  :root{--bg:#fff;--ink:#14122b;--body:#403c5c;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--ok:#12b981;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+  :root{--bg:#fff;--ink:#14122b;--body:#403c5c;--mut:#6f6a8a;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--ok:#12b981;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased}
   a{color:var(--v);text-decoration:none}
@@ -58,6 +58,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .endcta p{color:var(--body);font-size:16px;margin-bottom:20px}
   footer{border-top:1px solid var(--line);padding:32px 0;background:#fff}
   .foot{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--mut);font-family:var(--mono);flex-wrap:wrap;gap:14px}
+
+  .ctaproof{font-family:var(--mono);font-size:12px;color:var(--v);background:#fff;display:inline-block;padding:6px 14px;border-radius:20px;border:1px solid var(--line-2);margin-bottom:16px}
+  .ctabtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn-secondary{background:#fff;color:var(--ink);border:1px solid var(--line-2)}
   @media(max-width:900px){.nav-links a:not(.btn){display:none}}
 </style>
 </head>
@@ -79,6 +83,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </nav>
   </div>
 </header>
+<main>
 
 <article>
   <a class="back" href="/blog.html">← All posts</a>
@@ -124,7 +129,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p>Most brands don't have this because their attribution lives in Meta's dashboard or a shopify app that only sees last-click, same-session behavior. You can't run cohort maturity analysis on top of tools built for real-time bidding decisions. You need it in a warehouse where customer identity is stitched correctly across orders — which is its own problem if you've got guest checkouts, multiple emails, or Shopify plus a subscription platform that doesn't share customer IDs cleanly.</p>
 
-<h2>How to make decisions in the meantime</h2
+<h2>How to make decisions in the meantime</h2>
 
 <p>You still have to spend money every day, and you can't freeze budget decisions for 60 days while you wait for perfect data. The fix isn't paralysis — it's using leading indicators that correlate with the lagging truth.</p>
 
@@ -135,14 +140,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2>The takeaway</h2>
 
 <p>Ad platforms are optimized to report fast, not to report true. Your business runs on customer behavior that takes weeks to unfold — returns, repeat purchases, subscription renewals, chargebacks. If your reporting stack can't hold a cohort steady and watch it mature, you're making six-figure budget calls off a rounding error. Build the cohort table first. Then decide what to scale.</p>
+
+  <h2>Further reading</h2>
+  <ul>
+    <li><a href="/guide-true-roas.html">Guide: True ROAS, and how to get to it</a></li>
+    <li><a href="/blog-why-your-subscription-revenue-makes-blended-roas-misleading.html">Why your subscription revenue makes blended roas misleading</a></li>
+    <li><a href="/blog-how-dtc-brands-should-measure-blended-roas.html">How DTC brands should measure blended ROAS</a></li>
+  </ul>
 </article>
 
 <div class="endcta">
-  <h3>Want to see your real ROAS?</h3>
-  <p>We reconcile ad spend, platform conversions, and closed revenue into one true number you can actually optimize on.</p>
-  <a href="/#contact" class="btn btn-primary">Book a call</a>
+  <div class="ctaproof">400% blended ROAS target — Diagnosed a ROAS collapse, mapped the path to 400%</div>
+  <h3>Want to know what your ROAS is actually doing?</h3>
+  <p>We reconcile ad spend, platform conversions, and closed revenue into one number your team can spend against.</p>
+  <div class="ctabtns">
+    <a href="/#work" class="btn btn-secondary">See more work</a>
+    <a href="/#contact" class="btn btn-primary">Book a call</a>
+  </div>
 </div>
 
+</main>
 <footer>
   <div class="wrap foot">
     <span>© <span id="yr"></span> Twinslytics</span>
@@ -159,7 +176,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   "author":{"@type":"Organization","name":"Twinslytics"},
   "publisher":{"@type":"Organization","name":"Twinslytics","url":"https://twinslytics.com"},
   "mainEntityOfPage":"https://twinslytics.com/blog-ga4-roas-lying.html",
-  "datePublished":"2026-02-01"
+  "datePublished":"2026-07-25"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://twinslytics.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://twinslytics.com/blog.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "The 60-day cohort maturity rule for ad spend decisions",
+      "item": "https://twinslytics.com/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html"
+    }
+  ]
 }
 </script>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>

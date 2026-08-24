@@ -25,9 +25,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=optional" rel="stylesheet">
 <style>
-  :root{--bg:#fff;--ink:#14122b;--body:#403c5c;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--ok:#12b981;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+  :root{--bg:#fff;--ink:#14122b;--body:#403c5c;--mut:#6f6a8a;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--ok:#12b981;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased}
   a{color:var(--v);text-decoration:none}
@@ -63,6 +63,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   .burger.is-open span:nth-child(2){opacity:0}
   .burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .figure{margin:34px 0}
+  .figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:14px;background:#fff}
+  .figure figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:10px;line-height:1.5}
+
+  .ctaproof{font-family:var(--mono);font-size:12px;color:var(--v);background:#fff;display:inline-block;padding:6px 14px;border-radius:20px;border:1px solid var(--line-2);margin-bottom:16px}
+  .ctabtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn-secondary{background:#fff;color:var(--ink);border:1px solid var(--line-2)}
   @media(max-width:900px){
     .nav{position:relative}
     .burger{display:flex}
@@ -93,6 +100,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
+<main>
 
 <article>
   <a class="back" href="/blog.html">← All posts</a>
@@ -129,14 +137,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <h2>What changes once you do</h2>
   <p>The first time a brand sees reported vs. real side by side, the reaction is almost always the same: a mix of relief and mild horror. Relief because the numbers finally reconcile; horror because they've been steering spend with the wrong dashboard for months.</p>
   <p>But that's the win. Once bidding runs on closed revenue, the platforms stop chasing cheap conversions and start finding buyers — and the gap between what the dashboard says and what the bank says quietly closes.</p>
+
+  <h2>Further reading</h2>
+  <ul>
+    <li><a href="/guide-attribution.html">Guide: Marketing attribution for ecommerce</a></li>
+    <li><a href="/blog-how-to-attribute-subscription-ltv-back-to-the-original-ad-cl.html">How to attribute subscription ltv back to the original ad click</a></li>
+    <li><a href="/blog-server-side-conversions-with-meta-capi-what-breaks-and-how-t.html">Server-side conversions with Meta CAPI: what breaks and how to fix it</a></li>
+  </ul>
 </article>
 
 <div class="endcta">
-  <h3>Want to see your real ROAS?</h3>
-  <p>We reconcile ad spend, platform conversions, and closed revenue into one true number you can actually optimize on.</p>
-  <a href="/#contact" class="btn btn-primary">Book a call</a>
+  <div class="ctaproof">283/408 sessions reattributed — Fixed attribution, returned conversions to Google Ads</div>
+  <h3>Want your attribution reconciled like this?</h3>
+  <p>We patch the join between clicks and closed revenue so bidding optimizes on what actually happened, not what the checkout referrer claims.</p>
+  <div class="ctabtns">
+    <a href="/#work" class="btn btn-secondary">See more work</a>
+    <a href="/#contact" class="btn btn-primary">Book a call</a>
+  </div>
 </div>
 
+</main>
 <footer>
   <div class="wrap foot">
     <span>© <span id="yr"></span> Twinslytics</span>
@@ -154,6 +174,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   "publisher":{"@type":"Organization","name":"Twinslytics","url":"https://twinslytics.com"},
   "mainEntityOfPage":"https://twinslytics.com/blog-ga4-roas-lying.html",
   "datePublished":"2026-02-01"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://twinslytics.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://twinslytics.com/blog.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Why your GA4 ROAS is lying to you — and how to find the real number",
+      "item": "https://twinslytics.com/blog-ga4-roas-lying.html"
+    }
+  ]
 }
 </script>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>

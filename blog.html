@@ -24,9 +24,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta property="og:image" content="https://twinslytics.com/og.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=optional" rel="stylesheet">
 <style>
-  :root{--bg:#fff;--bg-alt:#faf9ff;--bg-tint:#f5f2ff;--ink:#14122b;--body:#5a5675;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+  :root{--bg:#fff;--bg-alt:#faf9ff;--bg-tint:#f5f2ff;--ink:#14122b;--body:#5a5675;--mut:#6f6a8a;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
@@ -67,6 +67,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   .burger.is-open span:nth-child(2){opacity:0}
   .burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .guides{max-width:var(--maxw);margin:0 auto;padding:8px 28px 0}
+  .guides .ghead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+  .guides .ghead h2{font-family:var(--disp);font-weight:600;font-size:23px;letter-spacing:-.02em}
+  .guides .ghead span{font-family:var(--mono);font-size:12px;color:var(--mut)}
+  .guidesrow{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:14px}
+  .guide{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;padding:24px 22px;background:linear-gradient(180deg,#fdfcff,#faf8ff);transition:transform .18s,box-shadow .18s,border-color .18s}
+  .guide:hover{transform:translateY(-3px);border-color:var(--line-2);box-shadow:0 20px 44px -28px rgba(108,76,240,.5)}
+  .guide .gtag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--v);margin-bottom:12px}
+  .guide h3{font-size:18px;line-height:1.25;margin-bottom:9px}
+  .guide p{color:var(--body);font-size:14.5px;line-height:1.6;flex:1}
+  @media(max-width:1000px){.guidesrow{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:620px){.guidesrow{grid-template-columns:1fr}}
   @media(max-width:900px){
     .nav{position:relative}
     .burger{display:flex}
@@ -97,6 +109,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
+<main>
 
 <section class="bloghero">
   <span class="eyebrow">Blog</span>
@@ -104,8 +117,55 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <p>Practical writing on attribution, true ROAS, data engineering, and the automation that runs real businesses.</p>
 </section>
 
+<section class="guides">
+  <div class="ghead">
+    <h2>Start here</h2>
+    <span>Guides and tools</span>
+  </div>
+  <div class="guidesrow">
+    <a class="guide" href="/guide-attribution.html">
+      <div class="gtag">Guide</div>
+      <h3>Marketing attribution for ecommerce</h3>
+      <p>The four places a paid click loses its identity, and the order to fix them in.</p>
+    </a>
+    <a class="guide" href="/guide-true-roas.html">
+      <div class="gtag">Guide</div>
+      <h3>True ROAS</h3>
+      <p>Turning a platform's best-case number into one you can safely spend against.</p>
+    </a>
+    <a class="guide" href="/guide-data-pipelines.html">
+      <div class="gtag">Guide</div>
+      <h3>Revenue data pipelines</h3>
+      <p>Schema drift, loader lag, and frozen partitions — and how to survive them.</p>
+    </a>
+    <a class="guide" href="/true-roas-calculator.html">
+      <div class="gtag">Free tool</div>
+      <h3>True ROAS calculator</h3>
+      <p>Apply overlap, refunds and untracked revenue to see what your ROAS really is.</p>
+    </a>
+  </div>
+</section>
+
 <div class="posts">
   <!-- POSTS -->
+  <a class="post" href="/blog-why-your-roas-looks-great-while-contribution-margin-keeps-sh.html">
+    <div class="tag">Marketing analytics</div>
+    <h3>Why ROAS can rise while contribution margin falls</h3>
+    <p>See how discounts, returns and product costs quietly erode margin behind a healthy ROAS number, and what your reporting is missing.</p>
+    <div class="meta">24 Aug 2026 · 6 min read<span class="views" data-p="/blog-why-your-roas-looks-great-while-contribution-margin-keeps-sh.html"></span></div>
+  </a>
+  <a class="post" href="/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo.html">
+    <div class="tag">AI &amp; automation</div>
+    <h3>Build an AI agent that catches ROAS anomalies before overspend</h3>
+    <p>A practical build guide to an AI agent that watches spend hourly and flags true ROAS drops before budget is wasted, not after the weekly review.</p>
+    <div class="meta">24 Aug 2026 · 6 min read<span class="views" data-p="/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo.html"></span></div>
+  </a>
+  <a class="post" href="/blog-how-to-build-an-ad-spend-decision-engine-from-warehouse-data.html">
+    <div class="tag">Data engineering</div>
+    <h3>Build an ad-spend decision engine on warehouse data</h3>
+    <p>Stop trusting platform ROAS. Learn how to join order and spend data in your warehouse to turn attribution into automated budget decisions.</p>
+    <div class="meta">24 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-to-build-an-ad-spend-decision-engine-from-warehouse-data.html"></span></div>
+  </a>
   <a class="post" href="/blog-how-to-attribute-subscription-ltv-back-to-the-original-ad-cl.html">
     <div class="tag">Attribution</div>
     <h3>How to attribute subscription ltv back to the original ad click</h3>
@@ -216,6 +276,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </a>
 </div>
 
+</main>
 <footer>
   <div class="wrap foot">
     <span>© <span id="yr"></span> Twinslytics</span>

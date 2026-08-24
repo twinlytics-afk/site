@@ -11,16 +11,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>When to move from spreadsheets to a data warehouse — Twinslytics</title>
-<meta name="description" content="Your marketing lead pulls Shopify data into Google Sheets every Monday. Someone else exports Klaviyo numbers into a different tab. Meta ad spend gets copy-" />
+<title>Build an AI agent that catches ROAS anomalies before overspend — Twinslytics</title>
+<meta name="description" content="A practical build guide to an AI agent that watches spend hourly and flags true ROAS drops before budget is wasted, not after the weekly review." />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="canonical" href="https://twinslytics.com/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html" />
+<link rel="canonical" href="https://twinslytics.com/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo.html" />
 <meta name="robots" content="index, follow" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://twinslytics.com/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html" />
-<meta property="og:title" content="When to move from spreadsheets to a data warehouse" />
-<meta property="og:description" content="GA4 measures clicks, not closed revenue. Here's how to reconcile reported ROAS against what actually hit your bank account." />
+<meta property="og:url" content="https://twinslytics.com/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo.html" />
+<meta property="og:title" content="Build an AI agent that catches ROAS anomalies before overspend" />
+<meta property="og:description" content="A practical build guide to an AI agent that watches spend hourly and flags true ROAS drops before budget is wasted, not after the weekly review." />
 <meta property="og:image" content="https://twinslytics.com/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,6 +63,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   .burger.is-open span:nth-child(2){opacity:0}
   .burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .figure{margin:34px 0}
+  .figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:14px;background:#fff}
+  .figure figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:10px;line-height:1.5}
 
   .ctaproof{font-family:var(--mono);font-size:12px;color:var(--v);background:#fff;display:inline-block;padding:6px 14px;border-radius:20px;border:1px solid var(--line-2);margin-bottom:16px}
   .ctabtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
@@ -101,58 +104,70 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <article>
   <a class="back" href="/blog.html">← All posts</a>
-  <span class="eyebrow">Data engineering</span>
-  <h1>When to move from spreadsheets to a data warehouse</h1>
-  <div class="artmeta">9 Aug 2026 · 5 min read · Twinslytics<span class="artviews"></span></div>
+  <span class="eyebrow">AI &amp; automation</span>
+  <h1>Build an AI agent that catches ROAS anomalies before overspend</h1>
+  <div class="artmeta">24 Aug 2026 · 6 min read · Twinslytics<span class="artviews"></span></div>
 
-  <p>Your marketing lead pulls Shopify data into Google Sheets every Monday. Someone else exports Klaviyo numbers into a different tab. Meta ad spend gets copy-pasted from a third source. By Wednesday, three people have three versions of "true ROAS" and nobody trusts any of them. This is the moment most DTC teams realize spreadsheets stopped working — they just don't admit it for another six months.</p>
+  <figure class="figure">
+    <svg viewBox="0 0 720 176" width="100%" height="auto" role="img" aria-label="Building an AI Agent to Catch ROAS Anomalies Early" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto"><text x="8" y="24" font-family="'Space Grotesk',system-ui,sans-serif" font-size="15" font-weight="600" fill="#14122b">Building an AI Agent to Catch ROAS Anomalies Early</text><defs><marker id="dgArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#918da8"/></marker></defs><rect x="8" y="46" width="150" height="96" rx="11" fill="#faf8ff" stroke="#ece7f6"/><rect x="8" y="46" width="3.5" height="96" rx="2" fill="#6c4cf0"/><text x="23" y="71" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10" letter-spacing="1.4" fill="#6c4cf0">01</text><text x="23" y="93" font-family="'Space Grotesk',system-ui,sans-serif" font-size="13.5" font-weight="600" fill="#14122b">Hourly API Pulls</text><text x="23" y="129" font-family="'Space Grotesk',system-ui,sans-serif" font-size="11.5" fill="#918da8">Meta, Google, TikTo…</text><line x1="165" y1="94" x2="185" y2="94" stroke="#918da8" stroke-width="1.6" marker-end="url(#dgArrow)"/><rect x="192" y="46" width="150" height="96" rx="11" fill="#faf8ff" stroke="#ece7f6"/><rect x="192" y="46" width="3.5" height="96" rx="2" fill="#6c4cf0"/><text x="207" y="71" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10" letter-spacing="1.4" fill="#6c4cf0">02</text><text x="207" y="93" font-family="'Space Grotesk',system-ui,sans-serif" font-size="13.5" font-weight="600" fill="#14122b">Revenue Matching</text><text x="207" y="129" font-family="'Space Grotesk',system-ui,sans-serif" font-size="11.5" fill="#918da8">Orders via UTM/clic…</text><line x1="349" y1="94" x2="369" y2="94" stroke="#918da8" stroke-width="1.6" marker-end="url(#dgArrow)"/><rect x="376" y="46" width="150" height="96" rx="11" fill="#faf8ff" stroke="#ece7f6"/><rect x="376" y="46" width="3.5" height="96" rx="2" fill="#6c4cf0"/><text x="391" y="71" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10" letter-spacing="1.4" fill="#6c4cf0">03</text><text x="391" y="93" font-family="'Space Grotesk',system-ui,sans-serif" font-size="13.5" font-weight="600" fill="#14122b">Warehouse Model</text><text x="391" y="129" font-family="'Space Grotesk',system-ui,sans-serif" font-size="11.5" fill="#918da8">True ROAS, tested …</text><line x1="533" y1="94" x2="553" y2="94" stroke="#918da8" stroke-width="1.6" marker-end="url(#dgArrow)"/><rect x="560" y="46" width="150" height="96" rx="11" fill="#faf8ff" stroke="#ece7f6"/><rect x="560" y="46" width="3.5" height="96" rx="2" fill="#12b981"/><text x="575" y="71" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10" letter-spacing="1.4" fill="#12b981">04</text><text x="575" y="93" font-family="'Space Grotesk',system-ui,sans-serif" font-size="13.5" font-weight="600" fill="#14122b">Baseline Compare</text><text x="575" y="129" font-family="'Space Grotesk',system-ui,sans-serif" font-size="11.5" fill="#918da8">90-day channel …</text></svg>
+    <figcaption>A generic outline of the pipeline stages needed before an agent can reliably flag overspend.</figcaption>
+  </figure>
 
-<p>Spreadsheets aren't the enemy. They're a fine tool for a $500K/year brand with one founder checking numbers once a week. The problem is nobody sets a clear line for when to graduate, so teams stay stuck with broken formulas and manual exports long after the pain outweighs the switching cost.</p>
+  <p>By the time your Monday morning dashboard shows a ROAS crater, you've already spent Friday, Saturday, and Sunday's budget on a campaign that stopped converting. Nobody checks ad spend on a Saturday at 2am. An AI agent will. This is a practical build guide, not a pitch for a SaaS tool you don't need.</p>
 
-<h2>The signs you're already behind</h2>
-<p>You don't need a data warehouse because it's trendy. You need one when specific, repeatable pain shows up:</p>
+<h2>Why you find out too late</h2>
+<p>Most teams catch ROAS problems through a person: a media buyer glancing at Meta Ads Manager, a founder asking "why does this month look weak" in a Slack thread. That's a detection system with a 24-72 hour lag built in. Platforms report blended numbers that hide the collapse of a single ad set inside an otherwise healthy campaign. And attributed ROAS from ad platforms is inflated anyway, so the number you're staring at was already wrong before it started drifting.</p>
+<p>The fix isn't "check the dashboard more often." It's removing the human from the detection loop and keeping them for the decision loop. An agent watches spend and revenue continuously, flags deviations against a real baseline, and pushes an alert before the budget is gone — not after finance asks about it in the weekly review.</p>
+
+<h2>The data layer the agent needs</h2>
+<p>An anomaly detector is only as good as the numbers feeding it, and this is where most attempts break. You need a pipeline that pulls, at minimum:</p>
 <ul>
-<li><strong>Manual refresh takes real time.</strong> If someone spends more than 2-3 hours a week copying data between platforms and spreadsheets, that's a part-time job you're paying for with opportunity cost.</li>
-<li><strong>Numbers disagree and nobody knows why.</strong> Shopify says one revenue number, your ad platform says another ROAS, and finance has a third. Nobody can explain the gap because the logic lives in someone's head, not in documented code.</li>
-<li><strong>Formulas break when data grows.</strong> VLOOKUP and INDEX/MATCH choke past a few hundred thousand rows. If your sheet takes 30 seconds to recalculate, you're already paying a tax on every analysis.</li>
-<li><strong>One person is a single point of failure.</strong> If your ops person leaves and nobody else understands the spreadsheet's tangle of tabs and hidden formulas, you don't have a reporting system — you have a liability.</li>
-<li><strong>You're blending multiple data sources by hand.</strong> Attribution, LTV, cohort analysis — any of these that require joining ad spend, order data, and customer data across platforms will break spreadsheets fast. Manual joins don't scale and they introduce errors nobody catches.</li>
+<li><strong>Platform spend data</strong> at the campaign and ad set level, pulled hourly via the Meta, Google, and TikTok APIs — not the daily CSV export someone downloads manually.</li>
+<li><strong>Order and revenue data</strong> from your store or order management system, ideally with UTM or click ID matching so you're not relying solely on platform-attributed conversions.</li>
+<li><strong>A blended or true ROAS calculation</strong> that nets out discounts, refunds, and COGS where possible, computed in your warehouse, not trusted from the ad platform's dashboard.</li>
+<li><strong>Historical baselines</strong> going back at least 90 days per channel and campaign, so the agent has something real to compare against instead of an arbitrary threshold.</li>
 </ul>
+<p>This lives in a warehouse — BigQuery or Snowflake, with dbt models turning raw API pulls into a clean <code>daily_channel_performance</code> table isn't allowed as a tag here, so just: a clean, tested table joining spend to revenue by channel and day. If that pipeline doesn't exist yet, build it before you build the agent. An agent reasoning over garbage data will just automate garbage alerts faster.</p>
 
-<h2>What a warehouse actually fixes</h2>
-<p>A data warehouse isn't a fancier spreadsheet. It's a different model for how data moves and who touches it. Instead of manual exports, you set up pipelines that pull from Shopify, your ad platforms, your ESP, and your CRM automatically — usually daily, sometimes hourly. The data lands in one place, structured the same way every time.</p>
-<p>This solves three things spreadsheets can't:</p>
+<h2>Define anomaly, not just alert</h2>
+<p>The lazy version of this is a static rule: "alert if ROAS drops below 1.5." Static thresholds break constantly. A new product launch, a holiday promo, a deliberate top-of-funnel push — all of these tank short-term ROAS on purpose. A rule-based system floods you with false positives until someone mutes it, and then it's dead.</p>
+<p>What actually works is comparing current performance to a rolling statistical baseline, adjusted for known variance:</p>
 <ul>
-<li><strong>Consistency.</strong> Everyone queries the same tables. Marketing and finance stop arguing about whose number is right because there's one source of truth.</li>
-<li><strong>Scale.</strong> A warehouse like BigQuery or Snowflake handles millions of rows without breaking a sweat. Your queries stay fast even as order volume grows.</li>
-<li><strong>Auditability.</strong> When logic lives in SQL and version-controlled transformations instead of nested spreadsheet formulas, you can actually trace how a number was calculated and who changed what.</li>
+<li><strong>Rolling median and standard deviation</strong> per campaign over a trailing 14-30 day window, so the baseline moves with recent reality instead of a fixed number set six months ago.</li>
+<li><strong>Z-score or MAD-based deviation checks</strong> that flag when today's ROAS or CPA is a statistically meaningful outlier, not just "a little lower than yesterday."</li>
+<li><strong>Spend velocity checks</strong> that catch a campaign burning through its daily budget in three hours instead of eighteen — often the earliest signal something is broken, before ROAS even has time to move.</li>
+<li><strong>Seasonality and calendar context</strong> so the agent knows Black Friday week and a new SKU launch aren't anomalies, they're expected variance.</li>
 </ul>
-<p>None of this requires a data team of five people. A lean setup — a pipeline tool, a warehouse, and a BI layer on top — can run on one analyst's time once it's built.</p>
+<p>This is the part people skip because it sounds like statistics homework. It's not optional. Without it, you're building an expensive way to get alerted about noise.</p>
 
-<h2>The real cost of waiting too long</h2>
-<p>Teams delay this move because it feels like overhead they don't need yet. But the cost of staying on spreadsheets isn't flat — it compounds. Every month you wait, more reports get built on the shaky foundation, more people get trained on broken workflows, and more decisions get made on numbers nobody has actually verified.</p>
-<p>The real cost shows up in decisions, not dashboards. If your true ROAS calculation is wrong because it's not accounting for returns, discounts, or multi-touch attribution properly, you're misallocating ad spend every single day that number goes unfixed. A warehouse doesn't just make reporting easier — it makes the underlying numbers correct, because you can actually implement the logic that spreadsheets can't handle: proper attribution windows, cohort-based LTV, blended CAC across channels.</p>
-<p>There's also a hiring cost. Growing teams eventually want a data analyst or growth marketer who can build real models. Good people don't want to inherit a spreadsheet held together with duct tape — they want a warehouse they can actually query.</p>
-
-<h2>What the transition actually looks like</h2>
-<p>You don't need to rip out spreadsheets overnight. The realistic path looks like this:</p>
+<h2>Build the detection loop</h2>
+<p>The agent itself doesn't need to be exotic. A practical version runs as a scheduled job — hourly is usually the right cadence for paid social, every 4-6 hours is fine for search — and does four things in sequence:</p>
 <ul>
-<li><strong>Start with the highest-pain data source.</strong> Usually it's ad platform spend or order data — whatever causes the most manual work or the most disagreement about numbers.</li>
-<li><strong>Set up a pipeline tool</strong> (Fivetran, Airbyte, or a custom script) to move that data into a warehouse automatically, on a schedule.</li>
-<li><strong>Rebuild your core reports as SQL queries</strong> instead of spreadsheet formulas. This is the part people underestimate — it forces you to actually document your logic instead of hiding it in a cell reference.</li>
-<li><strong>Layer a BI tool on top</strong> (Looker Studio, Metabase, or similar) so non-technical people still get dashboards, just built on solid ground.</li>
-<li><strong>Keep spreadsheets for what they're good at</strong> — quick one-off analysis, scenario modeling, ad hoc exports. Don't force everything into the warehouse if it doesn't need to live there.</li>
+<li><strong>Pull</strong> fresh spend and revenue data from the warehouse tables you already built.</li>
+<li><strong>Score</strong> each active campaign or ad set against its rolling baseline using the deviation logic above.</li>
+<li><strong>Classify</strong> the anomaly by severity — a mild dip in ROAS gets logged, a spend spike with no matching revenue gets an immediate alert.</li>
+<li><strong>Notify</strong> through a channel people actually check — Slack or a text alert, with the specific campaign name, the deviation, and the dollar amount at risk, not a generic "something changed" message.</li>
 </ul>
-<p>Most teams can get a basic version running in a few weeks, not months, if they pick one or two data sources to start instead of trying to migrate everything at once.</p>
+<p>This can run as a Python script on a cron schedule calling an LLM only for the summarization step — turning "campaign X, z-score -2.4, spend up 40% day-over-day, revenue flat" into a readable Slack message a media buyer can act on in ten seconds. The "AI" part doesn't need to be doing the statistics; language models are bad at math and good at explaining a number clearly. Let a proper statistical function do the detection, and let the agent handle interpretation, prioritization, and communication.</p>
+<p>For teams that want to go further, the agent can also take a first action — pausing an ad set automatically when spend velocity crosses a hard ceiling with zero attributed revenue, then notifying the team that it did so. That's the difference between an alert system and an agent: it acts, within guardrails you set, instead of just talking.</p>
 
-<h2>The takeaway</h2>
-<p>Spreadsheets are fine until they're not. The signal isn't a specific revenue number or order count — it's the pain: hours lost to manual work, numbers nobody trusts, and decisions made on data that might be wrong. If you're seeing two or more of those signs right now, you're not early. You're already paying the cost of waiting. The warehouse isn't the hard part — admitting the spreadsheet stopped working is.</p>
+<h2>Keep it from crying wolf</h2>
+<p>The fastest way to kill this system is alert fatigue. If it pings the team five times a day for normal variance, everyone mutes the channel within a week and you're back to finding out on Monday. A few things keep it credible:</p>
+<ul>
+<li><strong>Tiered alerting</strong> — log minor deviations quietly, reserve pings for anomalies that cross a spend-at-risk threshold you actually care about, like $500 or more of unexplained spend.</li>
+<li><strong>Suppression windows</strong> during known events — launches, promos, platform-wide auction volatility during major shopping days — so the agent doesn't flag things you already expect.</li>
+<li><strong>Feedback loop</strong> — when someone marks an alert as a false positive, feed that back into the baseline logic so the model tightens over time instead of staying static.</li>
+<li><strong>A weekly accuracy review</strong> — track how many alerts were real problems versus noise, and adjust thresholds like you would any other model, because that's what this is.</li>
+</ul>
+<p>None of this needs to be perfect on day one. Start with spend velocity and one or two high-spend channels, get the alerting cadence right, then expand coverage once the team trusts what it's seeing.</p>
+
+<p>The goal isn't a dashboard with more charts. It's a system that catches the $2,000 you were about to waste on a broken ad set before Saturday turns into Sunday. Build the data pipeline first, define anomalies statistically instead of with arbitrary thresholds, and let the agent do the tedious watching so your team can do the deciding.</p>
 
   <h2>Further reading</h2>
   <ul>
     <li><a href="/guide-data-pipelines.html">Guide: Revenue pipelines that survive production</a></li>
-    <li><a href="/blog-why-your-dbt-pipeline-keeps-breaking-on-api-schema-drift.html">Why your dbt pipeline keeps breaking on API schema drift</a></li>
     <li><a href="/blog-how-to-build-a-customer-data-warehouse-that-survives-ios-att.html">How to build a customer data warehouse that survives ios attribution loss</a></li>
+    <li><a href="/blog-how-to-build-an-ad-spend-decision-engine-from-warehouse-data.html">Build an ad-spend decision engine on warehouse data</a></li>
   </ul>
 </article>
 
@@ -178,12 +193,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 {
   "@context":"https://schema.org",
   "@type":"BlogPosting",
-  "headline":"Why your GA4 ROAS is lying to you — and how to find the real number",
-  "description":"GA4 and ad platforms report ROAS from clicks and pixels, not closed revenue. How to reconcile reported ROAS against real money and optimize on a true number.",
+  "headline":"Build an AI agent that catches ROAS anomalies before overspend",
+  "description":"A practical build guide to an AI agent that watches spend hourly and flags true ROAS drops before budget is wasted, not after the weekly review.",
   "author":{"@type":"Organization","name":"Twinslytics"},
   "publisher":{"@type":"Organization","name":"Twinslytics","url":"https://twinslytics.com"},
-  "mainEntityOfPage":"https://twinslytics.com/blog-ga4-roas-lying.html",
-  "datePublished":"2026-08-09"
+  "mainEntityOfPage":"https://twinslytics.com/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo.html",
+  "datePublished":"2026-08-24"
 }
 </script>
 <script type="application/ld+json">
@@ -206,8 +221,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "When to move from spreadsheets to a data warehouse",
-      "item": "https://twinslytics.com/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html"
+      "name": "Build an AI agent that catches ROAS anomalies before overspend",
+      "item": "https://twinslytics.com/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo.html"
     }
   ]
 }
