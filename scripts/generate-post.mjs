@@ -108,7 +108,10 @@ Pick the single highest-value cluster of related queries and return ONE topic li
 Prefer queries with high impressions and weak position, but judge relevance before volume. IGNORE any query that is a company or product name rather than a question — this site ranks incidentally for other vendors whose names also end in "lytics", and an article about a competitor's brand is worthless. Also ignore anything that looks like a scraper's query or an internal hostname.
 Long conversational queries are valuable: they come from AI search and state the reader's problem in their own words. Prefer them over short generic head terms when the intent is clearer.`;
     const usr = `Search Console queries with weak rankings:\n${demand}\n\nAlready published:\n${covered}\n\nReturn the single best next topic.`;
-    const { text, raw } = await claude(sys, usr, 120);
+    // Higher than it looks like it needs: a multi-instruction system prompt makes the
+    // model think longer before answering, and a tight cap here previously spent the
+    // whole budget on that reasoning and left nothing for the actual topic line.
+    const { text, raw } = await claude(sys, usr, 500);
     const topic = text.split("\n")[0].replace(/^[-*\d.\s]+/, "").replace(/^["']|["']$/g, "").trim();
     if (topic) { console.log("Topic from search demand:", topic); return { topic, fromQueue: false }; }
     console.error("Search-demand topic call returned nothing, falling back:", JSON.stringify(raw).slice(0, 400));
@@ -120,8 +123,9 @@ Long conversational queries are valuable: they come from AI search and state the
   const list = ranked.map(a => `- ${a.title} (${a.v} views)`).join("\n") || "(none yet)";
   const sys = `You plan SEO blog topics for Twinslytics, ${NICHE}. Return ONLY one topic line: lowercase, no quotes, no numbering, under 12 words. It must be a genuinely NEW angle not already covered, and should lean toward the themes of the best-performing existing posts.`;
   const usr = `Published posts with view counts (higher = more popular):\n${list}\n\nPropose the single best next topic to write.`;
-  const { text } = await claude(sys, usr, 120);
+  const { text, raw } = await claude(sys, usr, 500);
   const topic = text.split("\n")[0].replace(/^[-*\d.\s]+/, "").replace(/^["']|["']$/g, "").trim();
+  if (!topic) console.error("Fallback topic call returned nothing:", JSON.stringify(raw).slice(0, 400));
   console.log("Claude proposed topic:", topic);
   return { topic, fromQueue: false };
 }
