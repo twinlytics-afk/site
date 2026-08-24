@@ -5,6 +5,11 @@ main = "_worker.js"
 [assets]
 directory = "."
 binding = "ASSETS"
+# Every canonical tag, the sitemap, and every internal link use the .html
+# URL. The default "auto-trailing-slash" handling 307-redirects .html
+# requests to the extensionless path, so every page was telling Google two
+# different canonical URLs at once. "none" serves paths exactly as requested.
+html_handling = "none"
 
 [[kv_namespaces]]
 binding = "VIEWS"
