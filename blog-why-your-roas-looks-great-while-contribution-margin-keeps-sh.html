@@ -11,55 +11,51 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blog — Twinslytics | Notes on data, revenue, and automation</title>
-<meta name="description" content="Practical writing on marketing attribution, true ROAS, data engineering, and operations automation for ecommerce and DTC teams." />
+<title>Why ROAS can rise while contribution margin falls — Twinslytics</title>
+<meta name="description" content="See how discounts, returns and product costs quietly erode margin behind a healthy ROAS number, and what your reporting is missing." />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="canonical" href="https://twinslytics.com/blog.html" />
+<link rel="canonical" href="https://twinslytics.com/blog-why-your-roas-looks-great-while-contribution-margin-keeps-sh.html" />
 <meta name="robots" content="index, follow" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://twinslytics.com/blog.html" />
-<meta property="og:title" content="Twinslytics Blog — data, revenue, and automation" />
-<meta property="og:description" content="Practical writing on attribution, true ROAS, data engineering, and automation for ecommerce and DTC teams." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://twinslytics.com/blog-why-your-roas-looks-great-while-contribution-margin-keeps-sh.html" />
+<meta property="og:title" content="Why ROAS can rise while contribution margin falls" />
+<meta property="og:description" content="See how discounts, returns and product costs quietly erode margin behind a healthy ROAS number, and what your reporting is missing." />
 <meta property="og:image" content="https://twinslytics.com/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#fff;--bg-alt:#faf9ff;--bg-tint:#f5f2ff;--ink:#14122b;--body:#5a5675;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+  :root{--bg:#fff;--ink:#14122b;--body:#403c5c;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--ok:#12b981;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
-  a{color:inherit;text-decoration:none}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased}
+  a{color:var(--v);text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
-  h1,h2,h3{font-family:var(--disp);font-weight:600;line-height:1.1;letter-spacing:-.025em;color:var(--ink)}
-  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--v);background:#f2ecff;display:inline-block;padding:6px 12px;border-radius:20px}
   .btn{font-family:var(--disp);font-weight:600;font-size:14.5px;padding:12px 22px;border-radius:8px;display:inline-block;border:1px solid transparent}
   .btn-primary{background:var(--grad);color:#fff}
-  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
   .logo{font-family:var(--disp);font-weight:700;font-size:20px;letter-spacing:-.02em;display:inline-flex;align-items:center;gap:10px}
   .logo .brandmark{height:26px;width:auto;display:block}
   .logo .m{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .nav-links{display:flex;align-items:center;gap:30px;font-size:14.5px}
-  .nav-links a:not(.btn){color:var(--body)}
-  .nav-links a.active{color:var(--ink)}
+  .nav-links a:not(.btn){color:#5a5675}
   .nav .btn{padding:10px 18px}
-  .bloghero{text-align:center;padding:76px 0 48px;position:relative;overflow:hidden}
-  .bloghero::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:900px;height:600px;border-radius:50%;background:radial-gradient(circle at 45% 45%,rgba(108,76,240,.14),transparent 55%),radial-gradient(circle at 62% 55%,rgba(255,122,89,.1),transparent 55%);z-index:0}
-  .bloghero>*{position:relative;z-index:1}
-  .bloghero h1{font-size:clamp(34px,5vw,52px);margin:20px auto 14px;max-width:18ch}
-  .bloghero p{color:var(--body);font-size:19px;max-width:52ch;margin:0 auto}
-  .posts{max-width:var(--maxw);margin:0 auto;padding:20px 28px 96px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  .post{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px;transition:transform .18s,box-shadow .18s}
-  .post:hover{transform:translateY(-3px);box-shadow:0 20px 44px -28px rgba(108,76,240,.5)}
-  .post .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--v);margin-bottom:14px}
-  .post h3{font-size:20px;line-height:1.22;margin-bottom:10px}
-  .post p{color:var(--body);font-size:15px;flex:1}
-  .post .meta{font-family:var(--mono);font-size:11.5px;color:var(--mut);margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
-  .post.soon{opacity:.6}
-  .post.soon .tag{color:var(--mut)}
+  article{max-width:720px;margin:0 auto;padding:56px 28px 20px}
+  .back{font-family:var(--mono);font-size:13px;color:var(--mut);margin-bottom:26px;display:inline-block}
+  article h1{font-family:var(--disp);font-weight:600;font-size:clamp(30px,4.4vw,44px);line-height:1.12;letter-spacing:-.025em;margin:16px 0 18px}
+  .artmeta{font-family:var(--mono);font-size:13px;color:var(--mut);padding-bottom:26px;margin-bottom:36px;border-bottom:1px solid var(--line)}
+  article h2{font-family:var(--disp);font-weight:600;font-size:26px;letter-spacing:-.02em;margin:44px 0 14px}
+  article p{color:var(--body);margin-bottom:20px}
+  article ul{color:var(--body);margin:0 0 20px 22px}
+  article li{margin-bottom:8px}
+  article strong{color:var(--ink);font-weight:600}
+  .pull{border-left:3px solid;border-image:var(--grad) 1;padding:6px 0 6px 22px;margin:32px 0;font-family:var(--disp);font-weight:500;font-size:22px;line-height:1.35;color:var(--ink)}
+  .endcta{max-width:720px;margin:20px auto 90px;padding:34px 32px;background:linear-gradient(180deg,#faf8ff,#f5f2ff);border:1px solid var(--line);border-radius:16px;text-align:center}
+  .endcta h3{font-family:var(--disp);font-weight:600;font-size:24px;margin-bottom:10px}
+  .endcta p{color:var(--body);font-size:16px;margin-bottom:20px}
   footer{border-top:1px solid var(--line);padding:32px 0;background:#fff}
   .foot{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--mut);font-family:var(--mono);flex-wrap:wrap;gap:14px}
     .burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:none;border:0;cursor:pointer;padding:9px;border-radius:9px}
@@ -67,18 +63,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   .burger.is-open span:nth-child(2){opacity:0}
   .burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  .guides{max-width:var(--maxw);margin:0 auto;padding:8px 28px 0}
-  .guides .ghead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
-  .guides .ghead h2{font-family:var(--disp);font-weight:600;font-size:23px;letter-spacing:-.02em}
-  .guides .ghead span{font-family:var(--mono);font-size:12px;color:var(--mut)}
-  .guidesrow{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:14px}
-  .guide{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;padding:24px 22px;background:linear-gradient(180deg,#fdfcff,#faf8ff);transition:transform .18s,box-shadow .18s,border-color .18s}
-  .guide:hover{transform:translateY(-3px);border-color:var(--line-2);box-shadow:0 20px 44px -28px rgba(108,76,240,.5)}
-  .guide .gtag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--v);margin-bottom:12px}
-  .guide h3{font-size:18px;line-height:1.25;margin-bottom:9px}
-  .guide p{color:var(--body);font-size:14.5px;line-height:1.6;flex:1}
-  @media(max-width:1000px){.guidesrow{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:620px){.guidesrow{grid-template-columns:1fr}}
+  .figure{margin:34px 0}
+  .figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:14px;background:#fff}
+  .figure figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:10px;line-height:1.5}
   @media(max-width:900px){
     .nav{position:relative}
     .burger{display:flex}
@@ -87,7 +74,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .nav-links a:not(.btn){display:block;padding:14px 0;font-size:16px;color:var(--ink);border-bottom:1px solid var(--line)}
     .nav-links .langsw{padding:14px 0;font-size:13px;border-bottom:1px solid var(--line)}
     .nav-links .btn{margin-top:14px;width:100%;text-align:center;padding:13px}
-.posts{grid-template-columns:1fr}}
+}
 </style>
 </head>
 <body>
@@ -103,176 +90,80 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="/#work">Work</a>
       <a href="/#services">Services</a>
       <a href="/#team">Team</a>
-      <a href="/blog.html" class="active">Blog</a>
+      <a href="/blog.html">Blog</a>
       <a href="/#contact" class="btn btn-primary">Book a call</a>
     </nav>
     <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
 
-<section class="bloghero">
-  <span class="eyebrow">Blog</span>
-  <h1>Notes on data, revenue, and <span class="grad-text">automation</span>.</h1>
-  <p>Practical writing on attribution, true ROAS, data engineering, and the automation that runs real businesses.</p>
-</section>
+<article>
+  <a class="back" href="/blog.html">← All posts</a>
+  <span class="eyebrow">Marketing analytics</span>
+  <h1>Why ROAS can rise while contribution margin falls</h1>
+  <div class="artmeta">24 Aug 2026 · 6 min read · Twinslytics<span class="artviews"></span></div>
 
-<section class="guides">
-  <div class="ghead">
-    <h2>Start here</h2>
-    <span>Guides and tools</span>
-  </div>
-  <div class="guidesrow">
-    <a class="guide" href="/guide-attribution.html">
-      <div class="gtag">Guide</div>
-      <h3>Marketing attribution for ecommerce</h3>
-      <p>The four places a paid click loses its identity, and the order to fix them in.</p>
-    </a>
-    <a class="guide" href="/guide-true-roas.html">
-      <div class="gtag">Guide</div>
-      <h3>True ROAS</h3>
-      <p>Turning a platform's best-case number into one you can safely spend against.</p>
-    </a>
-    <a class="guide" href="/guide-data-pipelines.html">
-      <div class="gtag">Guide</div>
-      <h3>Revenue data pipelines</h3>
-      <p>Schema drift, loader lag, and frozen partitions — and how to survive them.</p>
-    </a>
-    <a class="guide" href="/true-roas-calculator.html">
-      <div class="gtag">Free tool</div>
-      <h3>True ROAS calculator</h3>
-      <p>Apply overlap, refunds and untracked revenue to see what your ROAS really is.</p>
-    </a>
-  </div>
-</section>
+  <figure class="figure">
+    <svg viewBox="0 0 720 224" width="100%" height="auto" role="img" aria-label="ROAS vs Contribution Margin: Why They Diverge" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto"><text x="8" y="24" font-family="'Space Grotesk',system-ui,sans-serif" font-size="15" font-weight="600" fill="#14122b">ROAS vs Contribution Margin: Why They Diverge</text><rect x="8" y="44" width="342" height="174" rx="12" fill="#fdfcff" stroke="#ece7f6"/><text x="24" y="69" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10.5" letter-spacing="1.3" fill="#ff7a59">WHAT ROAS IGNORES</text><line x1="24" y1="80" x2="334" y2="80" stroke="#ece7f6"/><circle cx="29" cy="98" r="2.6" fill="#ff7a59"/><text x="40" y="102" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">COGS &amp; shipping costs</text><circle cx="29" cy="128" r="2.6" fill="#ff7a59"/><text x="40" y="132" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Discounts &amp; promo codes</text><circle cx="29" cy="158" r="2.6" fill="#ff7a59"/><text x="40" y="162" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Returns &amp; chargebacks</text><circle cx="29" cy="188" r="2.6" fill="#ff7a59"/><text x="40" y="192" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Fulfillment costs</text><rect x="370" y="44" width="342" height="174" rx="12" fill="#fdfcff" stroke="#ece7f6"/><text x="386" y="69" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10.5" letter-spacing="1.3" fill="#12b981">WHAT FIXES IT</text><line x1="386" y1="80" x2="696" y2="80" stroke="#ece7f6"/><circle cx="391" cy="98" r="2.6" fill="#12b981"/><text x="402" y="102" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Split promo vs full-price revenue</text><circle cx="391" cy="128" r="2.6" fill="#12b981"/><text x="402" y="132" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Net down returns before reporting</text><circle cx="391" cy="158" r="2.6" fill="#12b981"/><text x="402" y="162" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Track contribution margin per ord…</text><circle cx="391" cy="188" r="2.6" fill="#12b981"/><text x="402" y="192" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Attribute true landed costs</text></svg>
+    <figcaption>ROAS and contribution margin measure different things, so they can move in opposite directions at the same time.</figcaption>
+  </figure>
 
-<div class="posts">
-  <!-- POSTS -->
-  <a class="post" href="/blog-why-your-roas-looks-great-while-contribution-margin-keeps-sh.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>Why ROAS can rise while contribution margin falls</h3>
-    <p>See how discounts, returns and product costs quietly erode margin behind a healthy ROAS number, and what your reporting is missing.</p>
-    <div class="meta">24 Aug 2026 · 6 min read<span class="views" data-p="/blog-why-your-roas-looks-great-while-contribution-margin-keeps-sh.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo.html">
-    <div class="tag">AI &amp; automation</div>
-    <h3>Build an AI agent that catches ROAS anomalies before overspend</h3>
-    <p>A practical build guide to an AI agent that watches spend hourly and flags true ROAS drops before budget is wasted, not after the weekly review.</p>
-    <div class="meta">24 Aug 2026 · 6 min read<span class="views" data-p="/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-to-build-an-ad-spend-decision-engine-from-warehouse-data.html">
-    <div class="tag">Data engineering</div>
-    <h3>Build an ad-spend decision engine on warehouse data</h3>
-    <p>Stop trusting platform ROAS. Learn how to join order and spend data in your warehouse to turn attribution into automated budget decisions.</p>
-    <div class="meta">24 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-to-build-an-ad-spend-decision-engine-from-warehouse-data.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-to-attribute-subscription-ltv-back-to-the-original-ad-cl.html">
-    <div class="tag">Attribution</div>
-    <h3>How to attribute subscription ltv back to the original ad click</h3>
-    <p>Most attribution setups stop working the moment a customer becomes a subscriber. Meta, Google, and your attribution tool all report the first-order value, </p>
-    <div class="meta">23 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-to-attribute-subscription-ltv-back-to-the-original-ad-cl.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-to-build-a-customer-data-warehouse-that-survives-ios-att.html">
-    <div class="tag">Data engineering</div>
-    <h3>How to build a customer data warehouse that survives ios attribution loss</h3>
-    <p>Apple didn't kill attribution. It killed your ability to trust a single platform's version of the truth. If your revenue reporting still lives inside Meta </p>
-    <div class="meta">21 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-to-build-a-customer-data-warehouse-that-survives-ios-att.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-to-build-a-marketing-mix-model-without-a-data-science-te.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>How to build a marketing mix model without a data science team</h3>
-    <p>Your CFO wants to know what happens to revenue if you cut paid social by 20%. Your last-click attribution can't answer that. Neither can your gut. What you</p>
-    <div class="meta">19 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-to-build-a-marketing-mix-model-without-a-data-science-te.html"></span></div>
-  </a>
-  <a class="post" href="/blog-why-your-subscription-revenue-makes-blended-roas-misleading.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>Why your subscription revenue makes blended roas misleading</h3>
-    <p>Your blended ROAS says 4.2x and everyone in the meeting nods. But if a third of that revenue comes from subscribers who resubscribed on autopilot, you're n</p>
-    <div class="meta">17 Aug 2026 · 5 min read<span class="views" data-p="/blog-why-your-subscription-revenue-makes-blended-roas-misleading.html"></span></div>
-  </a>
-  <a class="post" href="/blog-why-utm-parameters-break-at-checkout-redirects-and-how-to-fi.html">
-    <div class="tag">Attribution</div>
-    <h3>Why utm parameters break at checkout redirects and how to fix attribution</h3>
-    <p>You launch a campaign, spend real money, and three days later half your conversions show up as "direct" in GA4. Nobody typed your URL from memory. They cli</p>
-    <div class="meta">15 Aug 2026 · 5 min read<span class="views" data-p="/blog-why-utm-parameters-break-at-checkout-redirects-and-how-to-fi.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-dtc-brands-should-measure-blended-roas.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>How DTC brands should measure blended ROAS</h3>
-    <p>Most DTC brands calculate blended ROAS wrong, and the ones who calculate it right often use it wrong. It's not a marketing metric. It's not a Meta metric. </p>
-    <div class="meta">13 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-dtc-brands-should-measure-blended-roas.html"></span></div>
-  </a>
-  <a class="post" href="/blog-monitoring-and-alerting-for-data-pipelines-in-production.html">
-    <div class="tag">Data engineering</div>
-    <h3>Monitoring and alerting for data pipelines in production</h3>
-    <p>Your ROAS dashboard says one thing on Monday and something completely different on Tuesday. Not because ad performance changed, but because a pipeline sile</p>
-    <div class="meta">11 Aug 2026 · 5 min read<span class="views" data-p="/blog-monitoring-and-alerting-for-data-pipelines-in-production.html"></span></div>
-  </a>
-  <a class="post" href="/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html">
-    <div class="tag">Data engineering</div>
-    <h3>When to move from spreadsheets to a data warehouse</h3>
-    <p>Your marketing lead pulls Shopify data into Google Sheets every Monday. Someone else exports Klaviyo numbers into a different tab. Meta ad spend gets copy-</p>
-    <div class="meta">9 Aug 2026 · 5 min read<span class="views" data-p="/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html"></span></div>
-  </a>
-  <a class="post" href="/blog-attribution-when-payment-domains-steal-the-credit.html">
-    <div class="tag">Attribution</div>
-    <h3>Attribution when payment domains steal the credit</h3>
-    <p>Open your GA4 acquisition report and look for "paypal.com" or "checkout.shopify.com" sitting in your top referrers with a suspiciously high conversion rate</p>
-    <div class="meta">7 Aug 2026 · 4 min read<span class="views" data-p="/blog-attribution-when-payment-domains-steal-the-credit.html"></span></div>
-  </a>
-  <a class="post" href="/blog-why-your-dbt-pipeline-keeps-breaking-on-api-schema-drift.html">
-    <div class="tag">Data engineering</div>
-    <h3>Why your dbt pipeline keeps breaking on API schema drift</h3>
-    <p>Your dbt run was green yesterday. Today it's red because a marketing platform decided to rename a field, add a nested object, or quietly switch an integer </p>
-    <div class="meta">5 Aug 2026 · 5 min read<span class="views" data-p="/blog-why-your-dbt-pipeline-keeps-breaking-on-api-schema-drift.html"></span></div>
-  </a>
-  <a class="post" href="/blog-predictive-cac-bidding-on-lead-value-instead-of-clicks.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>Predictive CAC: bidding on lead value instead of clicks</h3>
-    <p>Most ad accounts are still optimizing for the wrong thing. You tell Google or Meta to chase clicks, or conversions, or even "leads" — but a lead form fill </p>
-    <div class="meta">3 Aug 2026 · 5 min read<span class="views" data-p="/blog-predictive-cac-bidding-on-lead-value-instead-of-clicks.html"></span></div>
-  </a>
-  <a class="post" href="/blog-true-roas-vs-ga4-ecommerce-roas-for-offline-close-businesses.html">
-    <div class="tag">Attribution</div>
-    <h3>True ROAS vs GA4 ecommerce ROAS for offline-close businesses</h3>
-    <p>GA4 tells you a campaign converted at 3.2 ROAS. Your finance team says the same campaign lost money. Both are right, and that gap is exactly why offline-cl</p>
-    <div class="meta">1 Aug 2026 · 5 min read<span class="views" data-p="/blog-true-roas-vs-ga4-ecommerce-roas-for-offline-close-businesses.html"></span></div>
-  </a>
-  <a class="post" href="/blog-server-side-conversions-with-meta-capi-what-breaks-and-how-t.html">
-    <div class="tag">Attribution</div>
-    <h3>Server-side conversions with Meta CAPI: what breaks and how to fix it</h3>
-    <p>Meta cut off third-party cookie tracking, so everyone rushed to implement Conversions API. Then ROAS numbers got weirder, not better. If you've deployed CA</p>
-    <div class="meta">31 Jul 2026 · 5 min read<span class="views" data-p="/blog-server-side-conversions-with-meta-capi-what-breaks-and-how-t.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-to-reconcile-meta-and-google-roas-against-your-crm.html">
-    <div class="tag">Data engineering</div>
-    <h3>How to reconcile Meta and Google ROAS against your CRM</h3>
-    <p>Meta says your campaign drove $40,000 in revenue. Google says its campaigns drove $35,000. Add those up and you've got $75,000 in attributed revenue. Excep</p>
-    <div class="meta">29 Jul 2026 · 5 min read<span class="views" data-p="/blog-how-to-reconcile-meta-and-google-roas-against-your-crm.html"></span></div>
-  </a>
-  <a class="post" href="/blog-what-ai-ready-data-actually-means-a-practical-checklist.html">
-    <div class="tag">AI & automation</div>
-    <h3>What AI-ready data actually means: a practical checklist</h3>
-    <p>Every vendor pitch deck has a slide claiming their platform makes your data "AI-ready." Nobody defines what that means, and most teams find out the hard wa</p>
-    <div class="meta">27 Jul 2026 · 4 min read<span class="views" data-p="/blog-what-ai-ready-data-actually-means-a-practical-checklist.html"></span></div>
-  </a>
-  <a class="post" href="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html">
-    <div class="tag">Marketing analytics</div>
-    <h3>The 60-day cohort maturity rule for ad spend decisions</h3>
-    <p>Most ecommerce brands kill winning campaigns and scale losing ones because they check the scoreboard before the game is over.</p>
-    <div class="meta">25 Jul 2026 · 4 min read<span class="views" data-p="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html"></span></div>
-  </a>
-  <a class="post" href="/blog-why-offline-conversions-beat-pixel-based-roas.html">
-    <div class="tag">Attribution</div>
-    <h3>Why offline conversions beat pixel-based ROAS</h3>
-    <p>Your dashboard says Meta is delivering a 4.2x ROAS. Your bank account says something else. If you've ever felt that gap, you're not imagining it.</p>
-    <div class="meta">24 Jul 2026 · 5 min read<span class="views" data-p="/blog-why-offline-conversions-beat-pixel-based-roas.html"></span></div>
-  </a>
-  <a class="post" href="/blog-ga4-roas-lying.html">
-    <div class="tag">Attribution</div>
-    <h3>Why your GA4 ROAS is lying to you — and how to find the real number</h3>
-    <p>GA4 and your ad platforms measure clicks, not closed revenue. Here's why the gap exists, and how to reconcile it against what actually hit your bank account.</p>
-    <div class="meta">1 Feb 2026 · 3 min read<span class="views" data-p="/blog-ga4-roas-lying.html"></span></div>
-  </a>
+  <p>Your dashboard says ROAS hit 4.2x last month. Your CFO says margin dropped for the third straight quarter. Both numbers are correct. That's the problem.</p>
+
+<p>ROAS measures revenue against ad spend. It says nothing about what it cost you to make, ship, return, or discount that revenue. You can grow ROAS every month while your business quietly bleeds cash, because the metric was never built to catch that. It's an efficiency ratio for one line item in a much bigger cost stack, and treating it like a profit signal is how teams end up optimizing themselves into a margin hole.</p>
+
+<h2>ROAS ignores everything but ad spend</h2>
+<p>ROAS is revenue divided by media spend. That's it. It doesn't know your product costs went up, your carrier raised rates, or that a third of last month's "revenue" came back as returns. It doesn't know you gave away 20% off to close the sale. Every one of those costs hits contribution margin directly. None of them touch the ROAS calculation.</p>
+
+<p>This is why a channel can post a beautiful ROAS while contributing almost nothing to the bottom line. A campaign selling a low-margin SKU at a steep discount can generate revenue efficiently and profit barely at all. If your reporting stops at "revenue over spend," you'll keep feeding budget to the exact channels and campaigns that are hollowing out margin, because on paper they look like your best performers.</p>
+
+<h2>Discounts inflate revenue, not profit</h2>
+<p>Promo codes, site-wide sales, and bundle deals all boost the top of the ROAS equation. Revenue goes up, spend often stays flat or even drops as the discount does the conversion work instead of the ad dollar, and ROAS looks fantastic. Contribution margin sees the opposite: the discount comes straight off the top before you even get to COGS.</p>
+
+<p>Teams that don't split promo revenue from full-price revenue in their reporting end up with a blended ROAS that hides which chunk of the win was profitable and which chunk was margin given away to hit a revenue number. Over time, if promo-driven revenue keeps growing as a share of total revenue, ROAS can climb steadily while contribution margin per order falls just as steadily. It's not a coincidence. It's the same discount showing up as a positive in one metric and a negative in the other.</p>
+
+<h2>Returns show up late, if at all</h2>
+<p>Most attribution and ad platform reporting locks in revenue at the point of purchase. Returns, chargebacks, and refunds happen days or weeks later, often after the reporting window has closed and the campaign has been marked a success. If your data pipeline doesn't reconcile order data against return data on a rolling basis, your ROAS reporting is running on gross revenue that never actually arrived.</p>
+
+<p>Categories with high return rates — apparel with sizing issues, anything ordered in multiple variants "to try," high-consideration purchases people second-guess — are the worst offenders here. A campaign can look like your top performer for three weeks straight and then get quietly gutted by returns that never make it back into the ROAS calculation, but absolutely show up in contribution margin once real costs are booked.</p>
+
+<h2>Fulfillment costs move, ROAS doesn't notice</h2>
+<p>Shipping rates, warehousing fees, pick-and-pack costs, and payment processing fees all shift over time, sometimes month to month. None of these live inside your ad platform's reporting. ROAS treats every dollar of revenue as equally valuable regardless of what it cost to fulfill the order that generated it.</p>
+
+<p>This gets worse at the SKU level. A $60 order for a bulky, heavy item might cost twice as much to ship and fulfill as a $60 order for something small and light. Ad platforms and most attribution tools don't differentiate. They see two $60 conversions and report the same efficiency for both, even though one is dragging down contribution margin and the other is carrying it.</p>
+
+<p>If your data pipeline isn't pulling in real fulfillment and COGS data at the order or SKU level, you literally cannot see this gap. You need a warehouse where order-level revenue joins cleanly with order-level cost — product cost, shipping cost, payment fees, return provisions — so you can calculate contribution margin per order, per campaign, per SKU. Without that join, you're stuck comparing a media efficiency metric against a P&L metric and wondering why they disagree.</p>
+
+<h2>Attribution models overcount channels</h2>
+<p>Last-click and platform-reported attribution routinely take credit for revenue that would have happened anyway, or that another channel actually drove. Retargeting and branded search are the usual suspects — they mop up demand created elsewhere and post huge ROAS numbers for doing very little marginal work. Scaling budget into these "great ROAS" channels can genuinely increase spend without increasing real incremental revenue, let alone profit.</p>
+
+<p>When you layer this on top of everything above, you get a specific and common failure mode: teams shift budget toward channels with the best reported ROAS, those channels are disproportionately retargeting and brand campaigns with high overcounted attribution, the incremental revenue is smaller than reported, the margin on what revenue does show up is thin because of discounting and returns, and the net effect is spend goes up, blended ROAS goes up, and contribution margin goes down. Every individual metric in the chain can be technically accurate and the overall trend can still be actively harmful.</p>
+
+<h2>Fix the metric, not the campaign</h2>
+<p>The instinct when margin drops is to blame creative fatigue, audience saturation, or rising CPMs. Sometimes that's real. But before you touch a single campaign, check whether you're even measuring the right thing. A few fixes matter more than any bid adjustment:</p>
+
+<ul>
+<li>Build a data pipeline that joins order-level revenue with order-level cost — COGS, shipping, payment fees, discount amount — so contribution margin can be calculated per order, not estimated in aggregate.</li>
+<li>Reconcile returns and refunds against the original order and campaign on a rolling basis, not as a separate finance-only process that never feeds back into marketing reporting.</li>
+<li>Report contribution margin by channel and campaign next to ROAS, not instead of it. Let the team see both numbers on the same dashboard so a "win" that isn't actually profitable gets caught immediately.</li>
+<li>Separate promo-driven revenue from full-price revenue in every performance report so discount-fueled ROAS gains don't get read as organic channel improvement.</li>
+<li>Push attribution toward incrementality testing for your top-spend channels, especially retargeting and brand search, instead of trusting platform-reported last-click numbers at face value.</li>
+</ul>
+
+<p>ROAS isn't wrong, it's incomplete. It was designed to answer one question — how efficiently did this dollar of ad spend turn into revenue — and it answers that question fine. The mistake is asking it a different question: is this business making money. Only contribution margin, built from a pipeline that actually connects cost data to revenue data at the order level, can answer that. Until you build that connection, you'll keep hitting your ROAS targets and wondering where the profit went.</p>
+
+  <h2>Further reading</h2>
+  <ul>
+    <li><a href="/guide-true-roas.html">Guide: True ROAS, and how to get to it</a></li>
+    <li><a href="/blog-how-dtc-brands-should-measure-blended-roas.html">How DTC brands should measure blended ROAS</a></li>
+    <li><a href="/blog-how-to-build-a-marketing-mix-model-without-a-data-science-te.html">How to build a marketing mix model without a data science team</a></li>
+  </ul>
+</article>
+
+<div class="endcta">
+  <h3>Want to see your real ROAS?</h3>
+  <p>We reconcile ad spend, platform conversions, and closed revenue into one true number you can actually optimize on.</p>
+  <a href="/#contact" class="btn btn-primary">Book a call</a>
 </div>
 
 <footer>
@@ -281,19 +172,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span>Data infrastructure that drives revenue.</span>
   </div>
 </footer>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BlogPosting",
+  "headline":"Why ROAS can rise while contribution margin falls",
+  "description":"See how discounts, returns and product costs quietly erode margin behind a healthy ROAS number, and what your reporting is missing.",
+  "author":{"@type":"Organization","name":"Twinslytics"},
+  "publisher":{"@type":"Organization","name":"Twinslytics","url":"https://twinslytics.com"},
+  "mainEntityOfPage":"https://twinslytics.com/blog-why-your-roas-looks-great-while-contribution-margin-keeps-sh.html",
+  "datePublished":"2026-08-24"
+}
+</script>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
 <script>
 (function(){var b=document.querySelector(".burger"),m=document.querySelector(".nav-links");if(!b||!m)return;function close(){m.classList.remove("open");b.classList.remove("is-open");b.setAttribute("aria-expanded","false");}b.addEventListener("click",function(e){e.stopPropagation();var o=m.classList.toggle("open");b.classList.toggle("is-open",o);b.setAttribute("aria-expanded",o);});m.querySelectorAll("a").forEach(function(a){a.addEventListener("click",close);});document.addEventListener("click",function(e){if(m.classList.contains("open")&&!m.contains(e.target)&&!b.contains(e.target))close();});})();
 </script>
-<script>
-fetch("/api/views").then(function(r){return r.json()}).then(function(v){
-  function get(p){p=p.replace(/\/$/,"");return v[p]||v[p+".html"]||v[p.replace(/\.html$/,"")]||0;}
-  document.querySelectorAll("a.post[href]").forEach(function(a){
-    var el=a.querySelector(".views");if(!el)return;
-    var n=get(a.getAttribute("href"));
-    if(n>0)el.textContent=" \u00b7 "+n+(n===1?" view":" views");
-  });
-}).catch(function(){});
-</script>
+<script>try{fetch("/api/views?p="+encodeURIComponent(location.pathname.replace(/\.html$/,"")),{method:"POST",keepalive:true})}catch(e){}</script>
 </body>
 </html>
