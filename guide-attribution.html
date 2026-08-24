@@ -118,6 +118,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .stat.key{border-color:#c9bdf5;background:#faf8ff}
   .stat.key .v{color:var(--v)}
   .verdict{margin-top:18px;font-family:var(--disp);font-size:16.5px;font-weight:500;color:var(--ink);line-height:1.5}
+
+  .faq{margin:44px 0}
+  .faqitem{border-bottom:1px solid var(--line);padding:20px 0}
+  .faqitem:first-child{border-top:1px solid var(--line)}
+  .faqitem h3{font-family:var(--disp);font-weight:600;font-size:17px;margin-bottom:9px;color:var(--ink)}
+  .faqitem p{color:var(--body);font-size:15.5px;margin:0}
   @media(max-width:760px){.calcgrid{grid-template-columns:1fr}.calcout{grid-template-columns:1fr}}
 </style>
 <script type="application/ld+json">
@@ -161,6 +167,46 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "position": 3,
       "name": "Marketing attribution for ecommerce",
       "item": "https://twinslytics.com/guide-attribution.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why do Meta and Google both claim credit for the same sale?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Each platform uses its own attribution window and its own view of the user, and both are graded on their own homework — a platform has no incentive to under-claim. Overlap is normal, not fraud; the fix is de-duplicating in your own warehouse, not trusting either platform's number in isolation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is last-click attribution actually wrong?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It's not wrong, it's incomplete. Last-click answers 'which touchpoint happened right before the order' — a real, useful question. It just isn't the same question as 'which spend actually drove incremental revenue,' and treating the two as interchangeable is where most attribution arguments start."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do we need a full CDP to fix this, or can it be simpler?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most of the value comes from three things: a first-party identifier that survives the checkout redirect, server-side conversion events, and a warehouse join between orders and clicks. That's a data engineering project, not necessarily a CDP purchase — a CDP can help operationalize it later, but it doesn't fix a broken identifier on its own."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long before a fix shows up in reported ROAS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Identifier and server-side fixes show up within days, once the new events start flowing. Attribution model changes take longer to read cleanly, because you're comparing against a cohort that matured under the old, broken measurement — give it at least one full cohort cycle before judging the before/after."
+      }
     }
   ]
 }
@@ -238,6 +284,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <li>Subtract refunds and failed renewals on the same cohort you attribute.</li>
     <li>Only then argue about attribution models.</li>
   </ul>
+
+  <h2>Questions people ask</h2>
+  <div class="faq">
+    <div class="faqitem">
+      <h3>Why do Meta and Google both claim credit for the same sale?</h3>
+      <p>Each platform uses its own attribution window and its own view of the user, and both are graded on their own homework — a platform has no incentive to under-claim. Overlap is normal, not fraud; the fix is de-duplicating in your own warehouse, not trusting either platform&#x27;s number in isolation.</p>
+    </div>
+    <div class="faqitem">
+      <h3>Is last-click attribution actually wrong?</h3>
+      <p>It&#x27;s not wrong, it&#x27;s incomplete. Last-click answers &#x27;which touchpoint happened right before the order&#x27; — a real, useful question. It just isn&#x27;t the same question as &#x27;which spend actually drove incremental revenue,&#x27; and treating the two as interchangeable is where most attribution arguments start.</p>
+    </div>
+    <div class="faqitem">
+      <h3>Do we need a full CDP to fix this, or can it be simpler?</h3>
+      <p>Most of the value comes from three things: a first-party identifier that survives the checkout redirect, server-side conversion events, and a warehouse join between orders and clicks. That&#x27;s a data engineering project, not necessarily a CDP purchase — a CDP can help operationalize it later, but it doesn&#x27;t fix a broken identifier on its own.</p>
+    </div>
+    <div class="faqitem">
+      <h3>How long before a fix shows up in reported ROAS?</h3>
+      <p>Identifier and server-side fixes show up within days, once the new events start flowing. Attribution model changes take longer to read cleanly, because you&#x27;re comparing against a cohort that matured under the old, broken measurement — give it at least one full cohort cycle before judging the before/after.</p>
+    </div>
+  </div>
 
   <h2>Read next</h2>
   <div class="readlist">

@@ -118,6 +118,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .stat.key{border-color:#c9bdf5;background:#faf8ff}
   .stat.key .v{color:var(--v)}
   .verdict{margin-top:18px;font-family:var(--disp);font-size:16.5px;font-weight:500;color:var(--ink);line-height:1.5}
+
+  .faq{margin:44px 0}
+  .faqitem{border-bottom:1px solid var(--line);padding:20px 0}
+  .faqitem:first-child{border-top:1px solid var(--line)}
+  .faqitem h3{font-family:var(--disp);font-weight:600;font-size:17px;margin-bottom:9px;color:var(--ink)}
+  .faqitem p{color:var(--body);font-size:15.5px;margin:0}
   @media(max-width:760px){.calcgrid{grid-template-columns:1fr}.calcout{grid-template-columns:1fr}}
 </style>
 <script type="application/ld+json">
@@ -161,6 +167,46 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "position": 3,
       "name": "True ROAS, and how to get to it",
       "item": "https://twinslytics.com/guide-true-roas.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does adding up every platform's ROAS overstate reality?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because platforms don't de-duplicate against each other, and none of them subtract refunds. Four systems each claiming a conversion they can plausibly argue for, gross of what comes back — the sum was never meant to equal your actual return."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should we use blended ROAS or channel-level ROAS to make decisions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Both, for different jobs. Blended is the honest reality check — it can't lie about total spend versus total revenue. Channel-level is what you need to allocate budget, but it's the easier number to inflate, since every platform overstates its own contribution. Investigate whenever the two move in opposite directions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the biggest single adjustment between reported and true ROAS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It varies by business, but refunds and cancelled renewals are the most commonly missed one — most reporting locks in revenue at the moment of purchase and never revisits it when the money comes back out."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do we know when a ROAS number is trustworthy enough to spend against?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Three checks: it reconciles to your payment processor for the same period, the cohort has had time to mature past your typical refund/renewal window, and you can trace an individual order in it back to the click that generated it. Until all three hold, treat the number as directional."
+      }
     }
   ]
 }
@@ -231,6 +277,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <p>A true ROAS number is ready to spend against when it reconciles to your payment processor for
   the same period, when the cohort has had time to mature, and when you can trace any single order
   in it back to a click. Until all three hold, treat it as directional.</p>
+
+  <h2>Questions people ask</h2>
+  <div class="faq">
+    <div class="faqitem">
+      <h3>Why does adding up every platform&#x27;s ROAS overstate reality?</h3>
+      <p>Because platforms don&#x27;t de-duplicate against each other, and none of them subtract refunds. Four systems each claiming a conversion they can plausibly argue for, gross of what comes back — the sum was never meant to equal your actual return.</p>
+    </div>
+    <div class="faqitem">
+      <h3>Should we use blended ROAS or channel-level ROAS to make decisions?</h3>
+      <p>Both, for different jobs. Blended is the honest reality check — it can&#x27;t lie about total spend versus total revenue. Channel-level is what you need to allocate budget, but it&#x27;s the easier number to inflate, since every platform overstates its own contribution. Investigate whenever the two move in opposite directions.</p>
+    </div>
+    <div class="faqitem">
+      <h3>What&#x27;s the biggest single adjustment between reported and true ROAS?</h3>
+      <p>It varies by business, but refunds and cancelled renewals are the most commonly missed one — most reporting locks in revenue at the moment of purchase and never revisits it when the money comes back out.</p>
+    </div>
+    <div class="faqitem">
+      <h3>How do we know when a ROAS number is trustworthy enough to spend against?</h3>
+      <p>Three checks: it reconciles to your payment processor for the same period, the cohort has had time to mature past your typical refund/renewal window, and you can trace an individual order in it back to the click that generated it. Until all three hold, treat the number as directional.</p>
+    </div>
+  </div>
 
   <h2>Read next</h2>
   <div class="readlist">

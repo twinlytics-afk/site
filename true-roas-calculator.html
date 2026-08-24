@@ -118,6 +118,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .stat.key{border-color:#c9bdf5;background:#faf8ff}
   .stat.key .v{color:var(--v)}
   .verdict{margin-top:18px;font-family:var(--disp);font-size:16.5px;font-weight:500;color:var(--ink);line-height:1.5}
+
+  .faq{margin:44px 0}
+  .faqitem{border-bottom:1px solid var(--line);padding:20px 0}
+  .faqitem:first-child{border-top:1px solid var(--line)}
+  .faqitem h3{font-family:var(--disp);font-weight:600;font-size:17px;margin-bottom:9px;color:var(--ink)}
+  .faqitem p{color:var(--body);font-size:15.5px;margin:0}
   @media(max-width:760px){.calcgrid{grid-template-columns:1fr}.calcout{grid-template-columns:1fr}}
 </style>
 <script type="application/ld+json">
@@ -164,6 +170,38 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "position": 3,
       "name": "True ROAS calculator",
       "item": "https://twinslytics.com/true-roas-calculator.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Where do the overlap and refund percentages actually come from?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Overlap comes from counting orders claimed by more than one ad platform in the same window — if you've never measured it, don't assume zero for a multi-channel account. Refund rate comes from your payment processor, attributed to the cohort that generated the order rather than the month the refund landed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why include untracked revenue in a ROAS calculation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because pixels only see what happens in a browser. Offline closes, phone orders, and anything finished outside the checkout flow are real revenue that platform-reported ROAS never had a chance to count — leaving it out understates channels that drive real, if invisible, demand."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this the same as what an agency or platform reports?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No — this is deliberately the number after de-duplication, refunds, and untracked revenue are applied, which is usually lower than what any single platform reports on its own. That's the point: it's the version you can safely spend against."
+      }
     }
   ]
 }
@@ -268,6 +306,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     generated the order rather than the month the refund landed.</li>
     <li><strong>Untracked revenue</strong>: total closed revenue minus what your analytics recorded.</li>
   </ul>
+
+  <h2>Questions people ask</h2>
+  <div class="faq">
+    <div class="faqitem">
+      <h3>Where do the overlap and refund percentages actually come from?</h3>
+      <p>Overlap comes from counting orders claimed by more than one ad platform in the same window — if you&#x27;ve never measured it, don&#x27;t assume zero for a multi-channel account. Refund rate comes from your payment processor, attributed to the cohort that generated the order rather than the month the refund landed.</p>
+    </div>
+    <div class="faqitem">
+      <h3>Why include untracked revenue in a ROAS calculation?</h3>
+      <p>Because pixels only see what happens in a browser. Offline closes, phone orders, and anything finished outside the checkout flow are real revenue that platform-reported ROAS never had a chance to count — leaving it out understates channels that drive real, if invisible, demand.</p>
+    </div>
+    <div class="faqitem">
+      <h3>Is this the same as what an agency or platform reports?</h3>
+      <p>No — this is deliberately the number after de-duplication, refunds, and untracked revenue are applied, which is usually lower than what any single platform reports on its own. That&#x27;s the point: it&#x27;s the version you can safely spend against.</p>
+    </div>
+  </div>
 
   <h2>Read next</h2>
   <div class="readlist">

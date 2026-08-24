@@ -118,6 +118,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .stat.key{border-color:#c9bdf5;background:#faf8ff}
   .stat.key .v{color:var(--v)}
   .verdict{margin-top:18px;font-family:var(--disp);font-size:16.5px;font-weight:500;color:var(--ink);line-height:1.5}
+
+  .faq{margin:44px 0}
+  .faqitem{border-bottom:1px solid var(--line);padding:20px 0}
+  .faqitem:first-child{border-top:1px solid var(--line)}
+  .faqitem h3{font-family:var(--disp);font-weight:600;font-size:17px;margin-bottom:9px;color:var(--ink)}
+  .faqitem p{color:var(--body);font-size:15.5px;margin:0}
   @media(max-width:760px){.calcgrid{grid-template-columns:1fr}.calcout{grid-template-columns:1fr}}
 </style>
 <script type="application/ld+json">
@@ -161,6 +167,46 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "position": 3,
       "name": "Revenue pipelines that survive production",
       "item": "https://twinslytics.com/guide-data-pipelines.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does a pipeline that worked for months suddenly break?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Almost always an upstream change nobody told you about — an ad platform renames a field, a payment provider adds a new status value, a loader falls behind its usual schedule. The pipeline itself didn't get worse; the assumptions it was built on quietly stopped holding."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is row-count monitoring enough to catch reporting errors?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. A pipeline can produce exactly the right number of wrong rows — a schema change that silently coerces a revenue column to null still lands the expected row count. Monitor freshness, reconciliation against a source of truth, and distribution shifts in key columns, not just volume."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How wide should an incremental load's window be?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Wider than the worst realistic lag in your data, including late-arriving refunds and cancelled renewals — not just wider than your loader's normal delay. A window sized to the happy path is exactly what silently freezes wrong numbers into place when something upstream slips."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When is a spreadsheet no longer the right tool?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When two people export the same figure and get different answers, when assembling a monthly report takes a person a full day, or when nobody on the team can explain where a number actually came from. Data volume alone is rarely the real signal."
+      }
     }
   ]
 }
@@ -224,6 +270,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <p>The signal is not data volume. It is when two people export the same figure and get different
   answers, when a monthly report takes a day of manual assembly, or when nobody can say where a
   number came from. That is the point where a warehouse pays for itself.</p>
+
+  <h2>Questions people ask</h2>
+  <div class="faq">
+    <div class="faqitem">
+      <h3>Why does a pipeline that worked for months suddenly break?</h3>
+      <p>Almost always an upstream change nobody told you about — an ad platform renames a field, a payment provider adds a new status value, a loader falls behind its usual schedule. The pipeline itself didn&#x27;t get worse; the assumptions it was built on quietly stopped holding.</p>
+    </div>
+    <div class="faqitem">
+      <h3>Is row-count monitoring enough to catch reporting errors?</h3>
+      <p>No. A pipeline can produce exactly the right number of wrong rows — a schema change that silently coerces a revenue column to null still lands the expected row count. Monitor freshness, reconciliation against a source of truth, and distribution shifts in key columns, not just volume.</p>
+    </div>
+    <div class="faqitem">
+      <h3>How wide should an incremental load&#x27;s window be?</h3>
+      <p>Wider than the worst realistic lag in your data, including late-arriving refunds and cancelled renewals — not just wider than your loader&#x27;s normal delay. A window sized to the happy path is exactly what silently freezes wrong numbers into place when something upstream slips.</p>
+    </div>
+    <div class="faqitem">
+      <h3>When is a spreadsheet no longer the right tool?</h3>
+      <p>When two people export the same figure and get different answers, when assembling a monthly report takes a person a full day, or when nobody on the team can explain where a number actually came from. Data volume alone is rarely the real signal.</p>
+    </div>
+  </div>
 
   <h2>Read next</h2>
   <div class="readlist">
