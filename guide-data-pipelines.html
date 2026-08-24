@@ -11,51 +11,57 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Why your GA4 ROAS is lying to you (and how to find the real number) — Twinslytics</title>
-<meta name="description" content="GA4 and your ad platforms report ROAS from clicks and pixels, not closed revenue. Here's why the numbers disagree with your bank account — and how to reconcile them into a true ROAS you can optimize on." />
+<title>Revenue data pipelines that don&#x27;t break in production — Twinslytics</title>
+<meta name="description" content="Schema drift, loader lag, and frozen partitions are what actually break revenue reporting. How to build pipelines that survive them and alert when they don&#x27;t." />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="canonical" href="https://twinslytics.com/blog-ga4-roas-lying.html" />
+<link rel="canonical" href="https://twinslytics.com/guide-data-pipelines.html" />
 <meta name="robots" content="index, follow" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://twinslytics.com/blog-ga4-roas-lying.html" />
-<meta property="og:title" content="Why your GA4 ROAS is lying to you (and how to find the real number)" />
-<meta property="og:description" content="GA4 measures clicks, not closed revenue. Here's how to reconcile reported ROAS against what actually hit your bank account." />
+<meta property="og:url" content="https://twinslytics.com/guide-data-pipelines.html" />
+<meta property="og:title" content="Revenue data pipelines that don&#x27;t break in production" />
+<meta property="og:description" content="Schema drift, loader lag, and frozen partitions are what actually break revenue reporting. How to build pipelines that survive them and alert when they don&#x27;t." />
 <meta property="og:image" content="https://twinslytics.com/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#fff;--ink:#14122b;--body:#403c5c;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--ok:#12b981;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+
+  :root{--bg:#fff;--bg-alt:#faf9ff;--bg-tint:#f5f2ff;--ink:#14122b;--body:#5a5675;--mut:#918da8;--line:#ece7f6;--line-2:#e0daef;--v:#6c4cf0;--grad:linear-gradient(90deg,#6c4cf0,#a24cf0 55%,#ff7a59);--maxw:1120px;--disp:'Space Grotesk',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased}
-  a{color:var(--v);text-decoration:none}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  h1,h2,h3{font-family:var(--disp);font-weight:600;line-height:1.1;letter-spacing:-.025em;color:var(--ink)}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--v);background:#f2ecff;display:inline-block;padding:6px 12px;border-radius:20px}
   .btn{font-family:var(--disp);font-weight:600;font-size:14.5px;padding:12px 22px;border-radius:8px;display:inline-block;border:1px solid transparent}
   .btn-primary{background:var(--grad);color:#fff}
-  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
   .logo{font-family:var(--disp);font-weight:700;font-size:20px;letter-spacing:-.02em;display:inline-flex;align-items:center;gap:10px}
   .logo .brandmark{height:26px;width:auto;display:block}
   .logo .m{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .nav-links{display:flex;align-items:center;gap:30px;font-size:14.5px}
-  .nav-links a:not(.btn){color:#5a5675}
+  .nav-links a:not(.btn){color:var(--body)}
+  .nav-links a.active{color:var(--ink)}
   .nav .btn{padding:10px 18px}
-  article{max-width:720px;margin:0 auto;padding:56px 28px 20px}
-  .back{font-family:var(--mono);font-size:13px;color:var(--mut);margin-bottom:26px;display:inline-block}
-  article h1{font-family:var(--disp);font-weight:600;font-size:clamp(30px,4.4vw,44px);line-height:1.12;letter-spacing:-.025em;margin:16px 0 18px}
-  .artmeta{font-family:var(--mono);font-size:13px;color:var(--mut);padding-bottom:26px;margin-bottom:36px;border-bottom:1px solid var(--line)}
-  article h2{font-family:var(--disp);font-weight:600;font-size:26px;letter-spacing:-.02em;margin:44px 0 14px}
-  article p{color:var(--body);margin-bottom:20px}
-  article ul{color:var(--body);margin:0 0 20px 22px}
-  article li{margin-bottom:8px}
-  article strong{color:var(--ink);font-weight:600}
-  .pull{border-left:3px solid;border-image:var(--grad) 1;padding:6px 0 6px 22px;margin:32px 0;font-family:var(--disp);font-weight:500;font-size:22px;line-height:1.35;color:var(--ink)}
-  .endcta{max-width:720px;margin:20px auto 90px;padding:34px 32px;background:linear-gradient(180deg,#faf8ff,#f5f2ff);border:1px solid var(--line);border-radius:16px;text-align:center}
-  .endcta h3{font-family:var(--disp);font-weight:600;font-size:24px;margin-bottom:10px}
-  .endcta p{color:var(--body);font-size:16px;margin-bottom:20px}
+  .bloghero{text-align:center;padding:76px 0 48px;position:relative;overflow:hidden}
+  .bloghero::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:900px;height:600px;border-radius:50%;background:radial-gradient(circle at 45% 45%,rgba(108,76,240,.14),transparent 55%),radial-gradient(circle at 62% 55%,rgba(255,122,89,.1),transparent 55%);z-index:0}
+  .bloghero>*{position:relative;z-index:1}
+  .bloghero h1{font-size:clamp(34px,5vw,52px);margin:20px auto 14px;max-width:18ch}
+  .bloghero p{color:var(--body);font-size:19px;max-width:52ch;margin:0 auto}
+  .posts{max-width:var(--maxw);margin:0 auto;padding:20px 28px 96px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .post{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px;transition:transform .18s,box-shadow .18s}
+  .post:hover{transform:translateY(-3px);box-shadow:0 20px 44px -28px rgba(108,76,240,.5)}
+  .post .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--v);margin-bottom:14px}
+  .post h3{font-size:20px;line-height:1.22;margin-bottom:10px}
+  .post p{color:var(--body);font-size:15px;flex:1}
+  .post .meta{font-family:var(--mono);font-size:11.5px;color:var(--mut);margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+  .post.soon{opacity:.6}
+  .post.soon .tag{color:var(--mut)}
   footer{border-top:1px solid var(--line);padding:32px 0;background:#fff}
   .foot{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--mut);font-family:var(--mono);flex-wrap:wrap;gap:14px}
     .burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:none;border:0;cursor:pointer;padding:9px;border-radius:9px}
@@ -63,9 +69,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   .burger.is-open span:nth-child(2){opacity:0}
   .burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  .figure{margin:34px 0}
-  .figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:14px;background:#fff}
-  .figure figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:10px;line-height:1.5}
   @media(max-width:900px){
     .nav{position:relative}
     .burger{display:flex}
@@ -74,8 +77,64 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .nav-links a:not(.btn){display:block;padding:14px 0;font-size:16px;color:var(--ink);border-bottom:1px solid var(--line)}
     .nav-links .langsw{padding:14px 0;font-size:13px;border-bottom:1px solid var(--line)}
     .nav-links .btn{margin-top:14px;width:100%;text-align:center;padding:13px}
-}
+.posts{grid-template-columns:1fr}}
+
+  .hubwrap{max-width:860px;margin:0 auto;padding:56px 28px 20px}
+  .hubwrap h1{font-family:var(--disp);font-weight:600;font-size:clamp(31px,4.6vw,46px);line-height:1.1;letter-spacing:-.025em;margin:16px 0 18px}
+  .hubmeta{font-family:var(--mono);font-size:13px;color:var(--mut);padding-bottom:26px;margin-bottom:34px;border-bottom:1px solid var(--line)}
+  .hubwrap h2{font-family:var(--disp);font-weight:600;font-size:26px;letter-spacing:-.02em;margin:46px 0 14px}
+  .hubwrap h3{font-family:var(--disp);font-weight:600;font-size:18px;margin:0 0 6px}
+  .hubwrap p{color:var(--body);font-size:17.5px;line-height:1.7;margin-bottom:20px}
+  .hubwrap ul{color:var(--body);font-size:17.5px;line-height:1.7;margin:0 0 20px 22px}
+  .hubwrap li{margin-bottom:9px}
+  .hubwrap strong{color:var(--ink);font-weight:600}
+  .lede{font-size:20px !important;color:var(--ink) !important}
+  .figure{margin:34px 0}
+  .figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:14px;background:#fff}
+  .figure figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:10px;line-height:1.5}
+  .readlist{display:grid;gap:14px;margin:26px 0 8px}
+  .readitem{display:block;border:1px solid var(--line);border-radius:14px;padding:20px 22px;background:#fff;transition:transform .16s,box-shadow .16s,border-color .16s}
+  .readitem:hover{transform:translateY(-2px);border-color:var(--line-2);box-shadow:0 18px 40px -28px rgba(108,76,240,.5)}
+  .readitem .rtag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--v);display:block;margin-bottom:9px}
+  .readitem p{font-size:15.5px !important;color:var(--body) !important;margin:0 !important}
+  .endcta{max-width:860px;margin:44px auto 90px;padding:34px 32px;background:linear-gradient(180deg,#faf8ff,#f5f2ff);border:1px solid var(--line);border-radius:16px;text-align:center}
+  .endcta h3{font-family:var(--disp);font-weight:600;font-size:24px;margin-bottom:10px}
+  .endcta p{color:var(--body);font-size:16px;margin-bottom:20px}
+  .calc{border:1px solid var(--line);border-radius:16px;padding:26px 24px;background:#fdfcff;margin:30px 0}
+  .calcgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px}
+  .field label{display:block;font-family:var(--disp);font-weight:600;font-size:13.5px;color:var(--ink);margin-bottom:6px}
+  .field .hint{display:block;font-family:var(--mono);font-size:11px;color:var(--mut);margin-top:5px;line-height:1.45}
+  .field input{width:100%;font-family:var(--mono);font-size:15px;color:var(--ink);padding:11px 13px;border:1px solid var(--line-2);border-radius:9px;background:#fff}
+  .field input:focus{outline:2px solid rgba(108,76,240,.35);outline-offset:1px;border-color:var(--v)}
+  .calcout{margin-top:24px;padding-top:22px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .stat .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mut);display:block;margin-bottom:8px}
+  .stat .v{font-family:var(--disp);font-weight:600;font-size:26px;letter-spacing:-.02em;color:var(--ink);display:block;line-height:1.1}
+  .stat .s{font-family:var(--mono);font-size:11px;color:var(--mut);display:block;margin-top:6px}
+  .stat.key{border-color:#c9bdf5;background:#faf8ff}
+  .stat.key .v{color:var(--v)}
+  .verdict{margin-top:18px;font-family:var(--disp);font-size:16.5px;font-weight:500;color:var(--ink);line-height:1.5}
+  @media(max-width:760px){.calcgrid{grid-template-columns:1fr}.calcout{grid-template-columns:1fr}}
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Revenue data pipelines that don't break in production",
+  "description": "Schema drift, loader lag, and frozen partitions are what actually break revenue reporting. How to build pipelines that survive them and alert when they don't.",
+  "author": {
+    "@type": "Organization",
+    "name": "Twinslytics"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Twinslytics",
+    "url": "https://twinslytics.com"
+  },
+  "mainEntityOfPage": "https://twinslytics.com/guide-data-pipelines.html",
+  "datePublished": "2026-08-24"
+}
+</script>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -97,55 +156,87 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </header>
 
-<article>
-  <a class="back" href="/blog.html">← All posts</a>
-  <span class="eyebrow">Attribution</span>
-  <h1>Why your GA4 ROAS is lying to you — and how to find the real number</h1>
-  <div class="artmeta">1 Feb 2026 · 3 min read · Twinslytics<span class="artviews"></span></div>
+<div class="hubwrap">
+  <a class="back" href="/blog.html">← All writing</a>
+  <span class="eyebrow">Guide</span>
+  <h1>Revenue pipelines that survive production</h1>
+  <div class="hubmeta">Guide · Data engineering · Twinslytics</div>
 
-  <p>Every few weeks a founder tells us some version of the same thing: "Google says we're at 3x, Meta says we're at 5x, and my accountant says we barely broke even. Who do I believe?"</p>
-  <p>The uncomfortable answer is: none of them, exactly. Not because anyone is cheating, but because the ad platforms and GA4 are measuring something different from the number you actually care about — money that landed in your account.</p>
+  <p class="lede">Reporting pipelines rarely fail loudly. They keep running and quietly serve a
+  number that is wrong — which is worse, because someone spends against it.</p>
 
-  <h2>What GA4 and the ad platforms actually count</h2>
-  <p>Ad platforms optimize toward the event you send them. For most stores that event is a pixel-fired "purchase" or "lead" — a click, a form submit, a checkout that fired in the browser. That's a fine <em>proxy</em>. It is not revenue.</p>
-  <p>Three things quietly break the link between that proxy and real money:</p>
-  <ul>
-    <li><strong>Attribution windows overlap.</strong> Meta claims a conversion in its window, Google claims the same one in its window. Add them up and you've "sold" the same order twice.</li>
-    <li><strong>Browser tracking leaks.</strong> Ad blockers, iOS privacy, consent banners, and cookie loss mean a real chunk of purchases never fire a pixel at all — so the platform undercounts, then models the gap with its own guesses.</li>
-    <li><strong>The sale isn't the close.</strong> If you have returns, cancellations, partial refunds, or an offline/sales-assisted close, the pixel value and the booked value are simply different numbers.</li>
-  </ul>
+  <h2>What a revenue pipeline has to survive</h2>
+  <p>Not traffic spikes. It has to survive other people's decisions: an ad platform renaming a
+  field, a payment provider backdating a refund, a loader falling two days behind while your
+  incremental window is seven. Every one of those is normal, and every one of those silently
+  changes a number a human already screenshotted.</p>
 
-  <div class="pull">Reported ROAS answers "did someone click and check out?" True ROAS answers "did we make money?" Those are not the same question.</div>
+  <figure class="figure">
+    <svg viewBox="0 0 720 224" width="100%" height="auto" role="img" aria-label="What breaks a revenue pipeline vs what survives" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto"><text x="8" y="24" font-family="'Space Grotesk',system-ui,sans-serif" font-size="15" font-weight="600" fill="#14122b">What breaks a revenue pipeline vs what survives</text><rect x="8" y="44" width="342" height="174" rx="12" fill="#fdfcff" stroke="#ece7f6"/><text x="24" y="69" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10.5" letter-spacing="1.3" fill="#ff7a59">BREAKS QUIETLY</text><line x1="24" y1="80" x2="334" y2="80" stroke="#ece7f6"/><circle cx="29" cy="98" r="2.6" fill="#ff7a59"/><text x="40" y="102" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Vendor API renames a field</text><circle cx="29" cy="128" r="2.6" fill="#ff7a59"/><text x="40" y="132" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Loader lags past the window</text><circle cx="29" cy="158" r="2.6" fill="#ff7a59"/><text x="40" y="162" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Late refunds rewrite history</text><circle cx="29" cy="188" r="2.6" fill="#ff7a59"/><text x="40" y="192" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Timezone drift across sources</text><rect x="370" y="44" width="342" height="174" rx="12" fill="#fdfcff" stroke="#ece7f6"/><text x="386" y="69" font-family="'IBM Plex Mono',ui-monospace,monospace" font-size="10.5" letter-spacing="1.3" fill="#12b981">HOLDS UP</text><line x1="386" y1="80" x2="696" y2="80" stroke="#ece7f6"/><circle cx="391" cy="98" r="2.6" fill="#12b981"/><text x="402" y="102" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Contracts tested on ingest</text><circle cx="391" cy="128" r="2.6" fill="#12b981"/><text x="402" y="132" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Windows wider than the lag</text><circle cx="391" cy="158" r="2.6" fill="#12b981"/><text x="402" y="162" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Idempotent, replayable loads</text><circle cx="391" cy="188" r="2.6" fill="#12b981"/><text x="402" y="192" font-family="'Space Grotesk',system-ui,sans-serif" font-size="12.5" fill="#403c5c">Freshness alerts that page</text></svg>
+    <figcaption>Most outages are upstream changes, not code you wrote today.</figcaption>
+  </figure>
 
-  <h2>Why the offline gap is the biggest one</h2>
-  <p>For businesses with any human involvement in the sale — B2B, high-ticket, quote-based, showroom, or sales-assisted ecommerce — the real revenue lives in the CRM or ERP, not in the ad pixel. The platform sees a lead. It never sees whether that lead closed for $200 or $20,000, or churned in 30 days.</p>
-  <p>Optimize on the pixel and you train the algorithm to buy cheap leads. Optimize on closed revenue and you train it to buy <em>customers</em>. Those two strategies spend your budget in completely different places.</p>
+  <h2>Schema drift and late-arriving truth</h2>
+  <p>Upstream APIs change without telling you. If a column becomes a string, or a nested field
+  moves, the load either fails — fine, you find out — or coerces, which is how a revenue column
+  ends up truncated to zero for a week. Test the contract at ingest, not three models downstream.</p>
+  <p>Refunds, chargebacks, and cancelled renewals arrive after the fact. If your incremental logic
+  only ever looks at the last few days, yesterday's correct number stays frozen and wrong forever.
+  The window has to be wider than the worst lag you tolerate, and re-runs have to be safe.</p>
 
-  <h2>How to find the real number</h2>
-  <p>Reconciling to true ROAS is less about a magic tool and more about connecting three systems that don't naturally talk to each other:</p>
-  <ul>
-    <li><strong>Send closed revenue back as the conversion.</strong> Instead of firing a fixed pixel value at checkout, feed the actual booked/closed value from your CRM or ERP back to the platforms via server-side conversions (CAPI for Meta, offline conversions for Google). Now the algorithm optimizes on money, not clicks.</li>
-    <li><strong>Reconcile in one place.</strong> Land ad spend, platform-reported conversions, and real revenue in one warehouse (BigQuery works well), joined on order or lead ID with a sane date window. The moment they sit in one table, the double-counting and the leakage become visible instead of theoretical.</li>
-    <li><strong>Pick one source of truth for the denominator.</strong> Decide once whether ROAS is measured against pixel value or booked value — and report it the same way everywhere. Most of the "Meta says 5x, accountant says 1x" confusion is just two teams quietly using two different definitions.</li>
-  </ul>
+  <h2>Monitoring that someone actually acts on</h2>
+  <p>Row counts are a weak signal; a pipeline can produce exactly the right number of wrong rows.
+  Alert on freshness (did today's partition land), on reconciliation (does revenue match the
+  processor within tolerance), and on distribution shifts (did nulls in a key column jump). Route
+  it to a human with the authority to stop a spend decision.</p>
 
-  <h2>What changes once you do</h2>
-  <p>The first time a brand sees reported vs. real side by side, the reaction is almost always the same: a mix of relief and mild horror. Relief because the numbers finally reconcile; horror because they've been steering spend with the wrong dashboard for months.</p>
-  <p>But that's the win. Once bidding runs on closed revenue, the platforms stop chasing cheap conversions and start finding buyers — and the gap between what the dashboard says and what the bank says quietly closes.</p>
+  <h2>When to leave spreadsheets</h2>
+  <p>The signal is not data volume. It is when two people export the same figure and get different
+  answers, when a monthly report takes a day of manual assembly, or when nobody can say where a
+  number came from. That is the point where a warehouse pays for itself.</p>
 
-  <h2>Further reading</h2>
-  <ul>
-    <li><a href="/guide-attribution.html">Guide: Marketing attribution for ecommerce</a></li>
-    <li><a href="/blog-how-to-attribute-subscription-ltv-back-to-the-original-ad-cl.html">How to attribute subscription ltv back to the original ad click</a></li>
-    <li><a href="/blog-server-side-conversions-with-meta-capi-what-breaks-and-how-t.html">Server-side conversions with Meta CAPI: what breaks and how to fix it</a></li>
-  </ul>
-</article>
+  <h2>Read next</h2>
+  <div class="readlist">
+    <a class="readitem" href="/blog-why-your-dbt-pipeline-keeps-breaking-on-api-schema-drift.html">
+      <span class="rtag">Data engineering</span>
+      <h3>Why your dbt pipeline keeps breaking on API schema drift</h3>
+      <p>The failure mode that causes most reporting outages, and how to catch it at ingest.</p>
+    </a>
+    <a class="readitem" href="/blog-monitoring-and-alerting-for-data-pipelines-in-production.html">
+      <span class="rtag">Data engineering</span>
+      <h3>Monitoring and alerting for data pipelines in production</h3>
+      <p>Alerts that catch a wrong number, not just a failed job.</p>
+    </a>
+    <a class="readitem" href="/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html">
+      <span class="rtag">Data engineering</span>
+      <h3>When to move from spreadsheets to a data warehouse</h3>
+      <p>The signals that say a spreadsheet has stopped being the right tool.</p>
+    </a>
+    <a class="readitem" href="/blog-how-to-build-a-customer-data-warehouse-that-survives-ios-att.html">
+      <span class="rtag">Data engineering</span>
+      <h3>How to build a customer data warehouse that survives ios attribution loss</h3>
+      <p>Designing for identity loss instead of pretending it isn&#x27;t happening.</p>
+    </a>
+    <a class="readitem" href="/blog-how-to-reconcile-meta-and-google-roas-against-your-crm.html">
+      <span class="rtag">Data engineering</span>
+      <h3>How to reconcile Meta and Google ROAS against your CRM</h3>
+      <p>Making platform numbers agree with the system that holds your closed revenue.</p>
+    </a>
+    <a class="readitem" href="/blog-what-ai-ready-data-actually-means-a-practical-checklist.html">
+      <span class="rtag">AI &amp; automation</span>
+      <h3>What AI-ready data actually means: a practical checklist</h3>
+      <p>What has to be true about your data before AI tooling is worth pointing at it.</p>
+    </a>
+  </div>
 
-<div class="endcta">
-  <h3>Want to see your real ROAS?</h3>
-  <p>We reconcile ad spend, platform conversions, and closed revenue into one true number you can actually optimize on.</p>
-  <a href="/#contact" class="btn btn-primary">Book a call</a>
 </div>
+
+  <div class="endcta">
+    <h3>Want this built on your own data?</h3>
+    <p>We reconcile ad spend, platform conversions, and closed revenue into one number your team can spend against.</p>
+    <a href="/#contact" class="btn btn-primary">Book a call</a>
+  </div>
+
 
 <footer>
   <div class="wrap foot">
@@ -153,23 +244,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span>Data infrastructure that drives revenue.</span>
   </div>
 </footer>
-
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"BlogPosting",
-  "headline":"Why your GA4 ROAS is lying to you — and how to find the real number",
-  "description":"GA4 and ad platforms report ROAS from clicks and pixels, not closed revenue. How to reconcile reported ROAS against real money and optimize on a true number.",
-  "author":{"@type":"Organization","name":"Twinslytics"},
-  "publisher":{"@type":"Organization","name":"Twinslytics","url":"https://twinslytics.com"},
-  "mainEntityOfPage":"https://twinslytics.com/blog-ga4-roas-lying.html",
-  "datePublished":"2026-02-01"
-}
-</script>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
 <script>
 (function(){var b=document.querySelector(".burger"),m=document.querySelector(".nav-links");if(!b||!m)return;function close(){m.classList.remove("open");b.classList.remove("is-open");b.setAttribute("aria-expanded","false");}b.addEventListener("click",function(e){e.stopPropagation();var o=m.classList.toggle("open");b.classList.toggle("is-open",o);b.setAttribute("aria-expanded",o);});m.querySelectorAll("a").forEach(function(a){a.addEventListener("click",close);});document.addEventListener("click",function(e){if(m.classList.contains("open")&&!m.contains(e.target)&&!b.contains(e.target))close();});})();
 </script>
-<script>try{fetch("/api/views?p="+encodeURIComponent(location.pathname.replace(/\.html$/,"")),{method:"POST",keepalive:true})}catch(e){}</script>
+<script>
+fetch("/api/views").then(function(r){return r.json()}).then(function(v){
+  function get(p){p=p.replace(/\/$/,"");return v[p]||v[p+".html"]||v[p.replace(/\.html$/,"")]||0;}
+  document.querySelectorAll("a.post[href]").forEach(function(a){
+    var el=a.querySelector(".views");if(!el)return;
+    var n=get(a.getAttribute("href"));
+    if(n>0)el.textContent=" \u00b7 "+n+(n===1?" view":" views");
+  });
+}).catch(function(){});
+</script>
 </body>
 </html>

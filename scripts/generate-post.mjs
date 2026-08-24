@@ -57,6 +57,17 @@ async function popularity() {
 // AI & automation is too thin to be its own link cluster.
 const clusterOf = cat => (cat === "AI & automation" ? "Data engineering" : cat);
 
+// Every post links up to its pillar page, so each cluster has one hub that
+// accumulates the internal links instead of 18 posts pointing sideways.
+const PILLARS = {
+  "Attribution": ["guide-attribution.html", "Guide: Marketing attribution for ecommerce"],
+  "Marketing analytics": ["guide-true-roas.html", "Guide: True ROAS, and how to get to it"],
+  "Data engineering": ["guide-data-pipelines.html", "Guide: Revenue pipelines that survive production"],
+  "AI & automation": ["guide-data-pipelines.html", "Guide: Revenue pipelines that survive production"],
+  "ML": ["guide-data-pipelines.html", "Guide: Revenue pipelines that survive production"],
+  "Analytics": ["guide-true-roas.html", "Guide: True ROAS, and how to get to it"],
+};
+
 function relatedTo(category, arts, n = 2) {
   const want = clusterOf(category);
   const inCluster = arts.filter(a => clusterOf(a.category) === want);
@@ -165,12 +176,12 @@ figure = renderDiagram(spec) || "";
 console.log("diagram:", figure ? spec.type : "none");
 
 const arts = existingArticles();
-const related = relatedTo(category, arts, 2);
-const furtherReading = related.length
-  ? `\n  <h2>Further reading</h2>\n  <ul>\n`
-    + related.map(a => `    <li><a href="/${a.file}">${esc(a.title)}</a></li>`).join("\n")
-    + `\n  </ul>\n`
-  : "";
+const [pillarFile, pillarLabel] = PILLARS[category] || PILLARS["Data engineering"];
+const links = [
+  `    <li><a href="/${pillarFile}">${esc(pillarLabel)}</a></li>`,
+  ...relatedTo(category, arts, 2).map(a => `    <li><a href="/${a.file}">${esc(a.title)}</a></li>`),
+];
+const furtherReading = `\n  <h2>Further reading</h2>\n  <ul>\n${links.join("\n")}\n  </ul>\n`;
 
 const tpl = fs.readFileSync(TEMPLATE, "utf-8");
 let html = tpl
