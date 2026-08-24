@@ -207,6 +207,12 @@ let html = tpl
 // the meta tag above so the two stay in sync.
 html = html.replace(/("description":")[^"]*(")/, `$1${escAttr(desc)}$2`);
 
+// The template's breadcrumb still names itself; retarget its last item to this post.
+html = html.replace(
+  /("position":\s*3,\s*"name":\s*")[^"]*("\s*,\s*"item":\s*")[^"]*(")/,
+  `$1${escAttr(title)}$2${SITE}/${file}$3`
+);
+
 const head = html.slice(0, html.indexOf("<h1>"));
 const tail = html.slice(html.indexOf("</article>"));
 const body = `<h1>${esc(title)}</h1>\n`
