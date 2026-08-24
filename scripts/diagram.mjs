@@ -130,7 +130,7 @@ function split(d) {
     items.forEach((it, i) => {
       const y = top + headH + 18 + i * rowH;
       s += `<circle cx="${x + 21}" cy="${y - 4}" r="2.6" fill="${accent}"/>`;
-      s += `<text x="${x + 32}" y="${y}" font-family="${DISP}" font-size="12.5" fill="${BODY}">${esc(clamp(it, 34))}</text>`;
+      s += `<text x="${x + 32}" y="${y}" font-family="${DISP}" font-size="12.5" fill="${BODY}">${esc(clamp(it, 42))}</text>`;
     });
   });
   return s + "</svg>";
@@ -156,5 +156,5 @@ export function renderDiagram(spec) {
 export const DIAGRAM_SCHEMA = `Return ONLY minified JSON, no prose, no code fences. One of these shapes:
 {"type":"flow","title":"<=70 chars","caption":"one sentence","items":[{"label":"<=18 chars","note":"<=22 chars"}, ...3-5 items]}
 {"type":"bars","title":"<=70 chars","caption":"one sentence","items":[{"label":"<=30 chars","value":<number>,"display":"e.g. 4.2x or $18k","highlight":<true for the key bar>}, ...2-5 items]}
-{"type":"split","title":"<=70 chars","caption":"one sentence","left":{"heading":"<=26 chars","items":["<=34 chars", ...2-4]},"right":{"heading":"<=26 chars","items":["<=34 chars", ...2-4]}}
+{"type":"split","title":"<=70 chars","caption":"one sentence","left":{"heading":"<=26 chars","items":["<=40 chars", ...2-4]},"right":{"heading":"<=26 chars","items":["<=40 chars", ...2-4]}}
 Pick the type that genuinely fits the article. "flow" for a pipeline or chain of steps, "bars" for a comparison of magnitudes, "split" for what-breaks vs what-fixes-it. Keep labels terse — they render inside a fixed-width box. Never invent statistics: for "bars", only use numbers that are illustrative and clearly generic, and say so in the caption.`;
