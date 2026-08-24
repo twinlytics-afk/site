@@ -108,9 +108,10 @@ Pick the single highest-value cluster of related queries and return ONE topic li
 Prefer queries with high impressions and weak position, but judge relevance before volume. IGNORE any query that is a company or product name rather than a question — this site ranks incidentally for other vendors whose names also end in "lytics", and an article about a competitor's brand is worthless. Also ignore anything that looks like a scraper's query or an internal hostname.
 Long conversational queries are valuable: they come from AI search and state the reader's problem in their own words. Prefer them over short generic head terms when the intent is clearer.`;
     const usr = `Search Console queries with weak rankings:\n${demand}\n\nAlready published:\n${covered}\n\nReturn the single best next topic.`;
-    const { text } = await claude(sys, usr, 120);
+    const { text, raw } = await claude(sys, usr, 120);
     const topic = text.split("\n")[0].replace(/^[-*\d.\s]+/, "").replace(/^["']|["']$/g, "").trim();
     if (topic) { console.log("Topic from search demand:", topic); return { topic, fromQueue: false }; }
+    console.error("Search-demand topic call returned nothing, falling back:", JSON.stringify(raw).slice(0, 400));
   }
 
   // Nothing from GSC (new site, API off, or no weak-position queries yet).
