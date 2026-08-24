@@ -6,9 +6,13 @@ Static site (HTML/CSS/JS, no build step) + blog. Hosted for **$0** on Cloudflare
 - `index.html` — main site (team photos are embedded, no external images needed)
 - `blog.html` — blog listing (has a `<!-- POSTS -->` marker for auto-insert)
 - `blog-*.html` — individual articles
+- `guide-*.html` — pillar pages: one hub per topic cluster, linking the posts in it
+- `true-roas-calculator.html` — free client-side tool, the page other sites can link to
 - `functions/api/contact.js` — optional Cloudflare Pages Function for the contact form → Slack
 - `scripts/generate-post.mjs` — generate a new SEO article with Claude
-- `.github/workflows/generate-post.yml` — run the generator on demand from GitHub
+- `scripts/diagram.mjs` — renders article diagrams as inline SVG
+- `scripts/gsc.mjs` — reads Search Console (no dependencies)
+- `.github/workflows/generate-post.yml` — run the generator on schedule or on demand
 - `favicon.svg`, `robots.txt`, `sitemap.xml`, `og.png`
 
 ---
@@ -74,6 +78,30 @@ It writes `blog-<slug>.html` in the house style and auto-inserts a card into `bl
 **On demand from GitHub (no local setup):**
 1. Repo → Settings → Secrets → Actions → add `ANTHROPIC_API_KEY`.
 2. Actions tab → "Generate SEO post" → Run workflow → type a topic. It generates the post, commits, and pushes (which auto-deploys).
+
+### How it picks a topic
+
+In order: the CLI argument → the next line of `content/topics.txt` → **Search Console
+demand** → whatever Claude proposes. The Search Console step is the useful one: it asks
+Google which queries already show the site but rank badly, and writes against that
+instead of guessing.
+
+To turn it on:
+1. GCP project → enable the **Google Search Console API** → create a service account → JSON key.
+2. Search Console → property → Settings → Users and permissions → add the service
+   account's `client_email` as a user.
+3. Repo → Settings → Secrets → Actions → `GSC_SA_KEY` = the whole JSON.
+4. Optional: Settings → Variables → `GSC_SITE_URL` if the property is not
+   `https://twinslytics.com/` (a Domain property is `sc-domain:twinslytics.com`).
+
+Without `GSC_SA_KEY` the generator still works — it just falls back to proposing its own topic.
+
+### Diagrams
+
+Each post gets one inline SVG diagram. Claude supplies only the labels and values as JSON;
+`scripts/diagram.mjs` owns the layout, sizing and palette. A malformed spec means the post
+publishes without a diagram rather than with a broken one. Three types: `flow` (pipeline or
+chain), `bars` (comparison of magnitudes), `split` (what breaks vs what holds up).
 
 Cost: only Anthropic API usage per article (cents), and hosting stays $0. The workflow is on-demand (no scheduled spend). To publish weekly automatically, add a `schedule:` cron to the workflow — but on-demand keeps cost and control in your hands.
 
