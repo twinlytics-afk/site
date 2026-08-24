@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       topic:
-        description: "Article topic (leave empty to use the next one from content/topics.txt)"
+        description: "Article topic (leave empty to pick from topics.txt, then Search Console demand)"
         required: false
 jobs:
   generate:
@@ -20,7 +20,13 @@ jobs:
       - name: Generate post
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: node scripts/generate-post.mjs "${{ github.event.inputs.topic }}"
+          # Optional: without it the generator falls back to proposing its own topic.
+          GSC_SA_KEY: ${{ secrets.GSC_SA_KEY }}
+          GSC_SITE_URL: ${{ vars.GSC_SITE_URL }}
+          # Passed as env, not interpolated into the command line, so a topic
+          # containing shell metacharacters can't run as a command.
+          TOPIC: ${{ github.event.inputs.topic }}
+        run: node scripts/generate-post.mjs "$TOPIC"
       - name: Commit and push
         run: |
           git config user.name "twinslytics-bot"
