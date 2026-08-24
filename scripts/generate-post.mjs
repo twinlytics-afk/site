@@ -104,7 +104,9 @@ async function pickTopic() {
     ).join("\n");
     const sys = `You plan SEO blog topics for Twinslytics, ${NICHE}.
 These are real Google Search Console queries the site already appears for but does not rank well on — existing demand that is winnable with a dedicated article.
-Pick the single highest-value cluster of related queries and return ONE topic line that targets it head-on: lowercase, no quotes, no numbering, under 12 words. It must not duplicate an already-published article. Prefer queries with high impressions and weak position. Ignore branded queries (containing "twinslytics" or "twinlytics").`;
+Pick the single highest-value cluster of related queries and return ONE topic line that targets it head-on: lowercase, no quotes, no numbering, under 12 words. It must not duplicate an already-published article.
+Prefer queries with high impressions and weak position, but judge relevance before volume. IGNORE any query that is a company or product name rather than a question — this site ranks incidentally for other vendors whose names also end in "lytics", and an article about a competitor's brand is worthless. Also ignore anything that looks like a scraper's query or an internal hostname.
+Long conversational queries are valuable: they come from AI search and state the reader's problem in their own words. Prefer them over short generic head terms when the intent is clearer.`;
     const usr = `Search Console queries with weak rankings:\n${demand}\n\nAlready published:\n${covered}\n\nReturn the single best next topic.`;
     const { text } = await claude(sys, usr, 120);
     const topic = text.split("\n")[0].replace(/^[-*\d.\s]+/, "").replace(/^["']|["']$/g, "").trim();

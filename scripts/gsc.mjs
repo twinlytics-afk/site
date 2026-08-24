@@ -136,13 +136,36 @@ export async function fetchQueries({ siteUrl, days = 90, rowLimit = 500 } = {}) 
 }
 
 /**
+ * Queries that exist in Search Console but are worthless to write against.
+ * This site ranks incidentally for other companies whose names also end in
+ * "lytics" — untreated, those brand names dominate the impression ranking and
+ * the generator writes an article about a competitor's brand.
+ */
+export function isJunkQuery(q) {
+  const s = String(q).trim().toLowerCase();
+  if (!s) return true;
+  // Someone else's scraper: search operators, not a human's question.
+  if (/(^|\s)-?site:/.test(s) || /(^|\s)[-+]"/.test(s)) return true;
+  // Hostnames and URLs. Match a domain, not any slash — "$150k/month" is a
+  // real question, not a path.
+  if (/[a-z0-9-]+\.(com|net|org|io|ai|jp|ua)\b/.test(s) || /https?:\/\//.test(s)) return true;
+  // Our own brand, in both spellings: already ranking, nothing to win.
+  if (/twins?lytics|twinsly/.test(s)) return true;
+  // A single token is either a brand name or too broad to target. Real
+  // informational demand in this niche is always more than one word.
+  if (!s.includes(" ")) return true;
+  return false;
+}
+
+/**
  * Queries Google already shows us for but where we don't yet rank well —
  * demand that exists and is winnable, as opposed to whatever we happened to write about.
  */
 export function opportunities(rows, { minImpressions = 3, minPosition = 6, limit = 40 } = {}) {
   if (!rows) return [];
-  return rows
-    .filter(r => r.impressions >= minImpressions && r.position >= minPosition)
-    .sort((a, b) => b.impressions - a.impressions)
-    .slice(0, limit);
+  const ranked = rows.filter(r => r.impressions >= minImpressions && r.position >= minPosition);
+  const kept = ranked.filter(r => !isJunkQuery(r.query));
+  const dropped = ranked.length - kept.length;
+  if (dropped) console.log(`GSC: dropped ${dropped} brand/operator queries, kept ${kept.length}`);
+  return kept.sort((a, b) => b.impressions - a.impressions).slice(0, limit);
 }
