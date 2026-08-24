@@ -91,8 +91,12 @@ To turn it on:
 2. Search Console → property → Settings → Users and permissions → add the service
    account's `client_email` as a user.
 3. Repo → Settings → Secrets → Actions → `GSC_SA_KEY` = the whole JSON.
-4. Optional: Settings → Variables → `GSC_SITE_URL` if the property is not
-   `https://twinslytics.com/` (a Domain property is `sc-domain:twinslytics.com`).
+4. Optional: Settings → Variables → `GSC_SITE_URL` to pin the property explicitly.
+   Normally you don't need it — the generator calls `sites.list` and resolves the
+   property itself, preferring a Domain property (`sc-domain:twinslytics.com`) over a
+   URL prefix (`https://twinslytics.com/`). If it can't match one it fails with the
+   list of properties the service account can actually see, which is the fastest way
+   to spot a missing permission.
 
 Without `GSC_SA_KEY` the generator still works — it just falls back to proposing its own topic.
 

@@ -53,6 +53,37 @@ function parseKey(raw) {
 
 const ymd = d => d.toISOString().slice(0, 10);
 
+/** Properties the service account can read. */
+export async function listSites(token) {
+  const res = await fetch("https://searchconsole.googleapis.com/webmasters/v3/sites", {
+    headers: { authorization: `Bearer ${token}` },
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error("sites.list failed: " + JSON.stringify(data).slice(0, 300));
+  return (data.siteEntry || []).map(s => ({ siteUrl: s.siteUrl, level: s.permissionLevel }));
+}
+
+/**
+ * Pick the property matching `domain`. A property is either a Domain property
+ * ("sc-domain:example.com") or a URL prefix ("https://example.com/"), and using
+ * the wrong string is the usual cause of a 403 — so resolve it instead of guessing.
+ */
+export function resolveSite(sites, domain) {
+  const usable = sites.filter(s => s.level !== "siteUnverifiedUser");
+  const host = domain.replace(/^https?:\/\//, "").replace(/\/$/, "").toLowerCase();
+  const matches = usable.filter(s => {
+    const u = s.siteUrl.toLowerCase();
+    return u === `sc-domain:${host}` || u === `https://${host}/` || u === `http://${host}/`
+      || u === `https://www.${host}/` || u === `sc-domain:${host.replace(/^www\./, "")}`;
+  });
+  // A Domain property covers every subdomain and scheme, so prefer it.
+  const domainProp = matches.find(s => s.siteUrl.startsWith("sc-domain:"));
+  if (domainProp || matches.length) return (domainProp || matches[0]).siteUrl;
+  // No name match. If the account can read exactly one property, that is the site —
+  // this covers the property being verified under the other brand spelling.
+  return usable.length === 1 ? usable[0].siteUrl : null;
+}
+
 /**
  * Query search analytics for the trailing `days` window.
  * Returns [{ query, clicks, impressions, ctr, position }, ...] sorted by impressions desc.
@@ -60,10 +91,19 @@ const ymd = d => d.toISOString().slice(0, 10);
 export async function fetchQueries({ siteUrl, days = 90, rowLimit = 500 } = {}) {
   const raw = process.env.GSC_SA_KEY;
   if (!raw) return null;
-  const site = siteUrl || process.env.GSC_SITE_URL;
-  if (!site) throw new Error("GSC site url not set (pass siteUrl or set GSC_SITE_URL)");
 
   const token = await accessToken(parseKey(raw));
+
+  let site = process.env.GSC_SITE_URL;
+  if (!site) {
+    const sites = await listSites(token);
+    site = resolveSite(sites, siteUrl || "twinslytics.com");
+    if (!site) {
+      throw new Error("no readable Search Console property matched. The service account can see: "
+        + (sites.map(s => `${s.siteUrl} (${s.level})`).join(", ") || "nothing — has it been added as a user?"));
+    }
+    console.log("GSC property:", site);
+  }
   // GSC data lags ~2 days; end the window there so the last buckets aren't half-empty.
   const end = new Date(Date.now() - 2 * 86400e3);
   const start = new Date(end.getTime() - days * 86400e3);
