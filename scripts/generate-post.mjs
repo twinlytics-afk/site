@@ -139,6 +139,13 @@ console.log("Topic:", topic, fromQueue ? "(from queue)" : "(auto)");
 
 const slug = topic.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60);
 const file = `blog-${slug}.html`;
+// Cloudflare serves every .html file at its extensionless twin via a redirect
+// and there's no config that turns that off without also breaking "/" ->
+// index.html. So `file` is the real filename on disk, and `url` is the only
+// address the site should ever advertise about itself — canonical, og:url,
+// JSON-LD, sitemap, and every internal link.
+const url = `${SITE}/blog-${slug}`;
+const stripHtml = f => f.replace(/\.html$/, "");
 function consume() {
   if (!fromQueue) return;
   const rest = fs.readFileSync(QUEUE, "utf-8").split("\n").map(l => l.trim()).filter(Boolean).slice(1);
@@ -185,8 +192,8 @@ console.log("diagram:", figure ? spec.type : "none");
 const arts = existingArticles();
 const [pillarFile, pillarLabel] = PILLARS[category] || PILLARS["Data engineering"];
 const links = [
-  `    <li><a href="/${pillarFile}">${esc(pillarLabel)}</a></li>`,
-  ...relatedTo(category, arts, 2).map(a => `    <li><a href="/${a.file}">${esc(a.title)}</a></li>`),
+  `    <li><a href="/${stripHtml(pillarFile)}">${esc(pillarLabel)}</a></li>`,
+  ...relatedTo(category, arts, 2).map(a => `    <li><a href="/${stripHtml(a.file)}">${esc(a.title)}</a></li>`),
 ];
 const furtherReading = `\n  <h2>Further reading</h2>\n  <ul>\n${links.join("\n")}\n  </ul>\n`;
 
@@ -194,13 +201,13 @@ const tpl = fs.readFileSync(TEMPLATE, "utf-8");
 let html = tpl
   .replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(title)} — Twinslytics</title>`)
   .replace(/(name="description" content=")[^"]*(")/, `$1${escAttr(desc)}$2`)
-  .replace(/(canonical" href=")[^"]*(")/, `$1${SITE}/${file}$2`)
-  .replace(/(og:url" content=")[^"]*(")/, `$1${SITE}/${file}$2`)
+  .replace(/(canonical" href=")[^"]*(")/, `$1${url}$2`)
+  .replace(/(og:url" content=")[^"]*(")/, `$1${url}$2`)
   .replace(/(og:title" content=")[^"]*(")/, `$1${escAttr(title)}$2`)
   .replace(/(og:description" content=")[^"]*(")/, `$1${escAttr(desc)}$2`)
   .replace(/("headline":")[^"]*(")/, `$1${escAttr(title)}$2`)
   .replace(/("datePublished":")[^"]*(")/, `$1${isoDate}$2`)
-  .replace(/("mainEntityOfPage":")[^"]*(")/, `$1${SITE}/${file}$2`)
+  .replace(/("mainEntityOfPage":")[^"]*(")/, `$1${url}$2`)
   .replace('<span class="eyebrow">Attribution</span>', `<span class="eyebrow">${esc(category)}</span>`);
 
 // The JSON-LD description is a separate field from the meta tag; replace it after
@@ -210,7 +217,7 @@ html = html.replace(/("description":")[^"]*(")/, `$1${escAttr(desc)}$2`);
 // The template's breadcrumb still names itself; retarget its last item to this post.
 html = html.replace(
   /("position":\s*3,\s*"name":\s*")[^"]*("\s*,\s*"item":\s*")[^"]*(")/,
-  `$1${escAttr(title)}$2${SITE}/${file}$3`
+  `$1${escAttr(title)}$2${url}$3`
 );
 
 const head = html.slice(0, html.indexOf("<h1>"));
@@ -225,7 +232,7 @@ console.log("Wrote", file);
 
 try {
   let blog = fs.readFileSync("blog.html", "utf-8");
-  const card = `  <a class="post" href="/${file}">\n    <div class="tag">${esc(category)}</div>\n    <h3>${esc(title)}</h3>\n    <p>${esc(desc)}</p>\n    <div class="meta">${date} · ${mins} min read<span class="views" data-p="/${file}"></span></div>\n  </a>`;
+  const card = `  <a class="post" href="/${stripHtml(file)}">\n    <div class="tag">${esc(category)}</div>\n    <h3>${esc(title)}</h3>\n    <p>${esc(desc)}</p>\n    <div class="meta">${date} · ${mins} min read<span class="views" data-p="/${file}"></span></div>\n  </a>`;
   if (blog.includes("<!-- POSTS -->")) {
     blog = blog.replace("<!-- POSTS -->", "<!-- POSTS -->\n" + card);
     fs.writeFileSync("blog.html", blog);
@@ -235,8 +242,8 @@ try {
 
 try {
   let sm = fs.readFileSync("sitemap.xml", "utf-8");
-  const entry = `  <url><loc>${SITE}/${file}</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>\n`;
-  if (!sm.includes(file)) {
+  const entry = `  <url><loc>${url}</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>\n`;
+  if (!sm.includes(stripHtml(file))) {
     sm = sm.replace("</urlset>", entry + "</urlset>");
     fs.writeFileSync("sitemap.xml", sm);
     console.log("Sitemap updated");
