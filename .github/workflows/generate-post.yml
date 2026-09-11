@@ -1,7 +1,11 @@
 name: Generate SEO post
 on:
   schedule:
-    - cron: "0 9 */2 * *"
+    # Weekly, not every 2 days. Google has been indexing new posts slower than
+    # they were published — most of the last two weeks' posts are still stuck
+    # "Discovered, not indexed" or unknown to Google. Publishing faster than
+    # the index can absorb just grows that backlog; slow down until it clears.
+    - cron: "0 9 * * 1"
   workflow_dispatch:
     inputs:
       topic:
