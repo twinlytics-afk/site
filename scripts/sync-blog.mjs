@@ -1,7 +1,7 @@
 // Rebuild everything that lists posts from the posts themselves, so nothing
 // drifts: the blog grid (with category filters), each guide's "Read next"
-// list, the article counts on the "Start here" cards, and the contact dock
-// script tag on every page. Idempotent; safe to run after every new post.
+// list, the article counts on the "Start here" cards, and the site footer and
+// contact dock script on every page. Idempotent; safe to run after every new post.
 //   node scripts/sync-blog.mjs
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -113,13 +113,86 @@ function ensureDock(file) {
   fs.writeFileSync(file, s.replace("</body>", `${DOCK}\n</body>`));
 }
 
+// One footer for the whole site. Real links (not JS) so crawlers follow them
+// to the guides and tools from every page.
+const FOOTER_T = {
+  en: { home: "/", tag: "Data infrastructure that drives revenue. Two engineers, no handoffs.", cta: "Book a call",
+    company: "Company", work: "Work", services: "Services", team: "Team", contact: "Contact",
+    resources: "Resources", blog: "Blog", report: "Live report example", calc: "True ROAS calculator",
+    reach: "Get in touch" },
+  uk: { home: "/ua", tag: "Дата-інфраструктура, що приносить гроші. Два інженери, без посередників.", cta: "Замовити дзвінок",
+    company: "Компанія", work: "Кейси", services: "Послуги", team: "Команда", contact: "Контакти",
+    resources: "Матеріали", blog: "Блог", report: "Приклад звіту", calc: "Калькулятор True ROAS",
+    reach: "Звʼязатися" },
+};
+function footerHtml(lang) {
+  const t = FOOTER_T[lang] || FOOTER_T.en;
+  const h = t.home;
+  const langsw = lang === "uk"
+    ? `<a href="/">EN</a> / <span class="on">UA</span>`
+    : `<span class="on">EN</span> / <a href="/ua">UA</a>`;
+  return `<footer class="sf">
+  <div class="sf-in">
+    <div class="sf-grid">
+      <div class="sf-brand">
+        <a class="sf-logo" href="${h}"><img src="/logo-icon.png" alt="" width="48" height="24" loading="lazy" />Twinslytics</a>
+        <p>${t.tag}</p>
+        <a class="sf-cta" href="${h}#contact">${t.cta}</a>
+      </div>
+      <div>
+        <h4>${t.company}</h4>
+        <ul>
+          <li><a href="${h}#work">${t.work}</a></li>
+          <li><a href="${h}#services">${t.services}</a></li>
+          <li><a href="${h}#team">${t.team}</a></li>
+          <li><a href="${h}#contact">${t.contact}</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>${t.resources}</h4>
+        <ul>
+          <li><a href="/blog">${t.blog}</a></li>
+          <li><a href="/guide-attribution">Attribution guide</a></li>
+          <li><a href="/guide-true-roas">True ROAS guide</a></li>
+          <li><a href="/guide-data-pipelines">Data pipelines guide</a></li>
+          <li><a href="/true-roas-calculator">${t.calc}</a></li>
+          <li><a href="/report">${t.report}</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>${t.reach}</h4>
+        <ul>
+          <li><a href="mailto:twinslytics@gmail.com">twinslytics@gmail.com</a></li>
+          <li><a href="https://t.me/vhalstian" target="_blank" rel="noopener">Telegram</a></li>
+          <li><a href="https://www.linkedin.com/in/vladislav-halstyan-03586b131/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="tel:+380956162210">+380 95 616 2210</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="sf-bottom">
+      <span>© <span id="yr">${new Date().getFullYear()}</span> Twinslytics</span>
+      <span>${langsw}</span>
+    </div>
+  </div>
+</footer>`;
+}
+const FOOTER_CSS = '<link rel="stylesheet" href="/footer.css" />';
+function ensureFooter(file) {
+  let s = fs.readFileSync(file, "utf-8");
+  if (!/<footer[\s>]/.test(s)) return;
+  const lang = (s.match(/<html lang="([a-z]+)/) || [, "en"])[1];
+  const next = s.replace(/<footer[\s\S]*?<\/footer>/, footerHtml(lang));
+  s = next.includes(FOOTER_CSS) ? next : next.replace("</head>", `${FOOTER_CSS}\n</head>`);
+  fs.writeFileSync(file, s);
+}
+
 export function sync() {
   const fixed = fs.readdirSync(".").filter(f => /^blog-.+\.html$/.test(f)).filter(normalizePostTitle);
   if (fixed.length) console.log("Titles fixed:", fixed.join(", "));
   const posts = readPosts();
   syncBlog(posts);
   for (const g of new Set(Object.values(PILLARS).map(v => v[0]))) syncGuide(g, posts);
-  for (const f of fs.readdirSync(".").filter(f => f.endsWith(".html"))) ensureDock(f);
+  for (const f of fs.readdirSync(".").filter(f => f.endsWith(".html"))) { ensureDock(f); ensureFooter(f); }
   console.log(`Synced ${posts.length} posts.`);
 }
 
