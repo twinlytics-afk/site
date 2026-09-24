@@ -100,6 +100,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .readitem{display:block;border:1px solid var(--line);border-radius:14px;padding:20px 22px;background:#fff;transition:transform .16s,box-shadow .16s,border-color .16s}
   .readitem:hover{transform:translateY(-2px);border-color:var(--line-2);box-shadow:0 18px 40px -28px rgba(108,76,240,.5)}
   .readitem .rtag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--v);display:block;margin-bottom:9px}
+  .readgroup{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin:30px 0 -12px}
   .readitem p{font-size:15.5px !important;color:var(--body) !important;margin:0 !important}
   .endcta{max-width:860px;margin:44px auto 90px;padding:34px 32px;background:linear-gradient(180deg,#faf8ff,#f5f2ff);border:1px solid var(--line);border-radius:16px;text-align:center}
   .endcta h3{font-family:var(--disp);font-weight:600;font-size:24px;margin-bottom:10px}
@@ -300,33 +301,40 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 
   <h2>Read next</h2>
+<!-- READLIST -->
   <div class="readlist">
-    <a class="readitem" href="/blog-how-dtc-brands-should-measure-blended-roas">
+    <a class="readitem" href="/blog-why-your-roas-looks-great-while-contribution-margin-keeps-sh">
       <span class="rtag">Marketing analytics</span>
-      <h3>How DTC brands should measure blended ROAS</h3>
-      <p>Blended as the sanity check on channel-level numbers that all claim credit.</p>
-    </a>
-    <a class="readitem" href="/blog-why-your-subscription-revenue-makes-blended-roas-misleading">
-      <span class="rtag">Marketing analytics</span>
-      <h3>Why your subscription revenue makes blended roas misleading</h3>
-      <p>Recurring revenue quietly breaks blended ROAS, in a direction that flatters you.</p>
-    </a>
-    <a class="readitem" href="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions">
-      <span class="rtag">Marketing analytics</span>
-      <h3>The 60-day cohort maturity rule for ad spend decisions</h3>
-      <p>Deciding too early on immature cohorts is the most expensive reporting mistake.</p>
-    </a>
-    <a class="readitem" href="/blog-predictive-cac-bidding-on-lead-value-instead-of-clicks">
-      <span class="rtag">Marketing analytics</span>
-      <h3>Predictive CAC: bidding on lead value instead of clicks</h3>
-      <p>Bidding on predicted value instead of raw conversions.</p>
+      <h3>Why ROAS can rise while contribution margin falls</h3>
+      <p>See how discounts, returns and product costs quietly erode margin behind a healthy ROAS number, and what your reporting is missing.</p>
     </a>
     <a class="readitem" href="/blog-how-to-build-a-marketing-mix-model-without-a-data-science-te">
       <span class="rtag">Marketing analytics</span>
       <h3>How to build a marketing mix model without a data science team</h3>
       <p>A workable MMM when platform attribution has stopped being enough.</p>
     </a>
+    <a class="readitem" href="/blog-why-your-subscription-revenue-makes-blended-roas-misleading">
+      <span class="rtag">Marketing analytics</span>
+      <h3>Why your subscription revenue makes blended ROAS misleading</h3>
+      <p>Recurring revenue quietly breaks blended ROAS, in a direction that flatters you.</p>
+    </a>
+    <a class="readitem" href="/blog-how-dtc-brands-should-measure-blended-roas">
+      <span class="rtag">Marketing analytics</span>
+      <h3>How DTC brands should measure blended ROAS</h3>
+      <p>Blended as the sanity check on channel-level numbers that all claim credit.</p>
+    </a>
+    <a class="readitem" href="/blog-predictive-cac-bidding-on-lead-value-instead-of-clicks">
+      <span class="rtag">Marketing analytics</span>
+      <h3>Predictive CAC: bidding on lead value instead of clicks</h3>
+      <p>Bidding on predicted value instead of raw conversions.</p>
+    </a>
+    <a class="readitem" href="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions">
+      <span class="rtag">Marketing analytics</span>
+      <h3>The 60-day cohort maturity rule for ad spend decisions</h3>
+      <p>Deciding too early on immature cohorts is the most expensive reporting mistake.</p>
+    </a>
   </div>
+  <!-- /READLIST -->
 
 </div>
 
@@ -362,5 +370,6 @@ fetch("/api/views").then(function(r){return r.json()}).then(function(v){
   });
 }).catch(function(){});
 </script>
+<script src="/dock.js" defer></script>
 </body>
 </html>

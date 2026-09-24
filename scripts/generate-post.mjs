@@ -4,6 +4,7 @@
 import fs from "node:fs";
 import { renderDiagram, DIAGRAM_SCHEMA } from "./diagram.mjs";
 import { fetchQueries, opportunities } from "./gsc.mjs";
+import { CATS, PILLARS, readPosts, sync } from "./sync-blog.mjs";
 
 const KEY = process.env.ANTHROPIC_API_KEY;
 if (!KEY) { console.error("Set ANTHROPIC_API_KEY"); process.exit(1); }
@@ -11,7 +12,6 @@ const QUEUE = "content/topics.txt";
 const SITE = "https://twinslytics.com";
 const TEMPLATE = "blog-ga4-roas-lying.html";
 const NICHE = "data engineering for ecommerce/DTC revenue teams — attribution, true ROAS, data pipelines and warehousing, AI agents/automation, and marketing analytics";
-const CATS = ["Attribution", "Marketing analytics", "Data engineering", "AI & automation", "ML", "Analytics"];
 
 async function claude(system, user, max = 3000) {
   const res = await fetch("https://api.anthropic.com/v1/messages", {
@@ -36,19 +36,6 @@ const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(
 const escAttr = s => esc(s).replace(/"/g, "&quot;");
 const stripTags = s => s.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 
-function existingArticles() {
-  return fs.readdirSync(".").filter(f => f.startsWith("blog-") && f.endsWith(".html")).map(f => {
-    const s = fs.readFileSync(f, "utf-8");
-    const t = s.match(/<h1>(.*?)<\/h1>/s);
-    const c = s.match(/eyebrow">([^<]*)<\/span>/);
-    return {
-      file: f,
-      title: t ? stripTags(t[1]) : f,
-      category: c ? c[1].trim() : "Data engineering",
-    };
-  });
-}
-
 async function popularity() {
   try { const r = await fetch(SITE + "/api/views"); return r.ok ? await r.json() : {}; }
   catch { return {}; }
@@ -57,16 +44,52 @@ async function popularity() {
 // AI & automation is too thin to be its own link cluster.
 const clusterOf = cat => (cat === "AI & automation" ? "Data engineering" : cat);
 
-// Every post links up to its pillar page, so each cluster has one hub that
-// accumulates the internal links instead of 18 posts pointing sideways.
-const PILLARS = {
-  "Attribution": ["guide-attribution.html", "Guide: Marketing attribution for ecommerce"],
-  "Marketing analytics": ["guide-true-roas.html", "Guide: True ROAS, and how to get to it"],
-  "Data engineering": ["guide-data-pipelines.html", "Guide: Revenue pipelines that survive production"],
-  "AI & automation": ["guide-data-pipelines.html", "Guide: Revenue pipelines that survive production"],
-  "ML": ["guide-data-pipelines.html", "Guide: Revenue pipelines that survive production"],
-  "Analytics": ["guide-true-roas.html", "Guide: True ROAS, and how to get to it"],
-};
+// Diversity. Left alone, the picker leaned toward the most-viewed posts and
+// the blog turned into ten "Build an AI agent that..." posts in a row, which
+// competed with each other for the same queries. So: rotate categories, and
+// reject a topic or title that opens like, or mostly overlaps, a recent one.
+const RECENT_N = 10;
+const recent = readPosts().slice(0, RECENT_N);
+const STOP = new Set("a an the to for of and or in on with your you how why what when that this by from is are vs".split(" "));
+const words = s => s.toLowerCase().replace(/[^a-z0-9 ]+/g, " ").split(/\s+/).filter(Boolean);
+const opener = s => words(s).slice(0, 3).join(" ");
+const keyset = s => new Set(words(s).filter(w => !STOP.has(w)));
+function tooSimilar(text) {
+  const o = opener(text), k = keyset(text);
+  return recent.find(p => {
+    if (opener(p.title) === o) return true;
+    const pk = keyset(p.title);
+    const inter = [...k].filter(w => pk.has(w)).length;
+    return inter / (new Set([...k, ...pk]).size || 1) >= 0.5;
+  });
+}
+// The category least used among the last six posts (ties: least used overall).
+function targetCategory() {
+  const all = readPosts();
+  const last = all.slice(0, 6);
+  const n = (list, c) => list.filter(p => p.category === c).length;
+  return [...CATS].sort((a, b) => n(last, a) - n(last, b) || n(all, a) - n(all, b))[0];
+}
+const TARGET = targetCategory();
+const recentList = recent.map(p => `- ${p.title} [${p.category}]`).join("\n");
+const diversityRules = `Recently published (newest first):\n${recentList}\n
+Rules: do NOT reuse the opening words or sentence pattern of any recent title (e.g. if several start "Build an AI agent that...", do not write another). Pick a different angle and format: a how-to, a diagnosis, a comparison, a checklist, a decision guide, a teardown of a common mistake.`;
+const cleanLine = text => text.split("\n")[0].replace(/^[-*\d.\s]+/, "").replace(/^["']|["']$/g, "").trim();
+
+// Asks for a topic, and re-asks (up to 3 times) when it collides with a recent post.
+async function askTopic(sys, usr) {
+  let feedback = "", topic = "";
+  for (let i = 0; i < 3; i++) {
+    const { text, raw } = await claude(sys, usr + feedback, 500);
+    topic = cleanLine(text);
+    if (!topic) { console.error("Topic call returned nothing:", JSON.stringify(raw).slice(0, 400)); return ""; }
+    const clash = tooSimilar(topic);
+    if (!clash) return topic;
+    console.log(`Topic too close to "${clash.title}", retrying:`, topic);
+    feedback += `\n\nRejected (too close to "${clash.title}"): ${topic}. Propose something clearly different.`;
+  }
+  return topic;
+}
 
 function relatedTo(category, arts, n = 2) {
   const want = clusterOf(category);
@@ -94,7 +117,7 @@ async function pickTopic() {
     if (lines.length) return { topic: lines[0], fromQueue: true };
   }
 
-  const arts = existingArticles();
+  const arts = readPosts();
   const covered = arts.map(a => `- ${a.title}`).join("\n") || "(none yet)";
   const opp = await searchDemand();
 
@@ -106,26 +129,27 @@ async function pickTopic() {
 These are real Google Search Console queries the site already appears for but does not rank well on — existing demand that is winnable with a dedicated article.
 Pick the single highest-value cluster of related queries and return ONE topic line that targets it head-on: lowercase, no quotes, no numbering, under 12 words. It must not duplicate an already-published article.
 Prefer queries with high impressions and weak position, but judge relevance before volume. IGNORE any query that is a company or product name rather than a question — this site ranks incidentally for other vendors whose names also end in "lytics", and an article about a competitor's brand is worthless. Also ignore anything that looks like a scraper's query or an internal hostname.
-Long conversational queries are valuable: they come from AI search and state the reader's problem in their own words. Prefer them over short generic head terms when the intent is clearer.`;
+Long conversational queries are valuable: they come from AI search and state the reader's problem in their own words. Prefer them over short generic head terms when the intent is clearer.
+When two clusters are close in value, prefer one that fits the "${TARGET}" category — the blog has had little of it lately.
+${diversityRules}`;
     const usr = `Search Console queries with weak rankings:\n${demand}\n\nAlready published:\n${covered}\n\nReturn the single best next topic.`;
     // Higher than it looks like it needs: a multi-instruction system prompt makes the
     // model think longer before answering, and a tight cap here previously spent the
     // whole budget on that reasoning and left nothing for the actual topic line.
-    const { text, raw } = await claude(sys, usr, 500);
-    const topic = text.split("\n")[0].replace(/^[-*\d.\s]+/, "").replace(/^["']|["']$/g, "").trim();
+    const topic = await askTopic(sys, usr);
     if (topic) { console.log("Topic from search demand:", topic); return { topic, fromQueue: false }; }
-    console.error("Search-demand topic call returned nothing, falling back:", JSON.stringify(raw).slice(0, 400));
+    console.error("Search-demand topic call returned nothing, falling back");
   }
 
   // Nothing from GSC (new site, API off, or no weak-position queries yet).
   const views = await popularity();
   const ranked = arts.map(a => ({ ...a, v: views["/" + a.file] || 0 })).sort((x, y) => y.v - x.v);
   const list = ranked.map(a => `- ${a.title} (${a.v} views)`).join("\n") || "(none yet)";
-  const sys = `You plan SEO blog topics for Twinslytics, ${NICHE}. Return ONLY one topic line: lowercase, no quotes, no numbering, under 12 words. It must be a genuinely NEW angle not already covered, and should lean toward the themes of the best-performing existing posts.`;
+  const sys = `You plan SEO blog topics for Twinslytics, ${NICHE}. Return ONLY one topic line: lowercase, no quotes, no numbering, under 12 words. It must be a genuinely NEW angle not already covered.
+The next post MUST belong to the "${TARGET}" category. Use view counts only as a hint about what readers care about, never as a template to copy.
+${diversityRules}`;
   const usr = `Published posts with view counts (higher = more popular):\n${list}\n\nPropose the single best next topic to write.`;
-  const { text, raw } = await claude(sys, usr, 500);
-  const topic = text.split("\n")[0].replace(/^[-*\d.\s]+/, "").replace(/^["']|["']$/g, "").trim();
-  if (!topic) console.error("Fallback topic call returned nothing:", JSON.stringify(raw).slice(0, 400));
+  const topic = await askTopic(sys, usr);
   console.log("Claude proposed topic:", topic);
   return { topic, fromQueue: false };
 }
@@ -137,7 +161,17 @@ else { const p = await pickTopic(); topic = p.topic; fromQueue = p.fromQueue; }
 if (!topic) { console.log("No topic could be determined — nothing to do."); process.exit(0); }
 console.log("Topic:", topic, fromQueue ? "(from queue)" : "(auto)");
 
-const slug = topic.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60);
+// Cut on a word boundary: slice(0, 60) used to leave slugs like "...before-roas-dr".
+function slugify(s, max = 60) {
+  let out = "";
+  for (const w of s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim().split(" ")) {
+    const next = out ? `${out}-${w}` : w;
+    if (next.length > max) break;
+    out = next;
+  }
+  return out || s.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, max);
+}
+const slug = slugify(topic);
 const file = `blog-${slug}.html`;
 // Cloudflare serves every .html file at its extensionless twin via a redirect
 // and there's no config that turns that off without also breaking "/" ->
@@ -165,8 +199,17 @@ const metaSys = `You write search-result copy for Twinslytics, ${NICHE}.
 Return ONLY minified JSON: {"title":"...","description":"...","category":"..."}
 title: the SEO title/headline. Under 60 characters, sentence case, no site name, no quotes. Capitalise acronyms correctly (ROAS, GA4, CAPI, LTV, CRM, dbt, MMM, CAC, DTC). Concrete and specific — it competes for a click against nine other results.
 description: 140-158 characters, one or two sentences, says what the reader gets and why it matters. No ellipsis, no truncation mid-sentence, no "in this article".
-category: EXACTLY one of: ${CATS.join(", ")}`;
-const metaOut = await claudeJson(metaSys, `Topic: ${topic}\n\nArticle:\n${stripTags(inner).slice(0, 2500)}`);
+category: EXACTLY one of: ${CATS.join(", ")}${fromQueue || cli ? "" : ` (this post was planned as "${TARGET}"; use it unless it clearly does not fit)`}
+The title must not open with the same words or pattern as any of these recent titles:
+${recentList}`;
+const metaUsr = `Topic: ${topic}\n\nArticle:\n${stripTags(inner).slice(0, 2500)}`;
+let metaOut = await claudeJson(metaSys, metaUsr);
+const titleClash = metaOut?.title && tooSimilar(metaOut.title);
+if (titleClash) {
+  console.log(`Title too close to "${titleClash.title}", retrying:`, metaOut.title);
+  const again = await claudeJson(metaSys, `${metaUsr}\n\nRejected title (too close to "${titleClash.title}"): ${metaOut.title}. Write a clearly different one.`);
+  if (again?.title) metaOut = again;
+}
 
 const fallbackTitle = topic.charAt(0).toUpperCase() + topic.slice(1);
 const title = (metaOut?.title || fallbackTitle).trim().replace(/^["']|["']$/g, "");
@@ -189,7 +232,7 @@ const spec = await claudeJson(
 figure = renderDiagram(spec) || "";
 console.log("diagram:", figure ? spec.type : "none");
 
-const arts = existingArticles();
+const arts = readPosts();
 const [pillarFile, pillarLabel] = PILLARS[category] || PILLARS["Data engineering"];
 const links = [
   `    <li><a href="/${stripHtml(pillarFile)}">${esc(pillarLabel)}</a></li>`,
@@ -230,15 +273,8 @@ const body = `<h1>${esc(title)}</h1>\n`
 fs.writeFileSync(file, head + body + tail);
 console.log("Wrote", file);
 
-try {
-  let blog = fs.readFileSync("blog.html", "utf-8");
-  const card = `  <a class="post" href="/${stripHtml(file)}">\n    <div class="tag">${esc(category)}</div>\n    <h3>${esc(title)}</h3>\n    <p>${esc(desc)}</p>\n    <div class="meta">${date} · ${mins} min read<span class="views" data-p="/${file}"></span></div>\n  </a>`;
-  if (blog.includes("<!-- POSTS -->")) {
-    blog = blog.replace("<!-- POSTS -->", "<!-- POSTS -->\n" + card);
-    fs.writeFileSync("blog.html", blog);
-    console.log("Card added");
-  }
-} catch (e) { console.error("blog.html skip:", e.message); }
+// Blog grid, filters, guide lists and counts are all rebuilt from the posts.
+try { sync(); } catch (e) { console.error("sync skip:", e.message); }
 
 try {
   let sm = fs.readFileSync("sitemap.xml", "utf-8");

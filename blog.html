@@ -51,7 +51,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .bloghero>*{position:relative;z-index:1}
   .bloghero h1{font-size:clamp(34px,5vw,52px);margin:20px auto 14px;max-width:18ch}
   .bloghero p{color:var(--body);font-size:19px;max-width:52ch;margin:0 auto}
-  .posts{max-width:var(--maxw);margin:0 auto;padding:20px 28px 96px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
   .post{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px;transition:transform .18s,box-shadow .18s}
   .post:hover{transform:translateY(-3px);box-shadow:0 20px 44px -28px rgba(108,76,240,.5)}
   .post .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--v);margin-bottom:14px}
@@ -77,6 +76,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .guide .gtag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--v);margin-bottom:12px}
   .guide h3{font-size:18px;line-height:1.25;margin-bottom:9px}
   .guide p{color:var(--body);font-size:14.5px;line-height:1.6;flex:1}
+  .guide .gcount{font-family:var(--mono);font-size:11.5px;color:var(--v);margin-top:16px}
+  .allposts{max-width:var(--maxw);margin:0 auto;padding:44px 28px 96px}
+  .phead{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+  .phead h2{font-size:23px;letter-spacing:-.02em}
+  .filters{display:flex;flex-wrap:wrap;gap:8px}
+  .ftab{font-family:var(--sans);font-size:13.5px;color:var(--body);background:#fff;border:1px solid var(--line-2);border-radius:999px;padding:7px 14px;cursor:pointer;transition:border-color .15s,color .15s,background .15s}
+  .ftab span{font-family:var(--mono);font-size:11px;color:var(--mut);margin-left:3px}
+  .ftab:hover{border-color:var(--v);color:var(--ink)}
+  .ftab.is-on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .ftab.is-on span{color:rgba(255,255,255,.65)}
+  .posts{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .post[hidden]{display:none}
+  .more{text-align:center;margin-top:34px}
+  .more button{font-family:var(--disp);font-weight:600;font-size:14.5px;color:var(--ink);background:#fff;border:1px solid var(--line-2);border-radius:8px;padding:12px 26px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+  .more button:hover{border-color:var(--v);box-shadow:0 14px 30px -22px rgba(108,76,240,.6)}
+  @media(max-width:1000px){.posts{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:620px){.posts{grid-template-columns:1fr}.allposts{padding:36px 20px 80px}}
   @media(max-width:1000px){.guidesrow{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:620px){.guidesrow{grid-template-columns:1fr}}
   @media(max-width:900px){
@@ -86,8 +102,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .nav-links.open{display:flex}
     .nav-links a:not(.btn){display:block;padding:14px 0;font-size:16px;color:var(--ink);border-bottom:1px solid var(--line)}
     .nav-links .langsw{padding:14px 0;font-size:13px;border-bottom:1px solid var(--line)}
-    .nav-links .btn{margin-top:14px;width:100%;text-align:center;padding:13px}
-.posts{grid-template-columns:1fr}}
+    .nav-links .btn{margin-top:14px;width:100%;text-align:center;padding:13px}}
 </style>
 </head>
 <body>
@@ -127,16 +142,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="gtag">Guide</div>
       <h3>Marketing attribution for ecommerce</h3>
       <p>The four places a paid click loses its identity, and the order to fix them in.</p>
+      <span class="gcount">8 articles →</span>
     </a>
     <a class="guide" href="/guide-true-roas">
       <div class="gtag">Guide</div>
       <h3>True ROAS</h3>
       <p>Turning a platform's best-case number into one you can safely spend against.</p>
+      <span class="gcount">6 articles →</span>
     </a>
     <a class="guide" href="/guide-data-pipelines">
       <div class="gtag">Guide</div>
       <h3>Revenue data pipelines</h3>
       <p>Schema drift, loader lag, and frozen partitions — and how to survive them.</p>
+      <span class="gcount">18 articles →</span>
     </a>
     <a class="guide" href="/true-roas-calculator">
       <div class="gtag">Free tool</div>
@@ -146,201 +164,217 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
-<div class="posts">
+<section class="allposts">
+<div class="phead">
+  <h2>All writing</h2>
+<!-- FILTERS -->
+  <div class="filters" role="toolbar" aria-label="Filter by topic">
+    <button type="button" class="ftab is-on" data-f="all">All <span>32</span></button>
+    <button type="button" class="ftab" data-f="attribution">Attribution <span>8</span></button>
+    <button type="button" class="ftab" data-f="marketing-analytics">Marketing analytics <span>6</span></button>
+    <button type="button" class="ftab" data-f="data-engineering">Data engineering <span>8</span></button>
+    <button type="button" class="ftab" data-f="ai-and-automation">AI &amp; automation <span>10</span></button>
+  </div>
+<!-- /FILTERS -->
+</div>
+<div class="posts" id="posts">
   <!-- POSTS -->
-  <a class="post" href="/blog-build-an-ai-agent-that-reallocates-budget-across-channels-us">
+  <a class="post" data-cat="ai-and-automation" href="/blog-build-an-ai-agent-that-reallocates-budget-across-channels-us">
     <div class="tag">AI &amp; automation</div>
     <h3>Build an AI agent that reallocates budget on CAC payback</h3>
     <p>Stop funding channels that win last-click but stall cash flow. Learn the data pipeline and logic for an agent that shifts spend toward fastest CAC payback.</p>
     <div class="meta">21 Sep 2026 · 6 min read<span class="views" data-p="/blog-build-an-ai-agent-that-reallocates-budget-across-channels-us.html"></span></div>
   </a>
-  <a class="post" href="/blog-build-an-ai-agent-that-flags-ltv-cohorts-drifting-below-cac-">
+  <a class="post" data-cat="ai-and-automation" href="/blog-build-an-ai-agent-that-flags-ltv-cohorts-drifting-below-cac-">
     <div class="tag">AI &amp; automation</div>
     <h3>Build an AI agent to flag LTV cohorts missing CAC payback</h3>
     <p>Learn how to design an agent that tracks contribution margin by cohort and channel, so payback drift gets caught in week six, not the Q3 deck.</p>
     <div class="meta">14 Sep 2026 · 6 min read<span class="views" data-p="/blog-build-an-ai-agent-that-flags-ltv-cohorts-drifting-below-cac-.html"></span></div>
   </a>
-  <a class="post" href="/blog-build-an-ai-agent-that-flags-discount-code-cannibalization-o">
+  <a class="post" data-cat="ai-and-automation" href="/blog-build-an-ai-agent-that-flags-discount-code-cannibalization-o">
     <div class="tag">AI &amp; automation</div>
     <h3>AI agent that catches discount codes eating your margin</h3>
     <p>Detect discount-code cannibalization before finance does, with an AI agent that compares margin lost against true baseline revenue in real time.</p>
     <div class="meta">9 Sep 2026 · 5 min read<span class="views" data-p="/blog-build-an-ai-agent-that-flags-discount-code-cannibalization-o.html"></span></div>
   </a>
-  <a class="post" href="/blog-build-an-ai-agent-that-flags-returns-and-refunds-skewing-tru">
+  <a class="post" data-cat="ai-and-automation" href="/blog-build-an-ai-agent-that-flags-returns-and-refunds-skewing-tru">
     <div class="tag">AI &amp; automation</div>
     <h3>Build an AI agent that catches refund-skewed ROAS</h3>
     <p>Learn how to pipe Shopify refunds and ad spend into a warehouse so an agent flags true ROAS before bad numbers drive scaling decisions.</p>
     <div class="meta">7 Sep 2026 · 5 min read<span class="views" data-p="/blog-build-an-ai-agent-that-flags-returns-and-refunds-skewing-tru.html"></span></div>
   </a>
-  <a class="post" href="/blog-build-an-ai-agent-that-flags-creative-fatigue-before-roas-dr">
+  <a class="post" data-cat="ai-and-automation" href="/blog-build-an-ai-agent-that-flags-creative-fatigue-before-roas-dr">
     <div class="tag">AI &amp; automation</div>
     <h3>Build an AI agent that catches creative fatigue before ROAS falls</h3>
     <p>Learn how an AI agent tracks frequency, CTR slope and CPM drift to flag ad fatigue days before ROAS drops, so you can refresh creative in time.</p>
     <div class="meta">5 Sep 2026 · 6 min read<span class="views" data-p="/blog-build-an-ai-agent-that-flags-creative-fatigue-before-roas-dr.html"></span></div>
   </a>
-  <a class="post" href="/blog-build-an-ai-agent-that-allocates-ad-spend-by-contribution-ma">
+  <a class="post" data-cat="ai-and-automation" href="/blog-build-an-ai-agent-that-allocates-ad-spend-by-contribution-ma">
     <div class="tag">AI &amp; automation</div>
     <h3>Build an AI agent that allocates ad spend by margin, not ROAS</h3>
     <p>ROAS hides which campaigns actually make money. Learn the data pipeline needed to shift ad budget allocation to true contribution margin.</p>
     <div class="meta">3 Sep 2026 · 6 min read<span class="views" data-p="/blog-build-an-ai-agent-that-allocates-ad-spend-by-contribution-ma.html"></span></div>
   </a>
-  <a class="post" href="/blog-how-to-get-one-true-roas-number-when-every-platform-disagree">
+  <a class="post" data-cat="attribution" href="/blog-how-to-get-one-true-roas-number-when-every-platform-disagree">
     <div class="tag">Attribution</div>
     <h3>Build one true ROAS number when platforms disagree</h3>
     <p>Stop trusting Meta, Google and TikTok's conflicting ROAS claims. Learn to build blended and incremental ROAS numbers finance and marketing both trust.</p>
     <div class="meta">1 Sep 2026 · 5 min read<span class="views" data-p="/blog-how-to-get-one-true-roas-number-when-every-platform-disagree.html"></span></div>
   </a>
-  <a class="post" href="/blog-build-an-ai-agent-that-unifies-meta-capi-and-warehouse-conve">
+  <a class="post" data-cat="ai-and-automation" href="/blog-build-an-ai-agent-that-unifies-meta-capi-and-warehouse-conve">
     <div class="tag">AI &amp; automation</div>
     <h3>Build an AI agent to unify Meta CAPI and warehouse events</h3>
     <p>Stop reporting inflated Meta conversions. Learn how to build an agent that reconciles CAPI and warehouse orders, fixing refunds and duplicates automatically.</p>
     <div class="meta">31 Aug 2026 · 6 min read<span class="views" data-p="/blog-build-an-ai-agent-that-unifies-meta-capi-and-warehouse-conve.html"></span></div>
   </a>
-  <a class="post" href="/blog-how-to-build-a-real-time-margin-aware-bidding-pipeline-from-">
+  <a class="post" data-cat="data-engineering" href="/blog-how-to-build-a-real-time-margin-aware-bidding-pipeline-from-">
     <div class="tag">Data engineering</div>
     <h3>Build a real-time margin-aware bidding pipeline from your warehouse</h3>
     <p>Stop bidding on blended ROAS. Learn the four-stage pipeline that feeds true SKU-level margin data into ad platforms before they waste spend.</p>
     <div class="meta">29 Aug 2026 · 6 min read<span class="views" data-p="/blog-how-to-build-a-real-time-margin-aware-bidding-pipeline-from-.html"></span></div>
   </a>
-  <a class="post" href="/blog-how-to-build-an-ai-agent-that-reconciles-ad-spend-with-contr">
+  <a class="post" data-cat="ai-and-automation" href="/blog-how-to-build-an-ai-agent-that-reconciles-ad-spend-with-contr">
     <div class="tag">AI &amp; automation</div>
     <h3>Build an AI agent that reconciles ad spend with margin</h3>
     <p>Learn the data pipeline and agent logic that turns blended ROAS into true contribution margin ROAS, updated daily by SKU and campaign.</p>
     <div class="meta">27 Aug 2026 · 6 min read<span class="views" data-p="/blog-how-to-build-an-ai-agent-that-reconciles-ad-spend-with-contr.html"></span></div>
   </a>
-  <a class="post" href="/blog-how-to-build-a-self-healing-dbt-pipeline-for-ecommerce-data-">
+  <a class="post" data-cat="data-engineering" href="/blog-how-to-build-a-self-healing-dbt-pipeline-for-ecommerce-data-">
     <div class="tag">Data engineering</div>
     <h3>Build a self-healing dbt pipeline for ecommerce data drift</h3>
     <p>Stop silent data drift from skewing ROAS and LTV. Learn schema, freshness, and distribution checks that let dbt pipelines detect and self-heal automatically.</p>
     <div class="meta">25 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-to-build-a-self-healing-dbt-pipeline-for-ecommerce-data-.html"></span></div>
   </a>
-  <a class="post" href="/blog-why-your-roas-looks-great-while-contribution-margin-keeps-sh">
-    <div class="tag">Marketing analytics</div>
-    <h3>Why ROAS can rise while contribution margin falls</h3>
-    <p>See how discounts, returns and product costs quietly erode margin behind a healthy ROAS number, and what your reporting is missing.</p>
-    <div class="meta">24 Aug 2026 · 6 min read<span class="views" data-p="/blog-why-your-roas-looks-great-while-contribution-margin-keeps-sh.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo">
-    <div class="tag">AI &amp; automation</div>
-    <h3>Build an AI agent that catches ROAS anomalies before overspend</h3>
-    <p>A practical build guide to an AI agent that watches spend hourly and flags true ROAS drops before budget is wasted, not after the weekly review.</p>
-    <div class="meta">24 Aug 2026 · 6 min read<span class="views" data-p="/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo.html"></span></div>
-  </a>
-  <a class="post" href="/blog-how-to-build-an-ad-spend-decision-engine-from-warehouse-data">
+  <a class="post" data-cat="data-engineering" href="/blog-how-to-build-an-ad-spend-decision-engine-from-warehouse-data">
     <div class="tag">Data engineering</div>
     <h3>Build an ad-spend decision engine on warehouse data</h3>
     <p>Stop trusting platform ROAS. Learn how to join order and spend data in your warehouse to turn attribution into automated budget decisions.</p>
     <div class="meta">24 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-to-build-an-ad-spend-decision-engine-from-warehouse-data.html"></span></div>
   </a>
-  <a class="post" href="/blog-how-to-attribute-subscription-ltv-back-to-the-original-ad-cl">
+  <a class="post" data-cat="ai-and-automation" href="/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo">
+    <div class="tag">AI &amp; automation</div>
+    <h3>Build an AI agent that catches ROAS anomalies before overspend</h3>
+    <p>A practical build guide to an AI agent that watches spend hourly and flags true ROAS drops before budget is wasted, not after the weekly review.</p>
+    <div class="meta">24 Aug 2026 · 6 min read<span class="views" data-p="/blog-how-to-build-an-ai-agent-that-flags-roas-anomalies-before-yo.html"></span></div>
+  </a>
+  <a class="post" data-cat="marketing-analytics" href="/blog-why-your-roas-looks-great-while-contribution-margin-keeps-sh">
+    <div class="tag">Marketing analytics</div>
+    <h3>Why ROAS can rise while contribution margin falls</h3>
+    <p>See how discounts, returns and product costs quietly erode margin behind a healthy ROAS number, and what your reporting is missing.</p>
+    <div class="meta">24 Aug 2026 · 6 min read<span class="views" data-p="/blog-why-your-roas-looks-great-while-contribution-margin-keeps-sh.html"></span></div>
+  </a>
+  <a class="post" data-cat="attribution" href="/blog-how-to-attribute-subscription-ltv-back-to-the-original-ad-cl">
     <div class="tag">Attribution</div>
-    <h3>How to attribute subscription ltv back to the original ad click</h3>
+    <h3>How to attribute subscription LTV back to the original ad click</h3>
     <p>Most attribution setups stop working the moment a customer becomes a subscriber. Meta, Google, and your attribution tool all report the first-order value, </p>
     <div class="meta">23 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-to-attribute-subscription-ltv-back-to-the-original-ad-cl.html"></span></div>
   </a>
-  <a class="post" href="/blog-how-to-build-a-customer-data-warehouse-that-survives-ios-att">
+  <a class="post" data-cat="data-engineering" href="/blog-how-to-build-a-customer-data-warehouse-that-survives-ios-att">
     <div class="tag">Data engineering</div>
-    <h3>How to build a customer data warehouse that survives ios attribution loss</h3>
+    <h3>How to build a customer data warehouse that survives iOS attribution loss</h3>
     <p>Apple didn't kill attribution. It killed your ability to trust a single platform's version of the truth. If your revenue reporting still lives inside Meta </p>
     <div class="meta">21 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-to-build-a-customer-data-warehouse-that-survives-ios-att.html"></span></div>
   </a>
-  <a class="post" href="/blog-how-to-build-a-marketing-mix-model-without-a-data-science-te">
+  <a class="post" data-cat="marketing-analytics" href="/blog-how-to-build-a-marketing-mix-model-without-a-data-science-te">
     <div class="tag">Marketing analytics</div>
     <h3>How to build a marketing mix model without a data science team</h3>
     <p>Your CFO wants to know what happens to revenue if you cut paid social by 20%. Your last-click attribution can't answer that. Neither can your gut. What you</p>
     <div class="meta">19 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-to-build-a-marketing-mix-model-without-a-data-science-te.html"></span></div>
   </a>
-  <a class="post" href="/blog-why-your-subscription-revenue-makes-blended-roas-misleading">
+  <a class="post" data-cat="marketing-analytics" href="/blog-why-your-subscription-revenue-makes-blended-roas-misleading">
     <div class="tag">Marketing analytics</div>
-    <h3>Why your subscription revenue makes blended roas misleading</h3>
+    <h3>Why your subscription revenue makes blended ROAS misleading</h3>
     <p>Your blended ROAS says 4.2x and everyone in the meeting nods. But if a third of that revenue comes from subscribers who resubscribed on autopilot, you're n</p>
     <div class="meta">17 Aug 2026 · 5 min read<span class="views" data-p="/blog-why-your-subscription-revenue-makes-blended-roas-misleading.html"></span></div>
   </a>
-  <a class="post" href="/blog-why-utm-parameters-break-at-checkout-redirects-and-how-to-fi">
+  <a class="post" data-cat="attribution" href="/blog-why-utm-parameters-break-at-checkout-redirects-and-how-to-fi">
     <div class="tag">Attribution</div>
-    <h3>Why utm parameters break at checkout redirects and how to fix attribution</h3>
-    <p>You launch a campaign, spend real money, and three days later half your conversions show up as "direct" in GA4. Nobody typed your URL from memory. They cli</p>
+    <h3>Why UTM parameters break at checkout redirects and how to fix attribution</h3>
+    <p>You launch a campaign, spend real money, and three days later half your conversions show up as </p>
     <div class="meta">15 Aug 2026 · 5 min read<span class="views" data-p="/blog-why-utm-parameters-break-at-checkout-redirects-and-how-to-fi.html"></span></div>
   </a>
-  <a class="post" href="/blog-how-dtc-brands-should-measure-blended-roas">
+  <a class="post" data-cat="marketing-analytics" href="/blog-how-dtc-brands-should-measure-blended-roas">
     <div class="tag">Marketing analytics</div>
     <h3>How DTC brands should measure blended ROAS</h3>
     <p>Most DTC brands calculate blended ROAS wrong, and the ones who calculate it right often use it wrong. It's not a marketing metric. It's not a Meta metric. </p>
     <div class="meta">13 Aug 2026 · 5 min read<span class="views" data-p="/blog-how-dtc-brands-should-measure-blended-roas.html"></span></div>
   </a>
-  <a class="post" href="/blog-monitoring-and-alerting-for-data-pipelines-in-production">
+  <a class="post" data-cat="data-engineering" href="/blog-monitoring-and-alerting-for-data-pipelines-in-production">
     <div class="tag">Data engineering</div>
     <h3>Monitoring and alerting for data pipelines in production</h3>
     <p>Your ROAS dashboard says one thing on Monday and something completely different on Tuesday. Not because ad performance changed, but because a pipeline sile</p>
     <div class="meta">11 Aug 2026 · 5 min read<span class="views" data-p="/blog-monitoring-and-alerting-for-data-pipelines-in-production.html"></span></div>
   </a>
-  <a class="post" href="/blog-when-to-move-from-spreadsheets-to-a-data-warehouse">
+  <a class="post" data-cat="data-engineering" href="/blog-when-to-move-from-spreadsheets-to-a-data-warehouse">
     <div class="tag">Data engineering</div>
     <h3>When to move from spreadsheets to a data warehouse</h3>
     <p>Your marketing lead pulls Shopify data into Google Sheets every Monday. Someone else exports Klaviyo numbers into a different tab. Meta ad spend gets copy-</p>
     <div class="meta">9 Aug 2026 · 5 min read<span class="views" data-p="/blog-when-to-move-from-spreadsheets-to-a-data-warehouse.html"></span></div>
   </a>
-  <a class="post" href="/blog-attribution-when-payment-domains-steal-the-credit">
+  <a class="post" data-cat="attribution" href="/blog-attribution-when-payment-domains-steal-the-credit">
     <div class="tag">Attribution</div>
     <h3>Attribution when payment domains steal the credit</h3>
-    <p>Open your GA4 acquisition report and look for "paypal.com" or "checkout.shopify.com" sitting in your top referrers with a suspiciously high conversion rate</p>
+    <p>Open your GA4 acquisition report and look for </p>
     <div class="meta">7 Aug 2026 · 4 min read<span class="views" data-p="/blog-attribution-when-payment-domains-steal-the-credit.html"></span></div>
   </a>
-  <a class="post" href="/blog-why-your-dbt-pipeline-keeps-breaking-on-api-schema-drift">
+  <a class="post" data-cat="data-engineering" href="/blog-why-your-dbt-pipeline-keeps-breaking-on-api-schema-drift">
     <div class="tag">Data engineering</div>
     <h3>Why your dbt pipeline keeps breaking on API schema drift</h3>
     <p>Your dbt run was green yesterday. Today it's red because a marketing platform decided to rename a field, add a nested object, or quietly switch an integer </p>
     <div class="meta">5 Aug 2026 · 5 min read<span class="views" data-p="/blog-why-your-dbt-pipeline-keeps-breaking-on-api-schema-drift.html"></span></div>
   </a>
-  <a class="post" href="/blog-predictive-cac-bidding-on-lead-value-instead-of-clicks">
+  <a class="post" data-cat="marketing-analytics" href="/blog-predictive-cac-bidding-on-lead-value-instead-of-clicks">
     <div class="tag">Marketing analytics</div>
     <h3>Predictive CAC: bidding on lead value instead of clicks</h3>
-    <p>Most ad accounts are still optimizing for the wrong thing. You tell Google or Meta to chase clicks, or conversions, or even "leads" — but a lead form fill </p>
+    <p>Most ad accounts are still optimizing for the wrong thing. You tell Google or Meta to chase clicks, or conversions, or even </p>
     <div class="meta">3 Aug 2026 · 5 min read<span class="views" data-p="/blog-predictive-cac-bidding-on-lead-value-instead-of-clicks.html"></span></div>
   </a>
-  <a class="post" href="/blog-true-roas-vs-ga4-ecommerce-roas-for-offline-close-businesses">
+  <a class="post" data-cat="attribution" href="/blog-true-roas-vs-ga4-ecommerce-roas-for-offline-close-businesses">
     <div class="tag">Attribution</div>
     <h3>True ROAS vs GA4 ecommerce ROAS for offline-close businesses</h3>
     <p>GA4 tells you a campaign converted at 3.2 ROAS. Your finance team says the same campaign lost money. Both are right, and that gap is exactly why offline-cl</p>
     <div class="meta">1 Aug 2026 · 5 min read<span class="views" data-p="/blog-true-roas-vs-ga4-ecommerce-roas-for-offline-close-businesses.html"></span></div>
   </a>
-  <a class="post" href="/blog-server-side-conversions-with-meta-capi-what-breaks-and-how-t">
+  <a class="post" data-cat="attribution" href="/blog-server-side-conversions-with-meta-capi-what-breaks-and-how-t">
     <div class="tag">Attribution</div>
     <h3>Server-side conversions with Meta CAPI: what breaks and how to fix it</h3>
     <p>Meta cut off third-party cookie tracking, so everyone rushed to implement Conversions API. Then ROAS numbers got weirder, not better. If you've deployed CA</p>
     <div class="meta">31 Jul 2026 · 5 min read<span class="views" data-p="/blog-server-side-conversions-with-meta-capi-what-breaks-and-how-t.html"></span></div>
   </a>
-  <a class="post" href="/blog-how-to-reconcile-meta-and-google-roas-against-your-crm">
+  <a class="post" data-cat="data-engineering" href="/blog-how-to-reconcile-meta-and-google-roas-against-your-crm">
     <div class="tag">Data engineering</div>
     <h3>How to reconcile Meta and Google ROAS against your CRM</h3>
     <p>Meta says your campaign drove $40,000 in revenue. Google says its campaigns drove $35,000. Add those up and you've got $75,000 in attributed revenue. Excep</p>
     <div class="meta">29 Jul 2026 · 5 min read<span class="views" data-p="/blog-how-to-reconcile-meta-and-google-roas-against-your-crm.html"></span></div>
   </a>
-  <a class="post" href="/blog-what-ai-ready-data-actually-means-a-practical-checklist">
-    <div class="tag">AI & automation</div>
+  <a class="post" data-cat="ai-and-automation" href="/blog-what-ai-ready-data-actually-means-a-practical-checklist">
+    <div class="tag">AI &amp; automation</div>
     <h3>What AI-ready data actually means: a practical checklist</h3>
-    <p>Every vendor pitch deck has a slide claiming their platform makes your data "AI-ready." Nobody defines what that means, and most teams find out the hard wa</p>
+    <p>Every vendor pitch deck has a slide claiming their platform makes your data </p>
     <div class="meta">27 Jul 2026 · 4 min read<span class="views" data-p="/blog-what-ai-ready-data-actually-means-a-practical-checklist.html"></span></div>
   </a>
-  <a class="post" href="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions">
+  <a class="post" data-cat="marketing-analytics" href="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions">
     <div class="tag">Marketing analytics</div>
     <h3>The 60-day cohort maturity rule for ad spend decisions</h3>
-    <p>Most ecommerce brands kill winning campaigns and scale losing ones because they check the scoreboard before the game is over.</p>
+    <p>Most ecommerce brands kill winning campaigns and scale losing ones because they check the scoreboard before the game is over. A customer who converts on da</p>
     <div class="meta">25 Jul 2026 · 4 min read<span class="views" data-p="/blog-the-60-day-cohort-maturity-rule-for-ad-spend-decisions.html"></span></div>
   </a>
-  <a class="post" href="/blog-why-offline-conversions-beat-pixel-based-roas">
+  <a class="post" data-cat="attribution" href="/blog-why-offline-conversions-beat-pixel-based-roas">
     <div class="tag">Attribution</div>
     <h3>Why offline conversions beat pixel-based ROAS</h3>
-    <p>Your dashboard says Meta is delivering a 4.2x ROAS. Your bank account says something else. If you've ever felt that gap, you're not imagining it.</p>
+    <p>Your dashboard says Meta is delivering a 4.2x ROAS. Your bank account says something else. If you've ever felt that gap, you're not imagining it. Pixel-bas</p>
     <div class="meta">24 Jul 2026 · 5 min read<span class="views" data-p="/blog-why-offline-conversions-beat-pixel-based-roas.html"></span></div>
   </a>
-  <a class="post" href="/blog-ga4-roas-lying">
+  <a class="post" data-cat="attribution" href="/blog-ga4-roas-lying">
     <div class="tag">Attribution</div>
     <h3>Why your GA4 ROAS is lying to you — and how to find the real number</h3>
-    <p>GA4 and your ad platforms measure clicks, not closed revenue. Here's why the gap exists, and how to reconcile it against what actually hit your bank account.</p>
+    <p>GA4 and your ad platforms report ROAS from clicks and pixels, not closed revenue. Here's why the numbers disagree with your bank account — and how to reconcile them into a true ROAS you can optimize on.</p>
     <div class="meta">1 Feb 2026 · 3 min read<span class="views" data-p="/blog-ga4-roas-lying.html"></span></div>
   </a>
+  <!-- /POSTS -->
 </div>
+<div class="more"><button type="button" id="showMore" hidden>Show more</button></div>
+</section>
 
 </main>
 <footer>
@@ -354,6 +388,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 (function(){var b=document.querySelector(".burger"),m=document.querySelector(".nav-links");if(!b||!m)return;function close(){m.classList.remove("open");b.classList.remove("is-open");b.setAttribute("aria-expanded","false");}b.addEventListener("click",function(e){e.stopPropagation();var o=m.classList.toggle("open");b.classList.toggle("is-open",o);b.setAttribute("aria-expanded",o);});m.querySelectorAll("a").forEach(function(a){a.addEventListener("click",close);});document.addEventListener("click",function(e){if(m.classList.contains("open")&&!m.contains(e.target)&&!b.contains(e.target))close();});})();
 </script>
 <script>
+(function(){
+  var PAGE=9,grid=document.getElementById("posts"),btn=document.getElementById("showMore");
+  if(!grid||!btn)return;
+  var cards=[].slice.call(grid.querySelectorAll(".post")),tabs=[].slice.call(document.querySelectorAll(".ftab"));
+  var f="all",shown=PAGE;
+  function render(){
+    var match=cards.filter(function(c){return f==="all"||c.getAttribute("data-cat")===f;});
+    cards.forEach(function(c){c.hidden=true;});
+    match.forEach(function(c,i){c.hidden=i>=shown;});
+    var left=match.length-shown;
+    btn.hidden=left<=0;
+    btn.textContent="Show more ("+left+")";
+    tabs.forEach(function(t){var on=t.getAttribute("data-f")===f;t.classList.toggle("is-on",on);t.setAttribute("aria-pressed",on);});
+  }
+  function pick(v,push){
+    if(!tabs.some(function(t){return t.getAttribute("data-f")===v;}))v="all";
+    f=v;shown=PAGE;render();
+    if(push)history.replaceState(null,"",v==="all"?location.pathname:"#"+v);
+  }
+  tabs.forEach(function(t){t.addEventListener("click",function(){pick(t.getAttribute("data-f"),true);});});
+  btn.addEventListener("click",function(){shown+=PAGE;render();});
+  pick(location.hash.slice(1)||"all",false);
+})();
+</script>
+<script>
 fetch("/api/views").then(function(r){return r.json()}).then(function(v){
   function get(p){p=p.replace(/\/$/,"");return v[p]||v[p+".html"]||v[p.replace(/\.html$/,"")]||0;}
   document.querySelectorAll("a.post[href]").forEach(function(a){
@@ -363,5 +422,6 @@ fetch("/api/views").then(function(r){return r.json()}).then(function(v){
   });
 }).catch(function(){});
 </script>
+<script src="/dock.js" defer></script>
 </body>
 </html>

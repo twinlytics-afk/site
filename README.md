@@ -4,7 +4,9 @@ Static site (HTML/CSS/JS, no build step) + blog. Hosted for **$0** on Cloudflare
 
 ## Files
 - `index.html` — main site (team photos are embedded, no external images needed)
-- `blog.html` — blog listing (has a `<!-- POSTS -->` marker for auto-insert)
+- `blog.html` — blog listing; the grid, filters and guide counts are rebuilt by `scripts/sync-blog.mjs`
+- `scripts/sync-blog.mjs` — rebuilds blog grid, guide "Read next" lists, title acronyms, dock tag (run after editing posts)
+- `dock.js` — floating Contact button / mobile bar on every page
 - `blog-*.html` — individual articles
 - `guide-*.html` — pillar pages: one hub per topic cluster, linking the posts in it
 - `true-roas-calculator.html` — free client-side tool, the page other sites can link to
