@@ -11,16 +11,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>A Slack bot that turns a PDF into an approved invoice — Twinslytics</title>
-<meta name="description" content="A manufacturing company keyed every vendor invoice into Microsoft Dynamics 365 Business Central by hand. Our Slack bot reads a PDF and routes it for approval automatically." />
+<title>A chat bot that turns a PDF into an approved invoice — Twinslytics</title>
+<meta name="description" content="A company keyed every vendor invoice into their ERP by hand. Our chat bot reads a PDF and routes it for approval automatically — same approach on any ERP or chat tool." />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="canonical" href="https://twinslytics.com/case-invoice-automation" />
 <meta name="robots" content="index, follow" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://twinslytics.com/case-invoice-automation" />
-<meta property="og:title" content="A Slack bot that turns a PDF into an approved invoice" />
-<meta property="og:description" content="A manufacturing company keyed every vendor invoice into Microsoft Dynamics 365 Business Central by hand. Our Slack bot reads a PDF and routes it for approval automatically." />
+<meta property="og:title" content="A chat bot that turns a PDF into an approved invoice" />
+<meta property="og:description" content="A company keyed every vendor invoice into their ERP by hand. Our chat bot reads a PDF and routes it for approval automatically — same approach on any ERP or chat tool." />
 <meta property="og:image" content="https://twinslytics.com/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -131,8 +131,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "A Slack bot that turns a PDF into an approved invoice",
-  "description": "A manufacturing company keyed every vendor invoice into Microsoft Dynamics 365 Business Central by hand. Our Slack bot reads a PDF and routes it for approval automatically.",
+  "headline": "A chat bot that turns a PDF into an approved invoice",
+  "description": "A company keyed every vendor invoice into their ERP by hand. Our chat bot reads a PDF and routes it for approval automatically — same approach on any ERP or chat tool.",
   "author": {
     "@type": "Organization",
     "name": "Twinslytics"
@@ -198,39 +198,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="hubwrap">
   <a class="back" href="/work">← All work</a>
   <span class="eyebrow">Case study · AI agents &amp; automation</span>
-  <h1>Turning a Slack message into an approved invoice</h1>
+  <h1>Turning a chat message into an approved invoice</h1>
   <div class="hubmeta">Case study · AI agents &amp; automation · Twinslytics</div>
 
-  <p class="lede">A manufacturing company on Microsoft Dynamics 365 Business Central keyed every vendor invoice in by hand. We built a Slack bot that reads a message or a PDF, extracts the line items, and routes it for approval before it ever touches the ERP.</p>
+  <p class="lede">A company on Microsoft Dynamics 365 Business Central keyed every vendor invoice in by hand. We built a bot that reads a message or a PDF, extracts the line items, and routes it for approval before it ever touches the ERP. Same idea works on QuickBooks, NetSuite, SAP, or whatever finance runs on.</p>
 
   <h2>The problem</h2>
-  <p>A manufacturing company on Microsoft Dynamics 365 Business Central had every vendor
-  invoice keyed in by hand — read the PDF, find the vendor, pick the GL account and dimensions,
-  create the purchase invoice, get it approved. Multiplied across every vendor bill that shows
-  up in a month, it added up to real accounting hours doing data entry instead of finance.</p>
+  <p>This is one of the most common finance-ops gaps: every vendor invoice gets keyed in by
+  hand — read the PDF, find the vendor, pick the right account, create the entry, get it
+  approved. Multiplied across every bill that shows up in a month, it adds up to real
+  accounting hours spent on data entry instead of finance.</p>
 
   <h2>What we built</h2>
-  <p>A Slack bot that turns a conversation — or an uploaded PDF — into a Purchase Invoice in
-  Business Central:</p>
+  <p>A chat bot — we built this one for Slack, but Teams works the same way — that turns a
+  conversation or an uploaded PDF into a purchase invoice in the ERP:</p>
   <ul>
-    <li>Upload a PDF, and Google Document AI extracts the vendor, line items, and amounts into
-    a pre-filled form — no manual transcription.</li>
-    <li>The form runs autocomplete against real Business Central data: vendor search, GL
-    accounts, cost centers and sub-projects, so the person filling it in can't pick something
-    that doesn't exist.</li>
-    <li>Submissions route through an approval step inside Slack — Approve, Edit, or Decline —
-    before anything is written to Business Central.</li>
-    <li>Every action is logged to BigQuery, so there's a full audit trail of who approved what,
-    separate from Business Central's own record.</li>
+    <li>Upload a PDF, and document AI extracts the vendor, line items, and amounts into a
+    pre-filled form — no manual transcription.</li>
+    <li>The form runs autocomplete against real ERP data — vendors, accounts, cost centers — so
+    the person filling it in can't pick something that doesn't exist.</li>
+    <li>Submissions route through an approval step right in the chat — approve, edit, or
+    decline — before anything is written to the ERP.</li>
+    <li>Every action is logged separately, so there's a full audit trail of who approved what.</li>
   </ul>
 
   <h2>The result</h2>
-  <p>Vendor invoices go from a PDF or a Slack message to an approved Business Central entry in
-  one step instead of five, with an audit trail that didn't exist before.</p>
+  <p>Vendor invoices go from a PDF or a chat message to an approved ERP entry in one step
+  instead of five, with an audit trail that didn't exist before. The exact ERP and chat tool
+  change the integration, not the approach.</p>
 </div>
 
   <div class="endcta">
-  <div class="ctaproof">Slack → Business Central — one step instead of five, full audit trail</div>
+  <div class="ctaproof">Chat message → approved ERP entry — one step instead of five</div>
   <h3>Still keying invoices in by hand?</h3>
   <p>We build the AI agents that read, decide, and act inside your existing tools — with every write gated behind a human confirmation.</p>
   <div class="ctabtns">

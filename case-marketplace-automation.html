@@ -11,16 +11,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Automating order fulfillment across Wayfair and Lowe's — Twinslytics</title>
-<meta name="description" content="A home-goods manufacturer had every marketplace order keyed into NetSuite by hand. We built the pipeline that closes the loop automatically, across two marketplaces." />
+<title>Automating order fulfillment across marketplaces and an ERP — Twinslytics</title>
+<meta name="description" content="A manufacturer had every marketplace order keyed into an ERP by hand. We built the pipeline that closes the loop automatically — the same pattern works on any ERP or marketplace stack." />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="canonical" href="https://twinslytics.com/case-marketplace-automation" />
 <meta name="robots" content="index, follow" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://twinslytics.com/case-marketplace-automation" />
-<meta property="og:title" content="Automating order fulfillment across Wayfair and Lowe's" />
-<meta property="og:description" content="A home-goods manufacturer had every marketplace order keyed into NetSuite by hand. We built the pipeline that closes the loop automatically, across two marketplaces." />
+<meta property="og:title" content="Automating order fulfillment across marketplaces and an ERP" />
+<meta property="og:description" content="A manufacturer had every marketplace order keyed into an ERP by hand. We built the pipeline that closes the loop automatically — the same pattern works on any ERP or marketplace stack." />
 <meta property="og:image" content="https://twinslytics.com/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -131,8 +131,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Automating order fulfillment across Wayfair and Lowe's",
-  "description": "A home-goods manufacturer had every marketplace order keyed into NetSuite by hand. We built the pipeline that closes the loop automatically, across two marketplaces.",
+  "headline": "Automating order fulfillment across marketplaces and an ERP",
+  "description": "A manufacturer had every marketplace order keyed into an ERP by hand. We built the pipeline that closes the loop automatically — the same pattern works on any ERP or marketplace stack.",
   "author": {
     "@type": "Organization",
     "name": "Twinslytics"
@@ -198,46 +198,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="hubwrap">
   <a class="back" href="/work">← All work</a>
   <span class="eyebrow">Case study · Marketplace &amp; ERP automation</span>
-  <h1>Automating order fulfillment across two marketplaces</h1>
+  <h1>Automating order fulfillment across marketplaces and an ERP</h1>
   <div class="hubmeta">Case study · Automation · Twinslytics</div>
 
-  <p class="lede">A home-goods manufacturer selling on Wayfair and Lowe's had every order handled by hand — check the marketplace, key it into NetSuite, print labels, confirm shipment days later. We built the pipeline that closes that loop automatically.</p>
+  <p class="lede">A manufacturer selling through multiple marketplaces had every order handled by hand — check the marketplace, key it into the ERP, print labels, confirm shipment days later. We built the pipeline that closes that loop automatically, on NetSuite. The same pattern works just as well on SAP, Oracle, Odoo, or whatever's already running.</p>
 
   <h2>The problem</h2>
-  <p>A home-goods manufacturer sells through Wayfair and Lowe's Marketplace, with NetSuite as
-  the system of record. Every order meant a person checking the marketplace, keying the order
-  into NetSuite, printing a shipping label and packing slip, and manually confirming the
-  shipment back to the marketplace days later. Inventory levels on both marketplaces were kept
-  in sync by hand — a recipe for overselling.</p>
+  <p>This is one of the most common gaps we see: a business sells through more than one
+  marketplace, with an ERP as the system of record, and nothing between them talks
+  automatically. A person checks each marketplace, keys the order into the ERP by hand, prints
+  a shipping label, and manually confirms the shipment back days later. Inventory gets kept in
+  sync by hand across channels — a recipe for overselling.</p>
 
   <h2>What we built</h2>
-  <p>Two Cloud Run services that close the loop automatically, triggered on a schedule:</p>
+  <p>An automated pipeline that closes the loop end to end, triggered on a schedule:</p>
   <ul>
-    <li><strong>Order in.</strong> New purchase orders are pulled from the marketplace, matched
-    against a SKU map, accepted, and turned into a Sales Order in NetSuite — with the shipping
-    label and packing slip generated and emailed to the warehouse automatically.</li>
-    <li><strong>Shipment out.</strong> Once the warehouse fulfills the order in NetSuite, the
-    pipeline detects it, reads the tracking and carrier, and confirms the shipment back to the
-    marketplace — no manual status update, ever.</li>
-    <li><strong>Inventory sync.</strong> The same architecture pushes stock levels from NetSuite
-    to both marketplaces on separate cadences — a full sync daily, a fast differential sync
-    hourly — plus automatic reordering when stock runs low.</li>
-    <li>Credentials live in one place (Secret Manager); rotating a token never means touching
-    code or redeploying a service.</li>
+    <li><strong>Order in.</strong> New orders are pulled from each marketplace, matched against
+    the product catalog, and turned into a sales order in the ERP — with shipping documents
+    generated and sent to the warehouse automatically.</li>
+    <li><strong>Shipment out.</strong> Once the warehouse fulfills the order in the ERP, the
+    pipeline detects it and confirms the shipment back to the marketplace — no manual status
+    update, ever.</li>
+    <li><strong>Inventory sync.</strong> The same architecture keeps stock levels current across
+    every channel, with automatic reordering when stock runs low.</li>
+    <li>Credentials and configuration live in one place, so adding a new marketplace or
+    swapping the ERP doesn't mean rewriting the pipeline.</li>
   </ul>
 
-  <h2>The bug we caught before it shipped</h2>
-  <p>While extending the pipeline to a second marketplace, testing surfaced a real defect: an
-  image-matching check only verified file size, and a similarly-named image for the <em>wrong
-  variant</em> of a product passed the check. We tightened the validation to also verify the
-  image belongs to the right SKU, added five regression tests, and confirmed the fix against a
-  live sandbox before it ever touched a real listing. The kind of bug that ships a customer the
-  wrong-colored product — caught by testing discipline, not luck.</p>
+  <h2>Caught before it shipped</h2>
+  <p>Testing surfaced a real defect while onboarding a second marketplace: a validation check
+  was too loose and would have let the wrong product image slip onto a live listing. We
+  tightened the check, added regression tests, and confirmed the fix against a sandbox before
+  it ever touched a real listing — the kind of mistake that reaches a customer if nobody's
+  testing for it.</p>
 
   <h2>The result</h2>
-  <p>Order fulfillment across two marketplaces now runs on a 10-minute check cycle with no
-  manual data entry, and the same architecture is what onboarded the second marketplace in a
-  fraction of the time the first one took.</p>
+  <p>Order fulfillment now runs continuously with no manual data entry, and the same
+  architecture is what let the second marketplace get onboarded in a fraction of the time the
+  first one took. Same approach, regardless of which marketplaces or which ERP is on the other
+  end.</p>
 </div>
 
   <div class="endcta">
