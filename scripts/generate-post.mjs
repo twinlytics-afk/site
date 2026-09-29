@@ -213,7 +213,19 @@ if (titleClash) {
 
 const fallbackTitle = topic.charAt(0).toUpperCase() + topic.slice(1);
 const title = (metaOut?.title || fallbackTitle).trim().replace(/^["']|["']$/g, "");
-const desc = (metaOut?.description || stripTags(inner).slice(0, 155)).trim().replace(/^["']|["']$/g, "");
+
+// Cut at a sentence or word boundary, never mid-word: a raw slice() previously
+// left descriptions like "...attributed revenue. Excep" in the page, which
+// Google shows verbatim in the snippet and kills CTR.
+function cleanDesc(s, max = 158) {
+  s = s.trim().replace(/^["']|["']$/g, "");
+  if (s.length <= max) return s;
+  const cut = s.slice(0, max);
+  const sentence = cut.match(/^.*[.!?](?=\s|$)/);
+  if (sentence && sentence[0].length > max * 0.5) return sentence[0];
+  return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:—-]$/, "") + "…";
+}
+const desc = cleanDesc(metaOut?.description || stripTags(inner).slice(0, 300));
 const category = CATS.includes(metaOut?.category) ? metaOut.category : "Data engineering";
 
 const M = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
