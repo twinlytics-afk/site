@@ -128,14 +128,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .prob-grid p{font-family:var(--disp);font-weight:500;font-size:18px;line-height:1.35;color:var(--ink)}
 
   /* services — bento */
-  .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  .svc{background:#fff;border:1px solid var(--line);border-radius:16px;padding:32px 30px;transition:transform .18s,box-shadow .18s,border-color .18s}
+  .bento{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .svc{background:#fff;border:1px solid var(--line);border-radius:16px;padding:32px 30px;transition:transform .18s,box-shadow .18s,border-color .18s;display:flex;flex-direction:column}
   .svc:hover{transform:translateY(-3px);box-shadow:0 20px 40px -26px rgba(108,76,240,.5);border-color:var(--line-2)}
   .svc.flag{grid-column:1 / -1;display:grid;grid-template-columns:1.3fr 1fr;gap:34px;align-items:center;background:linear-gradient(180deg,#fff,#faf8ff)}
   .svc .ic{width:42px;height:42px;border-radius:11px;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--mono);font-size:14px;margin-bottom:20px}
   .svc h3{font-size:21px;margin-bottom:11px}
   .svc.flag h3{font-size:26px}
-  .svc p{color:var(--body);font-size:15.5px}
+  .svc p{color:var(--body);font-size:15.5px;flex:1}
+  .svc-meta{display:flex;gap:14px;margin-top:20px;font-family:var(--mono);font-size:13px}
+  .svc-meta .price{color:var(--v);font-weight:600}
+  .svc-meta .term{color:var(--mut)}
+  .svc-link{display:inline-block;margin-top:16px;font-family:var(--disp);font-weight:600;font-size:14px;color:var(--v)}
+  .svc-link:hover{text-decoration:underline}
   .flag .mini{display:flex;flex-direction:column;gap:9px}
   .flag .mini .r{display:flex;justify-content:space-between;align-items:center;background:var(--bg-tint);border-radius:10px;padding:11px 14px;font-family:var(--mono);font-size:12.5px;color:var(--body)}
   .flag .mini .r b{font-family:var(--disp);font-weight:700;font-size:16px;color:var(--v)}
@@ -169,6 +174,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .case .stat{text-align:right}
   .case .stat .big{font-family:var(--disp);font-weight:700;font-size:36px;letter-spacing:-.02em;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .case .stat .lbl{font-family:var(--mono);font-size:11px;color:var(--mut);letter-spacing:.06em;text-transform:uppercase;margin-top:9px}
+  .case-link{display:inline-block;margin-top:2px;color:var(--v);font-weight:600;white-space:nowrap}
+  .case-link:hover{text-decoration:underline}
+  .work-more{text-align:center;margin-top:28px}
+  .work-more a{font-family:var(--disp);font-weight:600;font-size:14.5px;color:var(--ink);border:1px solid var(--line-2);border-radius:8px;padding:11px 22px;display:inline-block;transition:border-color .15s,box-shadow .15s}
+  .work-more a:hover{border-color:var(--v);box-shadow:0 14px 30px -22px rgba(108,76,240,.6)}
 
   /* why */
   .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:34px}
@@ -360,14 +370,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="eyebrow">What we do</span>
-      <h2>Four things, done to production standard.</h2>
+      <h2>Five things, done to production standard.</h2>
     </div>
     <div class="bento reveal">
       <div class="svc flag">
         <div>
           <div class="ic">01</div>
-          <h3>Revenue data infrastructure</h3>
+          <h3>Marketing analytics &amp; true ROAS</h3>
           <p>Connect Meta, Google, your CRM and ERP into one source of truth. Optimize on real closed revenue and true ROAS — not platform-reported conversions. This is where most of the money hides.</p>
+          <div class="svc-meta"><span class="price">From $2,000</span><span class="term">~2 weeks</span></div>
         </div>
         <div class="mini">
           <div class="r"><span>Ad platforms</span><b>2.1×</b></div>
@@ -375,9 +386,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="r"><span>Correction</span><b>+128%</b></div>
         </div>
       </div>
-      <div class="svc"><div class="ic">02</div><h3>AI-ready data foundation</h3><p>Clean, model, and pipeline your data so AI and automation have something reliable to run on. Most "AI projects" fail right here first.</p></div>
-      <div class="svc"><div class="ic">03</div><h3>Operations automation</h3><p>Automate the manual work — invoicing, inventory, reporting — with systems built for correctness and monitoring, not one-off demos.</p></div>
-      <div class="svc"><div class="ic">04</div><h3>Analytics &amp; BI</h3><p>Trustworthy, real-time reporting and alerting, readable on every device — desktop to phone.</p></div>
+      <div class="svc">
+        <div class="ic">02</div>
+        <h3>AI agents &amp; automation</h3>
+        <p>Slack bots, invoice processing, ops agents that read, decide, and act inside your existing tools — with every write gated behind a human confirmation, not a demo that only works on stage.</p>
+        <a class="svc-link" href="/case-invoice-automation">See the invoice bot →</a>
+      </div>
+      <div class="svc">
+        <div class="ic">03</div>
+        <h3>Marketplace &amp; ERP integration</h3>
+        <p>Wayfair, Lowe's, and NetSuite-type systems that were never meant to talk to each other, wired into one automated order-to-fulfillment pipeline — inventory sync included.</p>
+        <a class="svc-link" href="/case-marketplace-automation">See the case study →</a>
+      </div>
+      <div class="svc">
+        <div class="ic">04</div>
+        <h3>SEO systems &amp; sandbox recovery</h3>
+        <p>Technical SEO, content architecture, and the automation that ships pages on a schedule — for sites stuck in Google's sandbox with nothing happening.</p>
+        <a class="svc-link" href="/case-seo-sandbox-recovery">See the case study →</a>
+      </div>
+      <div class="svc">
+        <div class="ic">05</div>
+        <h3>Bulk content operations</h3>
+        <p>Titles, images, partner references, and copy changed across a whole network of sites at once — not one page at a time. Currently rolling out across a 20-site network.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -423,6 +454,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="cases reveal">
       <div class="case">
+        <div class="tag">SEO · Content systems</div>
+        <div class="desc"><h3>Took reprolegal.com out of Google's sandbox</h3><p>Built the technical SEO and content system for our own site from scratch — structure, indexing, and a generator that ships new pages on a schedule. It cleared Google's sandbox and started bringing in inbound leads with zero paid traffic. <a class="case-link" href="/case-seo-sandbox-recovery">Read the case study →</a></p></div>
+        <div class="stat"><div class="big">2</div><div class="lbl">Inbound leads, zero ad spend</div></div>
+      </div>
+      <div class="case">
+        <div class="tag">Automation · Marketplaces &amp; ERP</div>
+        <div class="desc"><h3>End-to-end order automation across two marketplaces</h3><p>A home-goods manufacturer selling on Wayfair and Lowe's had every order keyed into NetSuite by hand. We built the pipeline that closes the loop automatically — order in, shipment confirmed, inventory synced to both marketplaces. <a class="case-link" href="/case-marketplace-automation">Read the case study →</a></p></div>
+        <div class="stat"><div class="big">10min</div><div class="lbl">Order-to-fulfillment check cycle</div></div>
+      </div>
+      <div class="case">
+        <div class="tag">AI agent · Finance ops</div>
+        <div class="desc"><h3>Turn a Slack message into an approved invoice</h3><p>A manufacturing company keyed every vendor invoice into Microsoft Dynamics 365 Business Central by hand. Our Slack bot reads a message or a PDF, extracts the line items, and routes it for approval before it touches the ERP. <a class="case-link" href="/case-invoice-automation">Read the case study →</a></p></div>
+        <div class="stat"><div class="big">Slack→BC</div><div class="lbl">One step, not five</div></div>
+      </div>
+      <div class="case">
         <div class="tag">Data engineering · FinOps</div>
         <div class="desc"><h3>Automated financial reporting from scratch</h3><p>Analysts spent days consolidating actuals and budgets from spreadsheets and payment systems by hand. We built automated ingestion and transformation into one warehouse with data-quality checks and real-time metrics — and cut cloud infra cost 40% along the way.</p></div>
         <div class="stat"><div class="big">3d→0</div><div class="lbl">Monthly reporting time</div></div>
@@ -453,6 +499,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="stat"><div class="big">180d</div><div class="lbl">Value maturation horizon</div></div>
       </div>
     </div>
+    <div class="work-more reveal"><a href="/work">See all work →</a></div>
   </div>
 </section>
 
@@ -540,6 +587,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h4>Resources</h4>
         <ul>
           <li><a href="/blog">Blog</a></li>
+          <li><a href="/work">Case studies</a></li>
           <li><a href="/guide-attribution">Attribution guide</a></li>
           <li><a href="/guide-true-roas">True ROAS guide</a></li>
           <li><a href="/guide-data-pipelines">Data pipelines guide</a></li>

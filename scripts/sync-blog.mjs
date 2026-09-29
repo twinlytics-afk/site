@@ -118,11 +118,11 @@ function ensureDock(file) {
 const FOOTER_T = {
   en: { home: "/", tag: "Data infrastructure that drives revenue. Two engineers, no handoffs.", cta: "Book a call",
     company: "Company", work: "Work", services: "Services", team: "Team", contact: "Contact",
-    resources: "Resources", blog: "Blog", report: "Live report example", calc: "True ROAS calculator",
+    resources: "Resources", blog: "Blog", allWork: "Case studies", report: "Live report example", calc: "True ROAS calculator",
     reach: "Get in touch" },
   uk: { home: "/ua", tag: "Дата-інфраструктура, що приносить гроші. Два інженери, без посередників.", cta: "Замовити дзвінок",
     company: "Компанія", work: "Кейси", services: "Послуги", team: "Команда", contact: "Контакти",
-    resources: "Матеріали", blog: "Блог", report: "Приклад звіту", calc: "Калькулятор True ROAS",
+    resources: "Матеріали", blog: "Блог", allWork: "Кейси", report: "Приклад звіту", calc: "Калькулятор True ROAS",
     reach: "Звʼязатися" },
 };
 function footerHtml(lang) {
@@ -152,6 +152,7 @@ function footerHtml(lang) {
         <h4>${t.resources}</h4>
         <ul>
           <li><a href="/blog">${t.blog}</a></li>
+          <li><a href="/work">${t.allWork}</a></li>
           <li><a href="/guide-attribution">Attribution guide</a></li>
           <li><a href="/guide-true-roas">True ROAS guide</a></li>
           <li><a href="/guide-data-pipelines">Data pipelines guide</a></li>
