@@ -1,12 +1,12 @@
-// Timed lead popup: appears once, 40s into the SESSION (not 40s on a single
+// Timed lead popup: appears once, 20s into the SESSION (not 20s on a single
 // page — hopping from the homepage to a blog post 10s in still fires it at
-// the 40s mark, not 40s after the second page loads). Offers a free demo +
+// the 20s mark, not 20s after the second page loads). Offers a free demo +
 // 10% off. Suppressed for 30 days after it's shown once (submitted or
 // dismissed) so a returning visitor isn't nagged. Posts to the same
 // Formspree endpoint as the homepage contact form, tagged so leads from this
 // popup are identifiable.
 (function () {
-  var DELAY_MS = 40000;
+  var DELAY_MS = 20000;
   var SNOOZE_DAYS = 30;
   var ENDPOINT = 'https://formspree.io/f/xqeryybv';
   var KEY = 'tw_popup_seen';
@@ -22,7 +22,7 @@
     try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {}
   }
   // sessionStorage clears when the tab/browser session ends, so this is a
-  // fresh 40s countdown per visit but shared across every page in it.
+  // fresh 20s countdown per visit but shared across every page in it.
   function sessionElapsedMs() {
     try {
       var start = +sessionStorage.getItem(SESSION_KEY);
