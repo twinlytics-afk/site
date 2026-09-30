@@ -738,5 +738,6 @@ document.querySelectorAll('.kpi').forEach(el=>kpiIo.observe(el));
 (function(){var b=document.querySelector(".burger"),m=document.querySelector(".nav-links");if(!b||!m)return;function close(){m.classList.remove("open");b.classList.remove("is-open");b.setAttribute("aria-expanded","false");}b.addEventListener("click",function(e){e.stopPropagation();var o=m.classList.toggle("open");b.classList.toggle("is-open",o);b.setAttribute("aria-expanded",o);});m.querySelectorAll("a").forEach(function(a){a.addEventListener("click",close);});document.addEventListener("click",function(e){if(m.classList.contains("open")&&!m.contains(e.target)&&!b.contains(e.target))close();});})();
 </script>
 <script src="/dock.js" defer></script>
+<script src="/popup.js" defer></script>
 </body>
 </html>

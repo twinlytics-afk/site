@@ -113,6 +113,13 @@ function ensureDock(file) {
   fs.writeFileSync(file, s.replace("</body>", `${DOCK}\n</body>`));
 }
 
+const POPUP = '<script src="/popup.js" defer></script>';
+function ensurePopup(file) {
+  const s = fs.readFileSync(file, "utf-8");
+  if (s.includes(POPUP) || !s.includes("</body>")) return;
+  fs.writeFileSync(file, s.replace("</body>", `${POPUP}\n</body>`));
+}
+
 // One footer for the whole site. Real links (not JS) so crawlers follow them
 // to the guides and tools from every page.
 const FOOTER_T = {
@@ -193,7 +200,7 @@ export function sync() {
   const posts = readPosts();
   syncBlog(posts);
   for (const g of new Set(Object.values(PILLARS).map(v => v[0]))) syncGuide(g, posts);
-  for (const f of fs.readdirSync(".").filter(f => f.endsWith(".html"))) { ensureDock(f); ensureFooter(f); }
+  for (const f of fs.readdirSync(".").filter(f => f.endsWith(".html"))) { ensureDock(f); ensureFooter(f); ensurePopup(f); }
   console.log(`Synced ${posts.length} posts.`);
 }
 
