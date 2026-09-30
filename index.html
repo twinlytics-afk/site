@@ -95,14 +95,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .row-r .v{font-family:var(--disp);font-weight:600}
   .row-r.reported .v{color:#c2bdd4;font-size:26px;text-decoration:line-through}
   .row-r.actual .v{font-size:42px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .livecases{padding-top:16px}
-  .lp{max-width:520px;margin:0 auto;transition:opacity .25s}
-  .lp.swap{opacity:0}
-  .lp-nav{display:flex;justify-content:center;gap:8px;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
-  .lp-nav button{width:8px;height:8px;padding:0;border-radius:50%;border:0;background:var(--line-2);cursor:pointer;transition:background .2s,transform .2s}
-  .lp-nav button.on{background:var(--v);transform:scale(1.3)}
-  .panel .divide{height:1px;background:var(--line);margin:20px 0 15px}
-  .panel .correction{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:12.5px;color:var(--body)}
+  .lp .readout{transition:opacity .25s}
+  .lp.swap .readout{opacity:0}
+  .lp-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+  .lp-dots{display:flex;gap:8px}
+  .lp-dots button{width:8px;height:8px;padding:0;border-radius:50%;border:0;background:var(--line-2);cursor:pointer;transition:background .2s,transform .2s}
+  .lp-dots button.on{background:var(--v);transform:scale(1.35)}
+  .lp-dots button:focus-visible,.lp-arrow:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(108,76,240,.22)}
+  .lp-arrow{width:28px;height:28px;border-radius:50%;border:1px solid var(--line-2);background:#fff;color:var(--body);font-size:14px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .15s,color .15s,background .15s}
+  .lp-arrow:hover{border-color:var(--v);color:var(--v);background:var(--bg-tint)}
   .panel .correction b{color:var(--ok);font-weight:500}
 
   /* SOCIAL PROOF — sources strip, right under hero */
@@ -315,14 +316,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
   <div class="visual">
-    <div class="panel" id="panel">
-      <div class="p-head"><span><span class="dot"></span>Attribution reconciliation</span><span>live</span></div>
+    <div class="panel lp" id="panel">
+      <div class="p-head"><span><span class="dot"></span><span id="lp-label">Attribution reconciliation</span></span><span>live</span></div>
       <div class="readout">
-        <div class="row-r reported"><span class="k">Ad platforms reported</span><span class="v" id="rep">2.1&times;</span></div>
-        <div class="row-r actual"><span class="k">Actual closed revenue</span><span class="v" id="roas">0.0&times;</span></div>
+        <div class="row-r reported"><span class="k" id="lp-k1">Ad platforms reported</span><span class="v" id="lp-v1">2.1&times;</span></div>
+        <div class="row-r actual"><span class="k" id="lp-k2">Actual closed revenue</span><span class="v" id="lp-v2">4.8&times;</span></div>
       </div>
-      <div class="divide"></div>
-      <div class="correction"><span>Optimizing on the real number</span><b id="corr">+0%</b></div>
+      <div class="lp-nav">
+        <button type="button" class="lp-arrow" id="lp-prev" aria-label="Previous example">&larr;</button>
+        <div class="lp-dots" id="lp-nav" role="tablist" aria-label="Proof examples"></div>
+        <button type="button" class="lp-arrow" id="lp-next" aria-label="Next example">&rarr;</button>
+      </div>
     </div>
   </div>
 </section>
@@ -431,23 +435,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="svc-meta"><span class="price">From $3,000</span><span class="term">+ monthly</span></div>
         <a class="svc-link" href="/case-seo-sandbox-recovery">See a case study →</a>
       </div>
-    </div>
-  </div>
-</section>
-
-<section class="livecases">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Proof, live</span>
-      <h2>Numbers we can actually show, not made up for a slide.</h2>
-    </div>
-    <div class="panel lp reveal" id="lp">
-      <div class="p-head"><span><span class="dot"></span><span id="lp-label">Nightly BigQuery scan</span></span><span>live</span></div>
-      <div class="readout">
-        <div class="row-r reported"><span class="k" id="lp-k1">Before</span><span class="v" id="lp-v1">584.6 GiB</span></div>
-        <div class="row-r actual"><span class="k" id="lp-k2">After</span><span class="v" id="lp-v2">27.0 GiB</span></div>
-      </div>
-      <div class="lp-nav" id="lp-nav" role="tablist" aria-label="Proof examples"></div>
     </div>
   </div>
 </section>
@@ -647,16 +634,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
   const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const roasEl=document.getElementById('roas'),corrEl=document.getElementById('corr'),repEl=document.getElementById('rep');
-  const scenarios=[[2.1,4.8],[1.8,4.1],[2.4,5.6],[1.6,3.9],[2.0,5.1]];let si=0;
-  function cycle(){
-    const base=scenarios[si][0],target=scenarios[si][1];
-    repEl.innerHTML=base.toFixed(1)+'\u00d7';
-    if(reduce){roasEl.textContent=target.toFixed(1)+'\u00d7';corrEl.textContent='+'+Math.round((target/base-1)*100)+'%';}
-    else{const dur=1200,t0=performance.now();(function step(now){const p=Math.min((now-t0)/dur,1),e=1-Math.pow(1-p,3),cur=base+(target-base)*e;roasEl.textContent=cur.toFixed(1)+'\u00d7';corrEl.textContent='+'+Math.round((cur/base-1)*100)+'%';if(p<1)requestAnimationFrame(step);})(performance.now());}
-    si=(si+1)%scenarios.length;
-  }
-  setTimeout(cycle,450);if(!reduce)setInterval(cycle,3800);
 
   const form=document.getElementById('leadForm');
   if(form){form.addEventListener('submit',async(e)=>{e.preventDefault();const btn=form.querySelector('button');btn.textContent='Sending…';btn.disabled=true;try{await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});}catch(_){}form.hidden=true;document.getElementById('formOk').hidden=false;});}
@@ -677,10 +654,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     countIO.observe(proofRow);
   }
 
-  // "Proof, live" carousel — cycles real before/after numbers from case studies
-  const lp=document.getElementById('lp');
+  // Hero proof panel — cycles real before/after numbers from case studies
+  const lp=document.getElementById('panel');
   if(lp){
     const cases=[
+      {label:'Attribution reconciliation',k1:'Ad platforms reported',v1:'2.1×',k2:'Actual closed revenue',v2:'4.8×'},
       {label:'Nightly BigQuery scan',k1:'Before',v1:'584.6 GiB',k2:'After',v2:'27.0 GiB'},
       {label:'Ad spend reconciliation',k1:'Reported',v1:'$8,487/day',k2:'Actual, doubled',v2:'$15,379/day'},
       {label:'Ad reporting lag',k1:'Before',v1:'30 hours behind',k2:'Now',v2:'~1 hour'},
@@ -691,15 +669,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     let li=0,liTimer;
     cases.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label',c.label);if(i===0)b.className='on';b.addEventListener('click',()=>show(i,true));nav.appendChild(b);});
     function show(i,manual){
-      li=i;
-      const c=cases[i];
+      li=(i+cases.length)%cases.length;
+      const c=cases[li];
       const apply=()=>{lbl.textContent=c.label;k1.textContent=c.k1;v1.textContent=c.v1;k2.textContent=c.k2;v2.textContent=c.v2;lp.classList.remove('swap');
-        [...nav.children].forEach((b,bi)=>b.classList.toggle('on',bi===i));};
+        [...nav.children].forEach((b,bi)=>b.classList.toggle('on',bi===li));};
       if(reduce){apply();}
       else{lp.classList.add('swap');setTimeout(apply,220);}
-      if(manual){clearInterval(liTimer);if(!reduce)liTimer=setInterval(()=>show((li+1)%cases.length),5000);}
+      if(manual){clearInterval(liTimer);if(!reduce)liTimer=setInterval(()=>show(li+1),5000);}
     }
-    if(!reduce)liTimer=setInterval(()=>show((li+1)%cases.length),5000);
+    document.getElementById('lp-prev').addEventListener('click',()=>show(li-1,true));
+    document.getElementById('lp-next').addEventListener('click',()=>show(li+1,true));
+    if(!reduce)liTimer=setInterval(()=>show(li+1),5000);
   }
 
   // live dashboard chart — animated, trending up, on loop
