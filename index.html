@@ -99,7 +99,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .lp-viewport{flex:1;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;border-radius:16px;padding:6px 7%}
   .lp-viewport::-webkit-scrollbar{display:none}
   .lp-track{display:flex;gap:16px}
-  .lp-card{flex:0 0 100%;scroll-snap-align:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:32px;box-shadow:0 30px 70px -34px rgba(108,76,240,.55);text-align:left;opacity:.55;transition:opacity .3s}
+  .lp-track{align-items:stretch}
+  .lp-card{flex:0 0 100%;scroll-snap-align:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:32px;box-shadow:0 30px 70px -34px rgba(108,76,240,.55);text-align:left;opacity:.55;transition:opacity .3s;min-height:230px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;transform:translateZ(0);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+  .lp-card .v{white-space:nowrap}
   .lp-card.on{opacity:1}
   .lp-card .p-head{display:flex;justify-content:space-between;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);border-bottom:1px solid var(--line);padding-bottom:15px;margin-bottom:20px;white-space:nowrap}
   .lp-card .p-head span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -113,7 +115,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .lp-arrow:active{transform:scale(.96)}
   @media(max-width:520px){
     .lp-arrow{width:32px;height:32px}
-    .lp-card{padding:22px 20px;border-radius:16px}
+    .lp-card{padding:22px 20px;border-radius:16px;min-height:190px}
     .lp-card .p-head{font-size:9.5px;letter-spacing:.09em;padding-bottom:12px;margin-bottom:16px}
     .row-r.reported .v{font-size:21px}
     .row-r.actual .v{font-size:32px}
@@ -337,7 +339,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="lp-card"><div class="p-head"><span><span class="dot"></span>Nightly BigQuery scan</span><span>live</span></div><div class="readout"><div class="row-r reported"><span class="k">Before</span><span class="v">584.6 GiB</span></div><div class="row-r actual"><span class="k">After</span><span class="v">27.0 GiB</span></div></div></div>
           <div class="lp-card"><div class="p-head"><span><span class="dot"></span>Ad spend reconciliation</span><span>live</span></div><div class="readout"><div class="row-r reported"><span class="k">Reported</span><span class="v">$8,487/day</span></div><div class="row-r actual"><span class="k">Actual, doubled</span><span class="v">$15,379/day</span></div></div></div>
           <div class="lp-card"><div class="p-head"><span><span class="dot"></span>Ad reporting lag</span><span>live</span></div><div class="readout"><div class="row-r reported"><span class="k">Before</span><span class="v">30 hours behind</span></div><div class="row-r actual"><span class="k">Now</span><span class="v">~1 hour</span></div></div></div>
-          <div class="lp-card"><div class="p-head"><span><span class="dot"></span>Campaign launches</span><span>live</span></div><div class="readout"><div class="row-r reported"><span class="k">Before</span><span class="v">1 buyer, by hand</span></div><div class="row-r actual"><span class="k">Now</span><span class="v">Dozens of countries</span></div></div></div>
+          <div class="lp-card"><div class="p-head"><span><span class="dot"></span>Campaign launches</span><span>live</span></div><div class="readout"><div class="row-r reported"><span class="k">By hand</span><span class="v">1 country</span></div><div class="row-r actual"><span class="k">Automated</span><span class="v">20+ countries</span></div></div></div>
           <div class="lp-card"><div class="p-head"><span><span class="dot"></span>GA4 revenue anomaly</span><span>live</span></div><div class="readout"><div class="row-r reported"><span class="k">Reported</span><span class="v">$11.07B</span></div><div class="row-r actual"><span class="k">Actual</span><span class="v">$1,294</span></div></div></div>
         </div>
       </div>
@@ -682,14 +684,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     // scrollBy synchronously on every single wheel event (a trackpad can
     // fire dozens/sec) forces a layout round-trip per tick and is what made
     // this feel jerky compared to the browser's own compositor-driven scroll.
-    var wheelPending=0,wheelRaf=null;
-    function flushWheel(){window.scrollBy(0,wheelPending);wheelPending=0;wheelRaf=null;}
+    // Always take over the wheel event ourselves — a Mac trackpad's "pure
+    // vertical" swipe still carries tiny deltaX noise, so leaving any event
+    // to the browser's default handling let its mandatory scroll-snap grab
+    // it and fight the page scroll (felt like a freeze). We now route both
+    // axes manually: vertical to the page, horizontal to the carousel —
+    // batched per frame, with an explicit 'auto' behavior so it doesn't
+    // inherit the page's smooth-scroll CSS and queue up animations.
+    var wheelPendingY=0,wheelPendingX=0,wheelRaf=null;
+    function flushWheel(){
+      if(wheelPendingY)window.scrollBy({top:wheelPendingY,left:0,behavior:'auto'});
+      if(wheelPendingX)lpView.scrollBy({left:wheelPendingX,top:0,behavior:'auto'});
+      wheelPendingY=0;wheelPendingX=0;wheelRaf=null;
+    }
     lpView.addEventListener('wheel',function(e){
-      if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
-        e.preventDefault();
-        wheelPending+=e.deltaY;
-        if(!wheelRaf)wheelRaf=requestAnimationFrame(flushWheel);
-      }
+      e.preventDefault();
+      if(Math.abs(e.deltaY)>=Math.abs(e.deltaX))wheelPendingY+=e.deltaY;
+      else wheelPendingX+=e.deltaX;
+      if(!wheelRaf)wheelRaf=requestAnimationFrame(flushWheel);
     },{passive:false});
     const track=document.getElementById('lp-track'),cards=[...track.children],nav=document.getElementById('lp-nav');
     let li=0,liTimer,settling=false;
