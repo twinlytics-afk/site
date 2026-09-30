@@ -473,34 +473,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="stat"><div class="big">1 of 5</div><div class="lbl">Steps left for a human</div></div>
       </div>
       <div class="case">
-        <div class="tag">Data engineering · FinOps</div>
-        <div class="desc"><h3>Automated financial reporting from scratch</h3><p>Analysts spent days consolidating actuals and budgets from spreadsheets and payment systems by hand. We built automated ingestion and transformation into one warehouse with data-quality checks and real-time metrics — and cut cloud infra cost 40% along the way.</p></div>
-        <div class="stat"><div class="big">3d→0</div><div class="lbl">Monthly reporting time</div></div>
+        <div class="tag">Data engineering · Ad spend</div>
+        <div class="desc"><h3>Caught a doubled ad spend line and an $11B phantom revenue bug</h3><p>A daily reconciler between the ad accounts and the warehouse — built to catch silent failures, not just mismatches. Found a connector double-writing spend, a data export failing silently behind a green checkmark, and a currency bug that turned $1,294 into $11.07 billion in GA4. <a class="case-link" href="/case-ad-spend-reconciliation">Read the case study →</a></p></div>
+        <div class="stat"><div class="big">$6.9k/day</div><div class="lbl">Double-counted spend, caught</div></div>
       </div>
       <div class="case">
-        <div class="tag">Data engineering · Platform</div>
-        <div class="desc"><h3>Multi-brand data platform</h3><p>A daily dbt pipeline unifying four brands into one warehouse — resilient to API schema drift, idempotent loads, and Slack alerts that pinpoint failures down to the file and row. Hundreds of GiB, some models to ~178 GiB.</p></div>
-        <div class="stat"><div class="big">154</div><div class="lbl">dbt models · 4 brands</div></div>
+        <div class="tag">AI agent · Media buying</div>
+        <div class="desc"><h3>Automated campaign launches across 17 countries</h3><p>A media buyer built every campaign by hand from Drive creatives and a spreadsheet. Our agent scans both and creates the full campaign — cards, ad groups, budgets, UTMs — paused and ready for one click, with every API call logged and reversible. <a class="case-link" href="/case-campaign-launch-automation">Read the case study →</a></p></div>
+        <div class="stat"><div class="big">17</div><div class="lbl">Countries, one pipeline</div></div>
       </div>
       <div class="case">
-        <div class="tag">Marketing analytics · Ecommerce</div>
-        <div class="desc"><h3>Diagnosed a ROAS collapse, mapped the path to 400%</h3><p>Disproved the fraud/geo theory with raw data, found the real cause — a wrong optimization target buying cheap low-intent traffic — and rebuilt the conversion architecture around offline closes and a 60-day cohort maturity rule.</p></div>
-        <div class="stat"><div class="big">400%</div><div class="lbl">Blended ROAS target</div></div>
+        <div class="tag">Marketing analytics · Ad reporting</div>
+        <div class="desc"><h3>Turned day-old ad reporting into hourly</h3><p>Spend decisions were running up to 30 hours behind. We built an hourly pipeline across Google Ads, Meta, and X reconciled to the cent against the daily numbers — and fixed a conversion-value bug that was overstating value by up to 76×. <a class="case-link" href="/case-hourly-ad-reporting">Read the case study →</a></p></div>
+        <div class="stat"><div class="big">30h→1h</div><div class="lbl">Reporting lag, 6 brands</div></div>
       </div>
       <div class="case">
-        <div class="tag">Marketing analytics · Subscription</div>
-        <div class="desc"><h3>Fixed attribution, returned conversions to Google Ads</h3><p>Payment domains were stealing credit from the real channel. We patched the dbt attribution models and built a closed loop that feeds offline revenue back to Google Ads — so bidding optimizes on real revenue, not the checkout referrer.</p></div>
-        <div class="stat"><div class="big">283/408</div><div class="lbl">Sessions reattributed</div></div>
-      </div>
-      <div class="case">
-        <div class="tag">AI bots · Lead ops</div>
-        <div class="desc"><h3>Intelligent bots bridging disconnected systems</h3><p>Up to 30% of hot leads were lost to slow manual handling across disconnected systems. We built bots that sync data in real time, classify and qualify leads instantly, and resolve common requests straight from a knowledge base.</p></div>
-        <div class="stat"><div class="big">70%</div><div class="lbl">Comms automated</div></div>
-      </div>
-      <div class="case">
-        <div class="tag">ML · Predictive</div>
-        <div class="desc"><h3>Predictive CAC — forecasting lead value</h3><p>For a long sales-cycle business, we trained a maturation model on historical lead-to-close data and fed predicted value into Smart Bidding — so the algorithm bids on real future value, not cheap clicks.</p></div>
-        <div class="stat"><div class="big">180d</div><div class="lbl">Value maturation horizon</div></div>
+        <div class="tag">Data engineering · BigQuery</div>
+        <div class="desc"><h3>Cut a nightly BigQuery scan by 95%</h3><p>Two months of raising the timeout hadn't fixed the nightly pipeline failures. The real cause was unpartitioned sources scanning the full history every night — measured, fixed, and verified value-for-value, not just row counts. <a class="case-link" href="/case-bigquery-scan-reduction">Read the case study →</a></p></div>
+        <div class="stat"><div class="big">−95%</div><div class="lbl">Nightly scan, 0 timeouts</div></div>
       </div>
     </div>
     <div class="work-more reveal"><a href="/work">See all work →</a></div>

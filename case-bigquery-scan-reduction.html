@@ -11,16 +11,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Work — Twinslytics</title>
-<meta name="description" content="Case studies: marketplace and ERP automation, AI agents, SEO systems, and the data infrastructure that runs real businesses." />
+<title>Cutting a nightly BigQuery scan by 95% and ending the timeouts — Twinslytics</title>
+<meta name="description" content="A multi-brand data warehouse kept failing on nightly timeouts. We found the real cause — unpartitioned sources — and cut the nightly scan from 584.6 GiB to 27.0 GiB." />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="canonical" href="https://twinslytics.com/work" />
+<link rel="canonical" href="https://twinslytics.com/case-bigquery-scan-reduction" />
 <meta name="robots" content="index, follow" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://twinslytics.com/work" />
-<meta property="og:title" content="Work — Twinslytics" />
-<meta property="og:description" content="Case studies: marketplace and ERP automation, AI agents, SEO systems, and the data infrastructure that runs real businesses." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://twinslytics.com/case-bigquery-scan-reduction" />
+<meta property="og:title" content="Cutting a nightly BigQuery scan by 95% and ending the timeouts" />
+<meta property="og:description" content="A multi-brand data warehouse kept failing on nightly timeouts. We found the real cause — unpartitioned sources — and cut the nightly scan from 584.6 GiB to 27.0 GiB." />
 <meta property="og:image" content="https://twinslytics.com/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -130,10 +130,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Cutting a nightly BigQuery scan by 95% and ending the timeouts",
+  "description": "A multi-brand data warehouse kept failing on nightly timeouts. We found the real cause — unpartitioned sources — and cut the nightly scan from 584.6 GiB to 27.0 GiB.",
+  "author": {"@type": "Organization", "name": "Twinslytics"},
+  "publisher": {"@type": "Organization", "name": "Twinslytics", "url": "https://twinslytics.com"},
+  "mainEntityOfPage": "https://twinslytics.com/case-bigquery-scan-reduction",
+  "datePublished": "2026-09-30"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
     {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://twinslytics.com/"},
-    {"@type": "ListItem", "position": 2, "name": "Work", "item": "https://twinslytics.com/work"}
+    {"@type": "ListItem", "position": 2, "name": "Work", "item": "https://twinslytics.com/work"},
+    {"@type": "ListItem", "position": 3, "name": "BigQuery scan reduction", "item": "https://twinslytics.com/case-bigquery-scan-reduction"}
   ]
 }
 </script>
@@ -160,84 +173,52 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </header>
 <main>
 
-<section class="bloghero">
-  <span class="eyebrow">Work</span>
-  <h1>Systems that run every day, in <span class="grad-text">real businesses</span>.</h1>
-  <p>Case studies in marketplace and ERP automation, AI agents, SEO systems, and the data infrastructure underneath.</p>
-</section>
+<div class="hubwrap">
+  <a class="back" href="/work">← All work</a>
+  <span class="eyebrow">Case study · Data engineering</span>
+  <h1>Cutting a nightly scan by 95% and ending the timeouts</h1>
+  <div class="hubmeta">Case study · Data engineering · Twinslytics</div>
 
-<div class="posts">
-  <a class="post" href="/case-seo-sandbox-recovery">
-    <div class="tag">SEO · Content systems</div>
-    <h3>Took reprolegal.com out of Google's sandbox</h3>
-    <p>Built the technical SEO and content system for our own site. It cleared the sandbox and started bringing in leads with zero ad spend.</p>
-    <div class="meta">2 leads · zero ad spend</div>
-  </a>
-  <a class="post" href="/case-marketplace-automation">
-    <div class="tag">Automation · Marketplaces &amp; ERP</div>
-    <h3>End-to-end order automation across marketplaces and an ERP</h3>
-    <p>Orders flow into the ERP, get fulfilled, and confirm back automatically — inventory synced across every channel. Built on NetSuite; same pattern on SAP, Oracle, or Odoo.</p>
-    <div class="meta">Continuous · no manual entry</div>
-  </a>
-  <a class="post" href="/case-invoice-automation">
-    <div class="tag">AI agent · Finance ops</div>
-    <h3>Turn a chat message into an approved invoice</h3>
-    <p>A bot reads a PDF, extracts the line items, and routes an ERP invoice for approval — no manual entry. Works with any chat tool or ERP.</p>
-    <div class="meta">One step · not five</div>
-  </a>
-  <a class="post" href="/case-ad-spend-reconciliation">
-    <div class="tag">Data engineering · Ad spend</div>
-    <h3>Caught a doubled ad spend line and an $11B phantom revenue bug</h3>
-    <p>A daily reconciler between ad accounts and the warehouse — caught doubled spend, a silently-failed export, and a currency bug inflating GA4 revenue by nine orders of magnitude.</p>
-    <div class="meta">$6.9k/day · double-counted spend caught</div>
-  </a>
-  <a class="post" href="/case-campaign-launch-automation">
-    <div class="tag">AI agent · Media buying</div>
-    <h3>Automated campaign launches across 17 countries</h3>
-    <p>An agent that scans Drive and a spreadsheet and builds the full campaign — cards, ad groups, budgets, UTMs — paused, logged, one click from live.</p>
-    <div class="meta">17 countries · one pipeline</div>
-  </a>
-  <a class="post" href="/case-hourly-ad-reporting">
-    <div class="tag">Marketing analytics · Ad reporting</div>
-    <h3>Turned day-old ad reporting into hourly</h3>
-    <p>An hourly pipeline across Google Ads, Meta, and X, reconciled to the cent against daily numbers — plus a conversion-value bug fix.</p>
-    <div class="meta">30h → 1h · reporting lag, 6 brands</div>
-  </a>
-  <a class="post" href="/case-bigquery-scan-reduction">
-    <div class="tag">Data engineering · BigQuery</div>
-    <h3>Cut a nightly BigQuery scan by 95%</h3>
-    <p>Found the real cause of nightly pipeline timeouts — unpartitioned sources — and verified the fix value-for-value, not just row counts.</p>
-    <div class="meta">−95% · nightly scan, 0 timeouts</div>
-  </a>
-  <div class="post">
-    <div class="tag">Data engineering · FinOps</div>
-    <h3>Automated financial reporting from scratch</h3>
-    <p>Automated ingestion and transformation into one warehouse with data-quality checks and real-time metrics — and cut cloud infra cost 40% along the way.</p>
-    <div class="meta">3d→0 · monthly reporting time</div>
-  </div>
-  <div class="post">
-    <div class="tag">Marketing analytics · Ecommerce</div>
-    <h3>Diagnosed a ROAS collapse, mapped the path to 400%</h3>
-    <p>Disproved the fraud/geo theory with raw data, found the real cause, and rebuilt the conversion architecture around offline closes.</p>
-    <div class="meta">400% · blended ROAS target</div>
-  </div>
-  <div class="post">
-    <div class="tag">Marketing analytics · Subscription</div>
-    <h3>Fixed attribution, returned conversions to Google Ads</h3>
-    <p>Payment domains were stealing credit from the real channel. We patched the attribution models and closed the loop back to Google Ads.</p>
-    <div class="meta">283/408 · sessions reattributed</div>
-  </div>
-  <div class="post">
-    <div class="tag">AI bots · Lead ops</div>
-    <h3>Intelligent bots bridging disconnected systems</h3>
-    <p>Bots that sync data in real time, classify and qualify leads instantly, and resolve common requests from a knowledge base.</p>
-    <div class="meta">70% · comms automated</div>
-  </div>
-  <div class="post">
-    <div class="tag">ML · Predictive</div>
-    <h3>Predictive CAC — forecasting lead value</h3>
-    <p>Trained a maturation model on historical lead-to-close data and fed predicted value into Smart Bidding.</p>
-    <div class="meta">180d · value maturation horizon</div>
+  <p class="lede">A multi-brand data warehouse — 5 brands, one dbt project, 230+ models — kept failing on a nightly timeout. Two months of raising the timeout hadn't fixed it, because the real cause wasn't slow models. It was every model scanning the entire history, every single night.</p>
+
+  <h2>The problem</h2>
+  <p>The nightly dbt run kept failing on a 3,600-second timeout — but a different model every
+  night, green again after a retry, so for two months the fix was "raise the timeout." The real
+  cause was structural: none of the source tables were partitioned, so every model rescanned the
+  entire history every night, and a handful of heavy models fought each other for BigQuery slots.
+  Other jobs running in the same project made the picture look random.</p>
+
+  <h2>What we did</h2>
+  <ul>
+    <li><strong>Measured instead of guessing.</strong> Broke down the nightly scan by model
+    (job stats by node_id) and found that 27 brand-specific models — not the "heavy" core models
+    everyone suspected — accounted for 52.7% of all bytes scanned.</li>
+    <li><strong>Added incremental guards.</strong> A <code>_TABLE_SUFFIX</code> window on every
+    source branch, plus a partition-column clamp around the model body, with correct behavior on
+    <code>--full-refresh</code>. Rolled out identically across 4 brands.</li>
+    <li><strong>Rebuilt the run itself.</strong> Two sequential phases instead of one free-for-all
+    (the heavy block isolated, single-threaded), <code>interactive</code> priority instead of
+    <code>batch</code> (batch was hiding slot starvation as a "stuck job"), and per-model recovery
+    with kill+retry instead of failing the whole run.</li>
+    <li><strong>Guarded against silent regressions.</strong> A byte-for-byte diff of the compiled
+    SQL before and after every change — it caught two edits that landed inside a comment and
+    never actually ran.</li>
+  </ul>
+
+  <h2>The result</h2>
+  <p>Nightly scan on the brand models dropped from 584.6 GiB to 27.0 GiB — a 95.4% reduction —
+  and the full nightly run went from 1.63 TiB to about 1.09 TiB. Nightly timeouts stopped
+  happening entirely, and BigQuery cost fell in proportion to the scan. The output didn't change:
+  equivalence was proven by comparing values, not just row counts.</p>
+</div>
+
+  <div class="endcta">
+  <div class="ctaproof">584.6 → 27.0 GiB nightly scan (−95.4%) · full run 1.63 → ~1.09 TiB · 0 timeouts</div>
+  <h3>Nightly pipeline timing out for a reason nobody's found yet?</h3>
+  <p>We measure the actual scan before touching anything, then fix the structural cause — not the symptom.</p>
+  <div class="ctabtns">
+    <a href="/work" class="btn btn-secondary">See more work</a>
+    <a href="/#contact" class="btn btn-primary">Book a call</a>
   </div>
 </div>
 
