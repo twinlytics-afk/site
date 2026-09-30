@@ -7,7 +7,7 @@
 // popup are identifiable.
 (function () {
   var DELAY_MS = 20000;
-  var SNOOZE_DAYS = 30;
+  var SNOOZE_DAYS = 5;
   var ENDPOINT = 'https://formspree.io/f/xqeryybv';
   var KEY = 'tw_popup_seen';
   var SESSION_KEY = 'tw_session_start';
