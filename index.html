@@ -95,15 +95,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .row-r .v{font-family:var(--disp);font-weight:600}
   .row-r.reported .v{color:#c2bdd4;font-size:26px;text-decoration:line-through}
   .row-r.actual .v{font-size:42px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .lp .readout{transition:opacity .25s}
-  .lp.swap .readout{opacity:0}
-  .lp-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
-  .lp-dots{display:flex;gap:8px}
+  .lpwrap{position:relative;display:flex;align-items:center;gap:10px}
+  .lp-viewport{flex:1;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;border-radius:16px;padding:6px 7%}
+  .lp-viewport::-webkit-scrollbar{display:none}
+  .lp-track{display:flex;gap:16px}
+  .lp-card{flex:0 0 100%;scroll-snap-align:center;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;box-shadow:0 30px 70px -34px rgba(108,76,240,.55);text-align:left;opacity:.35;transition:opacity .3s}
+  .lp-card.on{opacity:1}
+  .lp-card .p-head{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);border-bottom:1px solid var(--line);padding-bottom:15px;margin-bottom:20px}
+  .lp-card .p-head .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(18,185,129,.16);display:inline-block;margin-right:8px;animation:pulse 2s ease-in-out infinite}
+  .lp-dots{display:flex;justify-content:center;gap:8px;margin-top:20px}
   .lp-dots button{width:8px;height:8px;padding:0;border-radius:50%;border:0;background:var(--line-2);cursor:pointer;transition:background .2s,transform .2s}
   .lp-dots button.on{background:var(--v);transform:scale(1.35)}
   .lp-dots button:focus-visible,.lp-arrow:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(108,76,240,.22)}
-  .lp-arrow{width:28px;height:28px;border-radius:50%;border:1px solid var(--line-2);background:#fff;color:var(--body);font-size:14px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .15s,color .15s,background .15s}
-  .lp-arrow:hover{border-color:var(--v);color:var(--v);background:var(--bg-tint)}
+  .lp-arrow{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line-2);background:#fff;color:var(--v);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px -10px rgba(20,18,43,.25);transition:border-color .15s,background .15s,transform .15s}
+  .lp-arrow:hover{border-color:var(--v);background:var(--bg-tint);transform:scale(1.06)}
+  .lp-arrow:active{transform:scale(.96)}
+  @media(max-width:520px){.lp-arrow{width:32px;height:32px}}
   .panel .correction b{color:var(--ok);font-weight:500}
 
   /* SOCIAL PROOF — sources strip, right under hero */
@@ -316,18 +323,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
   <div class="visual">
-    <div class="panel lp" id="panel">
-      <div class="p-head"><span><span class="dot"></span><span id="lp-label">Attribution reconciliation</span></span><span>live</span></div>
-      <div class="readout">
-        <div class="row-r reported"><span class="k" id="lp-k1">Ad platforms reported</span><span class="v" id="lp-v1">2.1&times;</span></div>
-        <div class="row-r actual"><span class="k" id="lp-k2">Actual closed revenue</span><span class="v" id="lp-v2">4.8&times;</span></div>
+    <div class="lpwrap">
+      <button type="button" class="lp-arrow lp-prev" id="lp-prev" aria-label="Previous example"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5 8 12l7 7"/></svg></button>
+      <div class="lp-viewport" id="lp-viewport">
+        <div class="lp-track" id="lp-track">
+          <div class="lp-card"><div class="p-head"><span><span class="dot"></span>Attribution reconciliation</span><span>live</span></div><div class="readout"><div class="row-r reported"><span class="k">Ad platforms reported</span><span class="v">2.1&times;</span></div><div class="row-r actual"><span class="k">Actual closed revenue</span><span class="v">4.8&times;</span></div></div></div>
+          <div class="lp-card"><div class="p-head"><span><span class="dot"></span>Nightly BigQuery scan</span><span>live</span></div><div class="readout"><div class="row-r reported"><span class="k">Before</span><span class="v">584.6 GiB</span></div><div class="row-r actual"><span class="k">After</span><span class="v">27.0 GiB</span></div></div></div>
+          <div class="lp-card"><div class="p-head"><span><span class="dot"></span>Ad spend reconciliation</span><span>live</span></div><div class="readout"><div class="row-r reported"><span class="k">Reported</span><span class="v">$8,487/day</span></div><div class="row-r actual"><span class="k">Actual, doubled</span><span class="v">$15,379/day</span></div></div></div>
+          <div class="lp-card"><div class="p-head"><span><span class="dot"></span>Ad reporting lag</span><span>live</span></div><div class="readout"><div class="row-r reported"><span class="k">Before</span><span class="v">30 hours behind</span></div><div class="row-r actual"><span class="k">Now</span><span class="v">~1 hour</span></div></div></div>
+          <div class="lp-card"><div class="p-head"><span><span class="dot"></span>Campaign launches</span><span>live</span></div><div class="readout"><div class="row-r reported"><span class="k">Before</span><span class="v">1 buyer, by hand</span></div><div class="row-r actual"><span class="k">Now</span><span class="v">17 countries</span></div></div></div>
+          <div class="lp-card"><div class="p-head"><span><span class="dot"></span>GA4 revenue anomaly</span><span>live</span></div><div class="readout"><div class="row-r reported"><span class="k">Reported</span><span class="v">$11.07B</span></div><div class="row-r actual"><span class="k">Actual</span><span class="v">$1,294</span></div></div></div>
+        </div>
       </div>
-      <div class="lp-nav">
-        <button type="button" class="lp-arrow" id="lp-prev" aria-label="Previous example">&larr;</button>
-        <div class="lp-dots" id="lp-nav" role="tablist" aria-label="Proof examples"></div>
-        <button type="button" class="lp-arrow" id="lp-next" aria-label="Next example">&rarr;</button>
-      </div>
+      <button type="button" class="lp-arrow lp-next" id="lp-next" aria-label="Next example"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></button>
     </div>
+    <div class="lp-dots" id="lp-nav" role="tablist" aria-label="Proof examples"></div>
   </div>
 </section>
 
@@ -654,32 +664,40 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     countIO.observe(proofRow);
   }
 
-  // Hero proof panel — cycles real before/after numbers from case studies
-  const lp=document.getElementById('panel');
-  if(lp){
-    const cases=[
-      {label:'Attribution reconciliation',k1:'Ad platforms reported',v1:'2.1×',k2:'Actual closed revenue',v2:'4.8×'},
-      {label:'Nightly BigQuery scan',k1:'Before',v1:'584.6 GiB',k2:'After',v2:'27.0 GiB'},
-      {label:'Ad spend reconciliation',k1:'Reported',v1:'$8,487/day',k2:'Actual, doubled',v2:'$15,379/day'},
-      {label:'Ad reporting lag',k1:'Before',v1:'30 hours behind',k2:'Now',v2:'~1 hour'},
-      {label:'Campaign launches',k1:'Before',v1:'1 buyer, by hand',k2:'Now',v2:'17 countries, automated'},
-      {label:'GA4 revenue anomaly',k1:'Reported',v1:'$11.07B',k2:'Actual',v2:'$1,294'},
-    ];
-    const lbl=document.getElementById('lp-label'),k1=document.getElementById('lp-k1'),v1=document.getElementById('lp-v1'),k2=document.getElementById('lp-k2'),v2=document.getElementById('lp-v2'),nav=document.getElementById('lp-nav');
-    let li=0,liTimer;
-    cases.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label',c.label);if(i===0)b.className='on';b.addEventListener('click',()=>show(i,true));nav.appendChild(b);});
-    function show(i,manual){
-      li=(i+cases.length)%cases.length;
-      const c=cases[li];
-      const apply=()=>{lbl.textContent=c.label;k1.textContent=c.k1;v1.textContent=c.v1;k2.textContent=c.k2;v2.textContent=c.v2;lp.classList.remove('swap');
-        [...nav.children].forEach((b,bi)=>b.classList.toggle('on',bi===li));};
-      if(reduce){apply();}
-      else{lp.classList.add('swap');setTimeout(apply,220);}
-      if(manual){clearInterval(liTimer);if(!reduce)liTimer=setInterval(()=>show(li+1),5000);}
+  // Hero proof carousel — real cards, sliding, swipeable, with peeking neighbors
+  const lpView=document.getElementById('lp-viewport');
+  if(lpView){
+    const track=document.getElementById('lp-track'),cards=[...track.children],nav=document.getElementById('lp-nav');
+    let li=0,liTimer,settling=false;
+    cards.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Example '+(i+1));if(i===0)b.className='on';b.addEventListener('click',()=>go(i,true));nav.appendChild(b);});
+    function cardOffset(i){return cards[i].offsetLeft-(lpView.clientWidth-cards[i].clientWidth)/2;}
+    function go(i,manual){
+      li=(i+cards.length)%cards.length;
+      settling=true;
+      lpView.scrollTo({left:cardOffset(li),behavior:reduce?'auto':'smooth'});
+      setTimeout(()=>settling=false,400);
+      [...nav.children].forEach((b,bi)=>b.classList.toggle('on',bi===li));
+      cards.forEach((c,ci)=>c.classList.toggle('on',ci===li));
+      if(manual){clearInterval(liTimer);if(!reduce)liTimer=setInterval(()=>go(li+1),5500);}
     }
-    document.getElementById('lp-prev').addEventListener('click',()=>show(li-1,true));
-    document.getElementById('lp-next').addEventListener('click',()=>show(li+1,true));
-    if(!reduce)liTimer=setInterval(()=>show(li+1),5000);
+    // keep dots/opacity in sync if the person drags/swipes the track directly
+    let scrollT;
+    lpView.addEventListener('scroll',()=>{
+      if(settling)return;
+      clearTimeout(scrollT);
+      scrollT=setTimeout(()=>{
+        let best=0,bestD=Infinity;
+        cards.forEach((c,i)=>{const d=Math.abs(c.offsetLeft-(lpView.scrollLeft+(lpView.clientWidth-c.clientWidth)/2));if(d<bestD){bestD=d;best=i;}});
+        li=best;
+        [...nav.children].forEach((b,bi)=>b.classList.toggle('on',bi===li));
+        cards.forEach((c,ci)=>c.classList.toggle('on',ci===li));
+        clearInterval(liTimer);if(!reduce)liTimer=setInterval(()=>go(li+1),5500);
+      },120);
+    },{passive:true});
+    document.getElementById('lp-prev').addEventListener('click',()=>go(li-1,true));
+    document.getElementById('lp-next').addEventListener('click',()=>go(li+1,true));
+    go(0,false);
+    if(!reduce)liTimer=setInterval(()=>go(li+1),5500);
   }
 
   // live dashboard chart — animated, trending up, on loop
