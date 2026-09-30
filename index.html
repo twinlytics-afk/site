@@ -678,10 +678,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     // vertical mouse-wheel scroll and drag the carousel instead of the page
     // — that's the "jerky scroll" feeling passing over the hero. Redirect
     // any wheel event that's mostly vertical back to scrolling the page.
+    // Batch same-frame wheel ticks into one scrollBy via rAF — calling
+    // scrollBy synchronously on every single wheel event (a trackpad can
+    // fire dozens/sec) forces a layout round-trip per tick and is what made
+    // this feel jerky compared to the browser's own compositor-driven scroll.
+    var wheelPending=0,wheelRaf=null;
+    function flushWheel(){window.scrollBy(0,wheelPending);wheelPending=0;wheelRaf=null;}
     lpView.addEventListener('wheel',function(e){
       if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
         e.preventDefault();
-        window.scrollBy({top:e.deltaY,left:0,behavior:'auto'});
+        wheelPending+=e.deltaY;
+        if(!wheelRaf)wheelRaf=requestAnimationFrame(flushWheel);
       }
     },{passive:false});
     const track=document.getElementById('lp-track'),cards=[...track.children],nav=document.getElementById('lp-nav');
