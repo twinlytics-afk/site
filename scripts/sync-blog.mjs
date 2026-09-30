@@ -123,11 +123,11 @@ function ensurePopup(file) {
 // One footer for the whole site. Real links (not JS) so crawlers follow them
 // to the guides and tools from every page.
 const FOOTER_T = {
-  en: { home: "/", tag: "Data infrastructure that drives revenue. Two engineers, no handoffs.", cta: "Book a call",
+  en: { home: "/", tag: "Data infrastructure that drives revenue. Three engineers, no handoffs.", cta: "Book a call",
     company: "Company", work: "Work", services: "Services", team: "Team", contact: "Contact",
     resources: "Resources", blog: "Blog", allWork: "Case studies", report: "Live report example", calc: "True ROAS calculator",
     reach: "Get in touch" },
-  uk: { home: "/ua", tag: "Дата-інфраструктура, що приносить гроші. Два інженери, без посередників.", cta: "Замовити дзвінок",
+  uk: { home: "/ua", tag: "Дата-інфраструктура, що приносить гроші. Три інженери, без посередників.", cta: "Замовити дзвінок",
     company: "Компанія", work: "Кейси", services: "Послуги", team: "Команда", contact: "Контакти",
     resources: "Матеріали", blog: "Блог", allWork: "Кейси", report: "Приклад звіту", calc: "Калькулятор True ROAS",
     reach: "Звʼязатися" },
