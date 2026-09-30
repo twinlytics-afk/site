@@ -95,6 +95,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .row-r .v{font-family:var(--disp);font-weight:600}
   .row-r.reported .v{color:#c2bdd4;font-size:26px;text-decoration:line-through}
   .row-r.actual .v{font-size:42px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .livecases{padding-top:16px}
+  .lp{max-width:520px;margin:0 auto;transition:opacity .25s}
+  .lp.swap{opacity:0}
+  .lp-nav{display:flex;justify-content:center;gap:8px;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+  .lp-nav button{width:8px;height:8px;padding:0;border-radius:50%;border:0;background:var(--line-2);cursor:pointer;transition:background .2s,transform .2s}
+  .lp-nav button.on{background:var(--v);transform:scale(1.3)}
   .panel .divide{height:1px;background:var(--line);margin:20px 0 15px}
   .panel .correction{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:12.5px;color:var(--body)}
   .panel .correction b{color:var(--ok);font-weight:500}
@@ -136,6 +142,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .svc h3{font-size:21px;margin-bottom:11px}
   .svc.flag h3{font-size:26px}
   .svc p{color:var(--body);font-size:15.5px;flex:1}
+  .svc-stats{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+  .svc-stats span{font-size:12.5px;color:var(--mut)}
+  .svc-stats b{font-family:var(--disp);font-weight:700;color:var(--v);font-size:14px}
   .svc-meta{display:flex;gap:14px;margin-top:20px;font-family:var(--mono);font-size:13px}
   .svc-meta .price{color:var(--v);font-weight:600}
   .svc-meta .term{color:var(--mut)}
@@ -326,10 +335,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="chip">Google Analytics 4</span>
       <span class="chip">Google Ads</span>
       <span class="chip">Meta Ads</span>
+      <span class="chip">X Ads</span>
       <span class="chip">NetSuite</span>
+      <span class="chip">SAP / Oracle</span>
       <span class="chip">Shopify</span>
+      <span class="chip">Slack</span>
       <span class="chip">BigQuery</span>
       <span class="chip">dbt</span>
+      <span class="chip">Document AI</span>
       <span class="chip">Looker Studio</span>
       <span class="chip">Cloud Run</span>
     </div>
@@ -342,7 +355,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="cap">Systems in production for ecommerce and DTC teams</div>
     <div class="row" id="proofRow">
       <div class="s"><div class="n" data-count="70" data-prefix="" data-suffix="%">0%</div><div class="l">Comms automated</div></div>
-      <div class="s"><div class="n" data-count="154" data-prefix="" data-suffix="">0</div><div class="l">dbt models in production</div></div>
+      <div class="s"><div class="n" data-count="230" data-prefix="" data-suffix="+">0</div><div class="l">dbt models in production</div></div>
       <div class="s"><div class="n" data-count="40" data-prefix="−" data-suffix="%">−0%</div><div class="l">Cloud infra cost</div></div>
     </div>
   </div>
@@ -390,6 +403,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="ic">02</div>
         <h3>AI agents &amp; automation</h3>
         <p>Chat-based bots and ops agents that read, decide, and act inside the tools you already use — Slack, Teams, email, whatever's in place — with every write gated behind a human confirmation.</p>
+        <div class="svc-stats"><span><b>17</b> countries, one pipeline</span><span><b>1 of 5</b> steps left for a human</span></div>
         <div class="svc-meta"><span class="price">From $3,000</span><span class="term">~3 weeks</span></div>
         <a class="svc-link" href="/case-invoice-automation">See a case study →</a>
       </div>
@@ -397,6 +411,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="ic">03</div>
         <h3>Marketplace &amp; ERP integration</h3>
         <p>Marketplaces and ERPs that were never meant to talk to each other, wired into one automated pipeline — order-to-fulfillment, inventory sync, whatever the flow needs. Any stack: NetSuite, SAP, Oracle, Shopify, and beyond.</p>
+        <div class="svc-stats"><span><b>0</b> manual order entries</span><span><b>Continuous</b> inventory sync</span></div>
         <div class="svc-meta"><span class="price">From $5,000</span><span class="term">~4 weeks</span></div>
         <a class="svc-link" href="/case-marketplace-automation">See a case study →</a>
       </div>
@@ -404,6 +419,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="ic">04</div>
         <h3>Data engineering &amp; pipeline reliability</h3>
         <p>Warehouses and pipelines that fail loudly instead of silently — schema drift, cost blowouts, and the reconciliation that catches a platform quietly disagreeing with itself before it costs you a decision.</p>
+        <div class="svc-stats"><span><b>−95%</b> nightly scan</span><span><b>$6.9k/day</b> caught double-counted</span></div>
         <div class="svc-meta"><span class="price">From $4,000</span><span class="term">~3 weeks</span></div>
         <a class="svc-link" href="/case-ad-spend-reconciliation">See a case study →</a>
       </div>
@@ -411,9 +427,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="ic">05</div>
         <h3>SEO systems &amp; content operations</h3>
         <p>Technical SEO and the automation that ships pages on a schedule — for sites stuck with nothing happening in search — plus bulk edits (titles, images, copy) across a whole network of sites at once.</p>
+        <div class="svc-stats"><span><b>2</b> inbound leads</span><span><b>$0</b> ad spend</span></div>
         <div class="svc-meta"><span class="price">From $3,000</span><span class="term">+ monthly</span></div>
         <a class="svc-link" href="/case-seo-sandbox-recovery">See a case study →</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="livecases">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Proof, live</span>
+      <h2>Numbers we can actually show, not made up for a slide.</h2>
+    </div>
+    <div class="panel lp reveal" id="lp">
+      <div class="p-head"><span><span class="dot"></span><span id="lp-label">Nightly BigQuery scan</span></span><span>live</span></div>
+      <div class="readout">
+        <div class="row-r reported"><span class="k" id="lp-k1">Before</span><span class="v" id="lp-v1">584.6 GiB</span></div>
+        <div class="row-r actual"><span class="k" id="lp-k2">After</span><span class="v" id="lp-v2">27.0 GiB</span></div>
+      </div>
+      <div class="lp-nav" id="lp-nav" role="tablist" aria-label="Proof examples"></div>
     </div>
   </div>
 </section>
@@ -641,6 +675,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       });
     })},{threshold:.4});
     countIO.observe(proofRow);
+  }
+
+  // "Proof, live" carousel — cycles real before/after numbers from case studies
+  const lp=document.getElementById('lp');
+  if(lp){
+    const cases=[
+      {label:'Nightly BigQuery scan',k1:'Before',v1:'584.6 GiB',k2:'After',v2:'27.0 GiB'},
+      {label:'Ad spend reconciliation',k1:'Reported',v1:'$8,487/day',k2:'Actual, doubled',v2:'$15,379/day'},
+      {label:'Ad reporting lag',k1:'Before',v1:'30 hours behind',k2:'Now',v2:'~1 hour'},
+      {label:'Campaign launches',k1:'Before',v1:'1 buyer, by hand',k2:'Now',v2:'17 countries, automated'},
+      {label:'GA4 revenue anomaly',k1:'Reported',v1:'$11.07B',k2:'Actual',v2:'$1,294'},
+    ];
+    const lbl=document.getElementById('lp-label'),k1=document.getElementById('lp-k1'),v1=document.getElementById('lp-v1'),k2=document.getElementById('lp-k2'),v2=document.getElementById('lp-v2'),nav=document.getElementById('lp-nav');
+    let li=0,liTimer;
+    cases.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label',c.label);if(i===0)b.className='on';b.addEventListener('click',()=>show(i,true));nav.appendChild(b);});
+    function show(i,manual){
+      li=i;
+      const c=cases[i];
+      const apply=()=>{lbl.textContent=c.label;k1.textContent=c.k1;v1.textContent=c.v1;k2.textContent=c.k2;v2.textContent=c.v2;lp.classList.remove('swap');
+        [...nav.children].forEach((b,bi)=>b.classList.toggle('on',bi===i));};
+      if(reduce){apply();}
+      else{lp.classList.add('swap');setTimeout(apply,220);}
+      if(manual){clearInterval(liTimer);if(!reduce)liTimer=setInterval(()=>show((li+1)%cases.length),5000);}
+    }
+    if(!reduce)liTimer=setInterval(()=>show((li+1)%cases.length),5000);
   }
 
   // live dashboard chart — animated, trending up, on loop
