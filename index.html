@@ -674,6 +674,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   // Hero proof carousel — real cards, sliding, swipeable, with peeking neighbors
   const lpView=document.getElementById('lp-viewport');
   if(lpView){
+    // A horizontally-scrollable element under the cursor will happily eat a
+    // vertical mouse-wheel scroll and drag the carousel instead of the page
+    // — that's the "jerky scroll" feeling passing over the hero. Redirect
+    // any wheel event that's mostly vertical back to scrolling the page.
+    lpView.addEventListener('wheel',function(e){
+      if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
+        e.preventDefault();
+        window.scrollBy({top:e.deltaY,left:0,behavior:'auto'});
+      }
+    },{passive:false});
     const track=document.getElementById('lp-track'),cards=[...track.children],nav=document.getElementById('lp-nav');
     let li=0,liTimer,settling=false;
     cards.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Example '+(i+1));if(i===0)b.className='on';b.addEventListener('click',()=>go(i,true));nav.appendChild(b);});
