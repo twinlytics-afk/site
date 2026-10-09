@@ -29,3 +29,14 @@ footer.sf{border-top:1px solid #ece7f6;background:linear-gradient(180deg,#fff,#f
 .langdd-menu a:hover{background:#f5f2ff;color:#14122b}
 .langdd-menu a.on{color:#6c4cf0;font-weight:600}
 @media(max-width:900px){.nav-links .langdd{padding:14px 0;border-bottom:1px solid #ece7f6}.nav-links .langdd-btn{font-size:14px;padding:0}.nav-links .langdd-menu{top:calc(100% + 6px)}}
+
+/* Services dropdown in the header; related-service link under post CTAs. */
+.svcdd{position:relative}
+.svcdd-menu{position:absolute;top:100%;left:-14px;padding:12px 6px 6px;min-width:230px;display:none;z-index:20}
+.svcdd-menu::before{content:"";position:absolute;inset:12px 0 0;background:#fff;border:1px solid #ece7f6;border-radius:10px;box-shadow:0 14px 34px -18px rgba(20,18,43,.35);z-index:-1}
+.svcdd:hover .svcdd-menu,.svcdd:focus-within .svcdd-menu{display:block}
+.svcdd-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:14px;color:#5a5675;white-space:nowrap}
+.svcdd-menu a:hover{background:#f5f2ff;color:#14122b}
+.ctasvc{display:block;margin-top:16px;font-size:14px;font-weight:600;color:#6c4cf0}
+.ctasvc:hover{text-decoration:underline}
+@media(max-width:900px){.svcdd-menu{position:static;display:block;padding:0 0 0 14px;min-width:0}.svcdd-menu::before{display:none}.nav-links .svcdd-menu a{font-size:15px;padding:12px 0;border-bottom:1px solid #ece7f6;color:#5a5675;border-radius:0}.nav-links .svcdd>a.svcdd-t{border-bottom:1px solid #ece7f6}}

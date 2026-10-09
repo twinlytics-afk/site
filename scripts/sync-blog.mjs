@@ -142,6 +142,11 @@ function ensureNav(file) {
   if (!nav.includes('class="langdd"')) {
     nav = nav.replace(/(\s*)(<a href="[^"]*" class="btn btn-primary">)/, (_, ws, btn) => `${ws}${langMarkup(file)}${ws}${btn}`);
   }
+  // Services opens a menu of the five service pages (hover on desktop, listed inline in the mobile menu).
+  if (!nav.includes("svcdd")) {
+    const items = FOOTER_T.en.svcLinks.map(([h, n]) => `<a href="${h}">${n.replace(/&/g, "&amp;")}</a>`).join("");
+    nav = nav.replace(/<a href="(\/?#services)">Services<\/a>/, (_, h) => `<div class="svcdd"><a href="${h}" class="svcdd-t">Services</a><div class="svcdd-menu">${items}</div></div>`);
+  }
   // Header CTA: the free audit is the low-friction entry offer; the contact dock still offers a call.
   nav = nav.replace(/<a href="[^"]*" class="btn btn-primary">[^<]*<\/a>/, '<a href="/audit" class="btn btn-primary">Free audit</a>');
   if (nav !== m[0]) fs.writeFileSync(file, s.replace(m[0], () => nav));
@@ -154,6 +159,12 @@ const END_CTA = {
   "Data engineering": ["Is your pipeline quietly breaking?", "We look at freshness, schema drift and failure handling in your reporting stack and show you what to fix first."],
   "AI & automation": ["Find the workflows worth automating first", "We look at where your team copies data between systems and tell you which agent or automation pays back fastest."],
 };
+const SVC_FOR = {
+  "Attribution": ["/marketing-analytics", "Marketing analytics & true ROAS"],
+  "Marketing analytics": ["/marketing-analytics", "Marketing analytics & true ROAS"],
+  "Data engineering": ["/data-engineering", "Data engineering"],
+  "AI & automation": ["/ai-agents-automation", "AI agents & automation"],
+};
 function ensureEndCta(file, category) {
   const [h, p] = END_CTA[category] || END_CTA["Marketing analytics"];
   const block = `<div class="endcta">
@@ -164,6 +175,7 @@ function ensureEndCta(file, category) {
     <a href="/#work" class="btn btn-secondary">See our work</a>
     <a href="/audit" class="btn btn-primary">Get a free audit</a>
   </div>
+  <a class="ctasvc" href="${(SVC_FOR[category] || SVC_FOR["Attribution"])[0]}">Related service: ${(SVC_FOR[category] || SVC_FOR["Attribution"])[1].replace(/&/g, "&amp;")} →</a>
 </div>`;
   const s = fs.readFileSync(file, "utf-8");
   const re = /<div class="endcta">[\s\S]*?<div class="ctabtns">[\s\S]*?<\/div>\s*<\/div>/;
