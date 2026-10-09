@@ -199,7 +199,6 @@ function footerHtml(lang) {
         <h4>${t.resources}</h4>
         <ul>
           <li><a href="/blog">${t.blog}</a></li>
-          <li><a href="/work">${t.allWork}</a></li>
           <li><a href="/guide-attribution">Attribution guide</a></li>
           <li><a href="/guide-true-roas">True ROAS guide</a></li>
           <li><a href="/guide-data-pipelines">Data pipelines guide</a></li>

@@ -1,6 +1,10 @@
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    // /work (a list that just repeated the homepage's Selected work section) was removed.
+    if (url.pathname === "/work" || url.pathname === "/work.html" || url.pathname === "/work/") {
+      return Response.redirect(url.origin + "/#work", 301);
+    }
     if (url.pathname === "/api/views") {
       const cors = { "access-control-allow-origin": "*", "content-type": "application/json" };
       const kv = env.VIEWS;
