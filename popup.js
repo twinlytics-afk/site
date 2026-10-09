@@ -101,6 +101,7 @@
         .then(function () {
           window.dataLayer = window.dataLayer || [];
           window.dataLayer.push({ event: 'popup_lead', popup_source: 'popup_40s_discount' });
+          window.dataLayer.push({ event: 'generate_lead', lead_source: 'popup_discount' });
           form.outerHTML = '<p class="tw-pop-ok">' + t.ok + '</p>';
           setTimeout(close, 2200);
         });

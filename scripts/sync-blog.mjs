@@ -113,6 +113,21 @@ function ensureDock(file) {
   fs.writeFileSync(file, s.replace("</body>", `${DOCK}\n</body>`));
 }
 
+
+// Header nav: Services, Pricing, Work — in that order on every English page.
+// Only the <nav class="nav-links"> block is touched (the footer also links to /pricing).
+function ensureNav(file) {
+  const s = fs.readFileSync(file, "utf-8");
+  const m = s.match(/<nav class="nav-links">[\s\S]*?<\/nav>/);
+  if (!m || m[0].includes('href="/pricing"')) return;
+  let nav = m[0]
+    // older pages list Work before Services — put Services first
+    .replace(/(\s*)<a href="(\/?)#work">Work<\/a>(\s*)<a href="\/?#services">Services<\/a>/,
+      (_, a, sl, b) => `${a}<a href="${sl}#services">Services</a>${b}<a href="${sl}#work">Work</a>`)
+    .replace(/(<a href="\/?#services">Services<\/a>)(\s*)/, (_, svc, ws) => `${svc}${ws}<a href="/pricing">Pricing</a>${ws}`);
+  if (nav !== m[0]) fs.writeFileSync(file, s.replace(m[0], () => nav));
+}
+
 const POPUP = '<script src="/popup.js" defer></script>';
 function ensurePopup(file) {
   const s = fs.readFileSync(file, "utf-8");
@@ -124,7 +139,7 @@ function ensurePopup(file) {
 // to the guides and tools from every page.
 const FOOTER_T = {
   en: { home: "/", tag: "Data infrastructure that drives revenue. Three engineers, no handoffs.", cta: "Book a call",
-    company: "Company", work: "Work", services: "Services", team: "Team", contact: "Contact",
+    company: "Company", work: "Work", services: "Services", pricing: "Pricing", team: "Team", contact: "Contact",
     resources: "Resources", blog: "Blog", allWork: "Case studies", report: "Live report example", calc: "True ROAS calculator",
     reach: "Get in touch" },
   uk: { home: "/ua", tag: "Дата-інфраструктура, що приносить гроші. Три інженери, без посередників.", cta: "Замовити дзвінок",
@@ -151,6 +166,7 @@ function footerHtml(lang) {
         <ul>
           <li><a href="${h}#work">${t.work}</a></li>
           <li><a href="${h}#services">${t.services}</a></li>
+          ${t.pricing ? `<li><a href="/pricing">${t.pricing}</a></li>` : ""}
           <li><a href="${h}#team">${t.team}</a></li>
           <li><a href="${h}#contact">${t.contact}</a></li>
         </ul>
@@ -200,7 +216,7 @@ export function sync() {
   const posts = readPosts();
   syncBlog(posts);
   for (const g of new Set(Object.values(PILLARS).map(v => v[0]))) syncGuide(g, posts);
-  for (const f of fs.readdirSync(".").filter(f => f.endsWith(".html"))) { ensureDock(f); ensureFooter(f); ensurePopup(f); }
+  for (const f of fs.readdirSync(".").filter(f => f.endsWith(".html"))) { ensureDock(f); ensureFooter(f); ensurePopup(f); if (!/<html lang="uk"/.test(fs.readFileSync(f, "utf-8"))) ensureNav(f); }
   console.log(`Synced ${posts.length} posts.`);
 }
 
