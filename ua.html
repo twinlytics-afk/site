@@ -624,9 +624,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </script>
 <script>
 (function(){var b=document.querySelector(".burger"),m=document.querySelector(".nav-links");if(!b||!m)return;function close(){m.classList.remove("open");b.classList.remove("is-open");b.setAttribute("aria-expanded","false");}b.addEventListener("click",function(e){e.stopPropagation();var o=m.classList.toggle("open");b.classList.toggle("is-open",o);b.setAttribute("aria-expanded",o);});m.querySelectorAll("a").forEach(function(a){a.addEventListener("click",close);});document.addEventListener("click",function(e){if(m.classList.contains("open")&&!m.contains(e.target)&&!b.contains(e.target))close();});})();
-(function(){var d=document.getElementById("langdd");if(!d)return;var btn=d.querySelector(".langdd-btn");function shut(){d.classList.remove("open");btn.setAttribute("aria-expanded","false");}btn.addEventListener("click",function(e){e.stopPropagation();var o=d.classList.toggle("open");btn.setAttribute("aria-expanded",o);});document.addEventListener("click",function(e){if(d.classList.contains("open")&&!d.contains(e.target))shut();});document.addEventListener("keydown",function(e){if(e.key==="Escape")shut();});})();
 </script>
 <script src="/dock.js" defer></script>
 <script src="/popup.js" defer></script>
+<script src="/lang.js" defer></script>
 </body>
 </html>

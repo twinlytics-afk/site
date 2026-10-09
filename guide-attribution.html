@@ -230,6 +230,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="/#work">Work</a>
       <a href="/#team">Team</a>
       <a href="/blog">Blog</a>
+      <div class="langdd" id="langdd">
+        <button type="button" class="langdd-btn" aria-haspopup="true" aria-expanded="false">EN <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 1l4 4 4-4"/></svg></button>
+        <div class="langdd-menu" role="menu">
+          <a href="/guide-attribution" class="on" role="menuitem">English</a>
+          <a href="/ua" role="menuitem">Українська</a>
+        </div>
+      </div>
       <a href="/#contact" class="btn btn-primary">Book a call</a>
     </nav>
     <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -437,5 +444,6 @@ fetch("/api/views").then(function(r){return r.json()}).then(function(v){
 </script>
 <script src="/dock.js" defer></script>
 <script src="/popup.js" defer></script>
+<script src="/lang.js" defer></script>
 </body>
 </html>

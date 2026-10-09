@@ -114,18 +114,42 @@ function ensureDock(file) {
 }
 
 
-// Header nav: Services, Pricing, Work — in that order on every English page.
-// Only the <nav class="nav-links"> block is touched (the footer also links to /pricing).
+// Header nav, identical on every English page: Services, Pricing, Work, Team, Blog,
+// the language dropdown, then the CTA. Only the <nav class="nav-links"> block is
+// touched (the footer also links to /pricing).
+const langMarkup = file => {
+  const here = file === "index.html" ? "/" : "/" + noExt(file);
+  return `<div class="langdd" id="langdd">
+        <button type="button" class="langdd-btn" aria-haspopup="true" aria-expanded="false">EN <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 1l4 4 4-4"/></svg></button>
+        <div class="langdd-menu" role="menu">
+          <a href="${here}" class="on" role="menuitem">English</a>
+          <a href="/ua" role="menuitem">Українська</a>
+        </div>
+      </div>`;
+};
 function ensureNav(file) {
   const s = fs.readFileSync(file, "utf-8");
   const m = s.match(/<nav class="nav-links">[\s\S]*?<\/nav>/);
-  if (!m || m[0].includes('href="/pricing"')) return;
-  let nav = m[0]
-    // older pages list Work before Services — put Services first
-    .replace(/(\s*)<a href="(\/?)#work">Work<\/a>(\s*)<a href="\/?#services">Services<\/a>/,
-      (_, a, sl, b) => `${a}<a href="${sl}#services">Services</a>${b}<a href="${sl}#work">Work</a>`)
-    .replace(/(<a href="\/?#services">Services<\/a>)(\s*)/, (_, svc, ws) => `${svc}${ws}<a href="/pricing">Pricing</a>${ws}`);
+  if (!m) return;
+  let nav = m[0];
+  if (!nav.includes('href="/pricing"')) {
+    nav = nav
+      // older pages list Work before Services — put Services first
+      .replace(/(\s*)<a href="(\/?)#work">Work<\/a>(\s*)<a href="\/?#services">Services<\/a>/,
+        (_, a, sl, b) => `${a}<a href="${sl}#services">Services</a>${b}<a href="${sl}#work">Work</a>`)
+      .replace(/(<a href="\/?#services">Services<\/a>)(\s*)/, (_, svc, ws) => `${svc}${ws}<a href="/pricing">Pricing</a>${ws}`);
+  }
+  if (!nav.includes('class="langdd"')) {
+    nav = nav.replace(/(\s*)(<a href="[^"]*" class="btn btn-primary">)/, (_, ws, btn) => `${ws}${langMarkup(file)}${ws}${btn}`);
+  }
   if (nav !== m[0]) fs.writeFileSync(file, s.replace(m[0], () => nav));
+}
+
+const LANG = '<script src="/lang.js" defer></script>';
+function ensureLang(file) {
+  const s = fs.readFileSync(file, "utf-8");
+  if (s.includes(LANG) || !s.includes("</body>")) return;
+  fs.writeFileSync(file, s.replace("</body>", `${LANG}\n</body>`));
 }
 
 const POPUP = '<script src="/popup.js" defer></script>';
@@ -216,7 +240,7 @@ export function sync() {
   const posts = readPosts();
   syncBlog(posts);
   for (const g of new Set(Object.values(PILLARS).map(v => v[0]))) syncGuide(g, posts);
-  for (const f of fs.readdirSync(".").filter(f => f.endsWith(".html"))) { ensureDock(f); ensureFooter(f); ensurePopup(f); if (!/<html lang="uk"/.test(fs.readFileSync(f, "utf-8"))) ensureNav(f); }
+  for (const f of fs.readdirSync(".").filter(f => f.endsWith(".html"))) { ensureDock(f); ensureFooter(f); ensurePopup(f); ensureLang(f); if (!/<html lang="uk"/.test(fs.readFileSync(f, "utf-8"))) ensureNav(f); }
   console.log(`Synced ${posts.length} posts.`);
 }
 

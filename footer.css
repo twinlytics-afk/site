@@ -15,3 +15,16 @@ footer.sf{border-top:1px solid #ece7f6;background:linear-gradient(180deg,#fff,#f
 .sf-bottom a:hover,.sf-bottom .on{color:#14122b}
 @media(max-width:900px){.sf-grid{grid-template-columns:1fr 1fr;gap:34px 24px}.sf-brand{grid-column:1/-1}}
 @media(max-width:480px){footer.sf{padding-top:44px}.sf-in{padding:0 20px}.sf-grid{grid-template-columns:1fr 1fr}}
+
+/* Header language dropdown — shared by every page so the header is identical everywhere. */
+.langdd{position:relative}
+.langdd-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:0;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12.5px;letter-spacing:.05em;color:#5a5675;cursor:pointer;padding:4px 2px}
+.langdd-btn:hover{color:#14122b}
+.langdd-btn svg{transition:transform .15s}
+.langdd.open .langdd-btn svg{transform:rotate(180deg)}
+.langdd-menu{position:absolute;top:calc(100% + 10px);right:0;background:#fff;border:1px solid #ece7f6;border-radius:10px;box-shadow:0 14px 34px -18px rgba(20,18,43,.35);padding:6px;min-width:150px;display:none;z-index:20}
+.langdd.open .langdd-menu{display:block}
+.langdd-menu a{display:block;padding:8px 10px;border-radius:7px;font-size:13.5px;color:#5a5675}
+.langdd-menu a:hover{background:#f5f2ff;color:#14122b}
+.langdd-menu a.on{color:#6c4cf0;font-weight:600}
+@media(max-width:900px){.nav-links .langdd{padding:14px 0;border-bottom:1px solid #ece7f6}.nav-links .langdd-btn{font-size:14px;padding:0}.nav-links .langdd-menu{top:calc(100% + 6px)}}
