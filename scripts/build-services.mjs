@@ -273,7 +273,7 @@ function build(s) {
     <p>Tell us what hurts and we'll say honestly whether we're the right fit, and what it would cost.</p>
     <div class="ctabtns">
       <a href="/pricing#${s.id}" class="btn btn-secondary">Get an estimate</a>
-      <a href="/#contact" class="btn btn-primary">Book a call</a>
+      <a href="/audit" class="btn btn-primary">Get a free audit</a>
     </div>
   </div>
 </div>

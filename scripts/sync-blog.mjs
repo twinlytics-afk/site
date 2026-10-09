@@ -142,7 +142,33 @@ function ensureNav(file) {
   if (!nav.includes('class="langdd"')) {
     nav = nav.replace(/(\s*)(<a href="[^"]*" class="btn btn-primary">)/, (_, ws, btn) => `${ws}${langMarkup(file)}${ws}${btn}`);
   }
+  // Header CTA: the free audit is the low-friction entry offer; the contact dock still offers a call.
+  nav = nav.replace(/<a href="[^"]*" class="btn btn-primary">[^<]*<\/a>/, '<a href="/audit" class="btn btn-primary">Free audit</a>');
   if (nav !== m[0]) fs.writeFileSync(file, s.replace(m[0], () => nav));
+}
+
+// End-of-post call to action, one per category, all leading to the free audit.
+const END_CTA = {
+  "Attribution": ["Find out how much revenue your attribution is losing", "We check where UTMs, redirects and payment domains cost you credit, and send a written summary of the top 3 leaks."],
+  "Marketing analytics": ["See your true ROAS, not the platform's number", "We compare reported ROAS with closed revenue and tell you which campaigns really pay back, free."],
+  "Data engineering": ["Is your pipeline quietly breaking?", "We look at freshness, schema drift and failure handling in your reporting stack and show you what to fix first."],
+  "AI & automation": ["Find the workflows worth automating first", "We look at where your team copies data between systems and tell you which agent or automation pays back fastest."],
+};
+function ensureEndCta(file, category) {
+  const [h, p] = END_CTA[category] || END_CTA["Marketing analytics"];
+  const block = `<div class="endcta">
+  <div class="ctaproof">Free · 30 minutes · written summary within 3 business days</div>
+  <h3>${h}</h3>
+  <p>${p}</p>
+  <div class="ctabtns">
+    <a href="/#work" class="btn btn-secondary">See our work</a>
+    <a href="/audit" class="btn btn-primary">Get a free audit</a>
+  </div>
+</div>`;
+  const s = fs.readFileSync(file, "utf-8");
+  const re = /<div class="endcta">[\s\S]*?<div class="ctabtns">[\s\S]*?<\/div>\s*<\/div>/;
+  const next = re.test(s) ? s.replace(re, () => block) : s.replace("</main>", () => `${block}\n\n</main>`);
+  if (next !== s) fs.writeFileSync(file, next);
 }
 
 const LANG = '<script src="/lang.js" defer></script>';
@@ -162,7 +188,7 @@ function ensurePopup(file) {
 // One footer for the whole site. Real links (not JS) so crawlers follow them
 // to the guides and tools from every page.
 const FOOTER_T = {
-  en: { home: "/", tag: "Data infrastructure that drives revenue. Three engineers, no handoffs.", cta: "Book a call",
+  en: { home: "/", tag: "Data infrastructure that drives revenue. Three engineers, no handoffs.", cta: "Get a free audit", ctaHref: "/audit",
     svcLinks: [["/marketing-analytics", "Marketing analytics"], ["/ai-agents-automation", "AI agents & automation"], ["/marketplace-erp-integration", "Marketplace & ERP"], ["/data-engineering", "Data engineering"], ["/seo-systems", "SEO systems"]],
     company: "Company", work: "Work", services: "Services", pricing: "Pricing", team: "Team", contact: "Contact",
     resources: "Resources", blog: "Blog", allWork: "Case studies", report: "Live report example", calc: "True ROAS calculator",
@@ -184,7 +210,7 @@ function footerHtml(lang) {
       <div class="sf-brand">
         <a class="sf-logo" href="${h}"><img src="/logo-icon.png" alt="" width="48" height="24" loading="lazy" />Twinslytics</a>
         <p>${t.tag}</p>
-        <a class="sf-cta" href="${h}#contact">${t.cta}</a>
+        <a class="sf-cta" href="${t.ctaHref || h + "#contact"}">${t.cta}</a>
       </div>
       ${t.svcLinks ? `<div>
         <h4>${t.services}</h4>
@@ -247,6 +273,7 @@ export function sync() {
   syncBlog(posts);
   for (const g of new Set(Object.values(PILLARS).map(v => v[0]))) syncGuide(g, posts);
   for (const f of fs.readdirSync(".").filter(f => f.endsWith(".html"))) { ensureDock(f); ensureFooter(f); ensurePopup(f); ensureLang(f); if (!/<html lang="uk"/.test(fs.readFileSync(f, "utf-8"))) ensureNav(f); }
+  for (const p of posts) ensureEndCta(p.file, p.category);
   console.log(`Synced ${posts.length} posts.`);
 }
 

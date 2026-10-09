@@ -11,7 +11,8 @@
     en: { form: '/#contact', fab: 'Contact', title: "Let's find your real numbers", who: 'Vlad & team · reply within a day', call: 'Book a 30-minute call', bar: 'Book a call', more: 'Or send us a message', back: 'Back', close: 'Close' },
     uk: { form: '/ua#contact', fab: 'Контакти', title: 'Знайдемо ваші реальні цифри', who: 'Влад і команда · відповідаємо протягом дня', call: 'Дзвінок на 30 хвилин', bar: 'Дзвінок', more: 'Або напишіть нам', back: 'Назад', close: 'Закрити' }
   };
-  var t = T[(document.documentElement.lang || 'en').slice(0, 2)] || T.en;
+  var lang = (document.documentElement.lang || 'en').slice(0, 2);
+  var t = T[lang] || T.en;
   var track = function (action) {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event: 'contact_dock', contact_action: action });
@@ -73,7 +74,8 @@
         '<button class="cdock-x" type="button" aria-label="' + t.close + '">&times;</button>' +
         '<p class="cdock-title">' + t.title + '</p>' +
         '<p class="cdock-who">' + t.who + '</p>' +
-        '<a class="cdock-btn cdock-main" href="' + CAL + '" target="_blank" rel="noopener" data-view-go="cal" data-track="call">' + icon.cal + t.call + '</a>' +
+        (lang === 'en' ? '<a class="cdock-btn cdock-main" href="/audit" data-dock-skip data-track="audit">' + icon.chat + 'Get a free audit</a>' : '') +
+        '<a class="cdock-btn' + (lang === 'en' ? '' : ' cdock-main') + '" href="' + CAL + '" target="_blank" rel="noopener" data-view-go="cal" data-track="call">' + icon.cal + t.call + '</a>' +
         '<a class="cdock-btn" href="' + TG + '" target="_blank" rel="noopener" data-track="telegram">' + icon.tg + 'Telegram</a>' +
         '<a class="cdock-btn" href="mailto:' + MAIL + '" data-track="email">' + icon.mail + MAIL + '</a>' +
         '<a class="cdock-more" href="' + t.form + '" data-dock-skip data-track="form">' + t.more + ' &rarr;</a>' +
