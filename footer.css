@@ -2,6 +2,7 @@
 footer.sf{border-top:1px solid #ece7f6;background:linear-gradient(180deg,#fff,#faf9ff);padding:56px 0 0;font-family:Inter,system-ui,sans-serif;color:#5a5675;font-size:14.5px;line-height:1.5}
 .sf-in{max-width:1120px;margin:0 auto;padding:0 28px}
 .sf-grid{display:grid;grid-template-columns:1.4fr 1fr 1.2fr 1.2fr;gap:40px}
+.sf-grid.sf-5{grid-template-columns:1.3fr 1fr 1fr 1.1fr 1.2fr;gap:32px}
 .sf-brand .sf-logo{display:inline-flex;align-items:center;gap:10px;font-family:"Space Grotesk",system-ui,sans-serif;font-weight:700;font-size:19px;letter-spacing:-.02em;color:#14122b;text-decoration:none}
 .sf-brand .sf-logo img{height:24px;width:auto;display:block}
 .sf-brand p{margin:14px 0 20px;max-width:30ch}
@@ -13,8 +14,8 @@ footer.sf{border-top:1px solid #ece7f6;background:linear-gradient(180deg,#fff,#f
 .sf-bottom{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-top:48px;padding:22px 0 26px;border-top:1px solid #ece7f6;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12.5px;color:#6f6a8a}
 .sf-bottom a{color:#6f6a8a;text-decoration:none}
 .sf-bottom a:hover,.sf-bottom .on{color:#14122b}
-@media(max-width:900px){.sf-grid{grid-template-columns:1fr 1fr;gap:34px 24px}.sf-brand{grid-column:1/-1}}
-@media(max-width:480px){footer.sf{padding-top:44px}.sf-in{padding:0 20px}.sf-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){.sf-grid,.sf-grid.sf-5{grid-template-columns:1fr 1fr;gap:34px 24px}.sf-brand{grid-column:1/-1}}
+@media(max-width:480px){footer.sf{padding-top:44px}.sf-in{padding:0 20px}.sf-grid,.sf-grid.sf-5{grid-template-columns:1fr 1fr}}
 
 /* Header language dropdown — shared by every page so the header is identical everywhere. */
 .langdd{position:relative}

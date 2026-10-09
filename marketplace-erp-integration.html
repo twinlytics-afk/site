@@ -11,16 +11,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>True ROAS calculator — Twinslytics</title>
-<meta name="description" content="Free calculator: enter ad spend and platform-reported revenue, apply overlap, refunds and untracked revenue, and see the ROAS you can actually spend against." />
+<title>Marketplace &amp; ERP integration — Twinslytics</title>
+<meta name="description" content="Connect retail marketplaces to your ERP: orders in, shipments confirmed back, inventory in sync, alerts on failures. From $5,000, about 4 weeks." />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="canonical" href="https://twinslytics.com/true-roas-calculator" />
+<link rel="canonical" href="https://twinslytics.com/marketplace-erp-integration" />
 <meta name="robots" content="index, follow" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://twinslytics.com/true-roas-calculator" />
-<meta property="og:title" content="True ROAS calculator" />
-<meta property="og:description" content="Free calculator: enter ad spend and platform-reported revenue, apply overlap, refunds and untracked revenue, and see the ROAS you can actually spend against." />
+<meta property="og:url" content="https://twinslytics.com/marketplace-erp-integration" />
+<meta property="og:title" content="Marketplace &amp; ERP integration" />
+<meta property="og:description" content="Connect retail marketplaces to your ERP: orders in, shipments confirmed back, inventory in sync, alerts on failures. From $5,000, about 4 weeks." />
 <meta property="og:image" content="https://twinslytics.com/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -101,6 +101,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .readitem{display:block;border:1px solid var(--line);border-radius:14px;padding:20px 22px;background:#fff;transition:transform .16s,box-shadow .16s,border-color .16s}
   .readitem:hover{transform:translateY(-2px);border-color:var(--line-2);box-shadow:0 18px 40px -28px rgba(108,76,240,.5)}
   .readitem .rtag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--v);display:block;margin-bottom:9px}
+  .readgroup{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin:30px 0 -12px}
   .readitem p{font-size:15.5px !important;color:var(--body) !important;margin:0 !important}
   .endcta{max-width:860px;margin:44px auto 90px;padding:34px 32px;background:linear-gradient(180deg,#faf8ff,#f5f2ff);border:1px solid var(--line);border-radius:16px;text-align:center}
   .endcta h3{font-family:var(--disp);font-weight:600;font-size:24px;margin-bottom:10px}
@@ -127,84 +128,93 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .faqitem p{color:var(--body);font-size:15.5px;margin:0}
   @media(max-width:760px){.calcgrid{grid-template-columns:1fr}.calcout{grid-template-columns:1fr}}
 </style>
+<link rel="stylesheet" href="/services.css" />
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "True ROAS calculator",
-  "description": "Free calculator: enter ad spend and platform-reported revenue, apply overlap, refunds and untracked revenue, and see the ROAS you can actually spend against.",
-  "url": "https://twinslytics.com/true-roas-calculator",
-  "applicationCategory": "BusinessApplication",
-  "operatingSystem": "Any",
-  "isAccessibleForFree": true,
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
-  "publisher": {
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Service",
+   "name": "Marketplace & ERP integration",
+   "serviceType": "Marketplace & ERP integration",
+   "description": "Connect retail marketplaces to your ERP: orders in, shipments confirmed back, inventory in sync, alerts on failures. From $5,000, about 4 weeks.",
+   "url": "https://twinslytics.com/marketplace-erp-integration",
+   "provider": {
     "@type": "Organization",
     "name": "Twinslytics",
     "url": "https://twinslytics.com"
+   },
+   "offers": {
+    "@type": "Offer",
+    "priceCurrency": "USD",
+    "priceSpecification": {
+     "@type": "PriceSpecification",
+     "minPrice": 5000,
+     "priceCurrency": "USD"
+    }
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Which marketplaces and ERPs do you work with?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The approach is the same on NetSuite, SAP, Oracle, Odoo and others; what changes is the connector. If a system's API is a poor fit, we say so up front."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How do you stop bad data reaching a live listing?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Every change is tested against a sandbox first. In our case study that caught a validation gap that would have put the wrong product image on a live listing."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What happens when something fails?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Failures are logged and alerted, and orders aren't silently dropped. You see which order or file failed, so the fix starts at the cause."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How long does it take to add another marketplace?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Less than the first one. In our case study the second marketplace was onboarded in a fraction of the time, because the architecture was reused."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://twinslytics.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Services",
+     "item": "https://twinslytics.com/#services"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Marketplace & ERP integration",
+     "item": "https://twinslytics.com/marketplace-erp-integration"
+    }
+   ]
   }
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://twinslytics.com/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Guides",
-      "item": "https://twinslytics.com/blog"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "True ROAS calculator",
-      "item": "https://twinslytics.com/true-roas-calculator"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Where do the overlap and refund percentages actually come from?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Overlap comes from counting orders claimed by more than one ad platform in the same window — if you've never measured it, don't assume zero for a multi-channel account. Refund rate comes from your payment processor, attributed to the cohort that generated the order rather than the month the refund landed."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Why include untracked revenue in a ROAS calculation?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Because pixels only see what happens in a browser. Offline closes, phone orders, and anything finished outside the checkout flow are real revenue that platform-reported ROAS never had a chance to count — leaving it out understates channels that drive real, if invisible, demand."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Is this the same as what an agency or platform reports?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No — this is deliberately the number after de-duplication, refunds, and untracked revenue are applied, which is usually lower than what any single platform reports on its own. That's the point: it's the version you can safely spend against."
-      }
-    }
-  ]
+ ]
 }
 </script>
 <link rel="stylesheet" href="/footer.css" />
@@ -227,7 +237,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="langdd" id="langdd">
         <button type="button" class="langdd-btn" aria-haspopup="true" aria-expanded="false">EN <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="langdd-menu" role="menu">
-          <a href="/true-roas-calculator" class="on" role="menuitem">English</a>
+          <a href="/guide-attribution" class="on" role="menuitem">English</a>
           <a href="/ua" role="menuitem">Українська</a>
         </div>
       </div>
@@ -238,215 +248,87 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </header>
 <main>
 
-<div class="hubwrap">
-  <a class="back" href="/blog">← All writing</a>
-  <span class="eyebrow">Free tool</span>
-  <h1>True ROAS calculator</h1>
-  <div class="hubmeta">Runs in your browser · nothing is sent anywhere · Twinslytics</div>
 
-  <p class="lede">Platform-reported ROAS is gross, de-duplicated by nobody, and blind to refunds.
-  Put your own numbers in and see what is left.</p>
+<section class="sv-hero">
+  <span class="crumb"><a href="/#services">Services</a> / Marketplace &amp; ERP integration</span>
+  <span class="eyebrow">Service · Integrations</span>
+  <h1>Marketplace and ERP integration that closes the order-to-shipment loop</h1>
+  <p>Orders flow from the marketplace into your ERP, fulfilment confirms back, and stock stays in sync, without anyone re-keying a thing.</p>
+  <div class="sv-cta">
+    <a class="btn btn-primary" href="/pricing#marketplace-erp">Get an estimate</a>
+    <a class="btn btn-secondary" href="/#contact">Book a call</a>
+  </div>
+  <div class="sv-fact"><b>From $5,000</b> · ~4 weeks</div>
+</section>
 
-  <div class="calc">
-    <div class="calcgrid">
-      <div class="field">
-        <label for="spend">Ad spend</label>
-        <input id="spend" type="text" inputmode="decimal" value="50000" aria-describedby="spendHint" />
-        <span class="hint" id="spendHint">Total spend for the period, all channels.</span>
-      </div>
-      <div class="field">
-        <label for="reported">Platform-reported revenue</label>
-        <input id="reported" type="text" inputmode="decimal" value="220000" aria-describedby="repHint" />
-        <span class="hint" id="repHint">Sum of what every platform claims. Yes, it double-counts — that's the next field.</span>
-      </div>
-      <div class="field">
-        <label for="overlap">Cross-platform overlap %</label>
-        <input id="overlap" type="text" inputmode="decimal" value="18" aria-describedby="ovHint" />
-        <span class="hint" id="ovHint">Share of conversions claimed by more than one platform.</span>
-      </div>
-      <div class="field">
-        <label for="refund">Refunds &amp; chargebacks %</label>
-        <input id="refund" type="text" inputmode="decimal" value="9" aria-describedby="refHint" />
-        <span class="hint" id="refHint">Of gross revenue, including cancelled renewals.</span>
-      </div>
-      <div class="field">
-        <label for="untracked">Untracked closed revenue</label>
-        <input id="untracked" type="text" inputmode="decimal" value="15000" aria-describedby="untHint" />
-        <span class="hint" id="untHint">Offline closes, phone orders — real money no pixel saw.</span>
-      </div>
-    </div>
-
-    <div class="calcout">
-      <div class="stat">
-        <span class="k">Reported ROAS</span>
-        <span class="v" id="outReported">—</span>
-        <span class="s">what the platforms claim</span>
-      </div>
-      <div class="stat key">
-        <span class="k">True ROAS</span>
-        <span class="v" id="outTrue">—</span>
-        <span class="s" id="outTrueSub"></span>
-      </div>
-      <div class="stat">
-        <span class="k">Gap</span>
-        <span class="v" id="outGap">—</span>
-        <span class="s" id="outGapSub"></span>
-      </div>
-    </div>
-    <p class="verdict" id="verdict"></p>
+<div class="sv-sec">
+  <div class="sv-two" style="margin-top:8px">
+    <div class="sv-box sym"><h3>Sounds familiar?</h3><ul>
+      <li>Marketplace orders are keyed into the ERP by hand.</li>
+      <li>Shipment confirmations reach the marketplace days late.</li>
+      <li>Inventory is updated by hand across channels, and you oversell.</li>
+      <li>An integration broke quietly and nobody noticed until a customer complained.</li>
+    </ul></div>
+    <div class="sv-box get"><h3>What you get</h3><ul>
+      <li>Marketplace orders pulled in, checked against your product catalog and created as sales orders in the ERP</li>
+      <li>Shipping documents generated and sent to the warehouse automatically</li>
+      <li>Fulfilment detected in the ERP and confirmed back to the marketplace</li>
+      <li>Inventory kept in sync across every channel, with monitoring and alerts on failures</li>
+    </ul></div>
   </div>
 
-  <h2>How the number is built</h2>
-  <p>Reported revenue is de-duplicated by the overlap you enter, then reduced by refunds and
-  cancelled renewals, then increased by revenue that closed where no pixel could see it. The result
-  is divided by spend:</p>
-  <ul>
-    <li><strong>De-duplicated</strong> = reported × (1 − overlap%)</li>
-    <li><strong>Net of refunds</strong> = de-duplicated × (1 − refund%)</li>
-    <li><strong>True revenue</strong> = net of refunds + untracked</li>
-    <li><strong>True ROAS</strong> = true revenue ÷ spend</li>
-  </ul>
-  <p>The arithmetic is the easy half. The hard half is knowing your real overlap and your real
-  refund rate by cohort — which is a data problem, not a spreadsheet problem.</p>
-
-  <h2>Where the inputs come from</h2>
-  <ul>
-    <li><strong>Overlap</strong>: count orders claimed by more than one platform in the same window.
-    If you can't, the honest starting assumption for a multi-channel account is not zero.</li>
-    <li><strong>Refund rate</strong>: from your payment processor, attributed to the cohort that
-    generated the order rather than the month the refund landed.</li>
-    <li><strong>Untracked revenue</strong>: total closed revenue minus what your analytics recorded.</li>
-  </ul>
-
-  <h2>Questions people ask</h2>
-  <div class="faq">
-    <div class="faqitem">
-      <h3>Where do the overlap and refund percentages actually come from?</h3>
-      <p>Overlap comes from counting orders claimed by more than one ad platform in the same window — if you&#x27;ve never measured it, don&#x27;t assume zero for a multi-channel account. Refund rate comes from your payment processor, attributed to the cohort that generated the order rather than the month the refund landed.</p>
-    </div>
-    <div class="faqitem">
-      <h3>Why include untracked revenue in a ROAS calculation?</h3>
-      <p>Because pixels only see what happens in a browser. Offline closes, phone orders, and anything finished outside the checkout flow are real revenue that platform-reported ROAS never had a chance to count — leaving it out understates channels that drive real, if invisible, demand.</p>
-    </div>
-    <div class="faqitem">
-      <h3>Is this the same as what an agency or platform reports?</h3>
-      <p>No — this is deliberately the number after de-duplication, refunds, and untracked revenue are applied, which is usually lower than what any single platform reports on its own. That&#x27;s the point: it&#x27;s the version you can safely spend against.</p>
-    </div>
+  <h2>Proof it works</h2>
+  <p class="sub">Real engagements, with the clients anonymized.</p>
+  <div class="sv-proof">
+      <a class="sv-pcard" href="/case-marketplace-automation"><div class="tag">Automation · Marketplaces &amp; ERP</div><h3>End-to-end order automation across marketplaces and an ERP</h3><p>Orders flow into the ERP, get fulfilled and confirm back automatically, with inventory synced across every channel.</p><div class="stat"><b>0</b><span>manual order entries</span></div><span class="go">Read the case study →</span></a>
   </div>
 
-  <h2>Read next</h2>
-  <div class="readlist">
-    <a class="readitem" href="/blog-ga4-roas-lying">
-      <span class="rtag">Attribution</span>
-      <h3>Why your GA4 ROAS is lying to you — and how to find the real number</h3>
-      <p>Why the dashboard number and the bank number disagree in the first place.</p>
-    </a>
-    <a class="readitem" href="/blog-why-offline-conversions-beat-pixel-based-roas">
-      <span class="rtag">Attribution</span>
-      <h3>Why offline conversions beat pixel-based ROAS</h3>
-      <p>Feeding closed revenue back to the platforms so they optimise on real money.</p>
-    </a>
-    <a class="readitem" href="/blog-how-dtc-brands-should-measure-blended-roas">
-      <span class="rtag">Marketing analytics</span>
-      <h3>How DTC brands should measure blended ROAS</h3>
-      <p>The blended check that catches channel-level numbers overstating themselves.</p>
-    </a>
+  <h2>Price and timeline</h2>
+  <div class="sv-price">
+    <div><div class="from">From</div><div class="amt">$5,000</div><div class="plus">~4 weeks</div></div>
+    <div class="txt"><b>Typically ~4 weeks.</b> Covers one marketplace connected to one ERP. Adding a second marketplace is faster, because the same architecture is reused.</div>
+    <a class="btn btn-primary" href="/pricing#marketplace-erp">Open the estimator</a>
   </div>
 
-</div>
+  <h2>Works with your stack</h2>
+  <p class="sub">The method stays the same; the connector changes.</p>
+  <div class="sv-chips"><span class="sv-chip">NetSuite</span><span class="sv-chip">SAP</span><span class="sv-chip">Oracle</span><span class="sv-chip">Odoo</span><span class="sv-chip">Shopify</span><span class="sv-chip">Cloud Run</span><span class="sv-chip">Cloud Scheduler</span><span class="sv-chip">BigQuery</span></div>
 
-  <div class="endcta">
-  <div class="ctaproof">400% blended ROAS target — Diagnosed a ROAS collapse, mapped the path to 400%</div>
-  <h3>Want to know what your ROAS is actually doing?</h3>
-  <p>We reconcile ad spend, platform conversions, and closed revenue into one number your team can spend against.</p>
-  <div class="ctabtns">
-    <a href="/#work" class="btn btn-secondary">See more work</a>
-    <a href="/#contact" class="btn btn-primary">Book a call</a>
+  <h2>Questions</h2>
+  <div class="sv-faq" style="margin-top:18px">
+    <details><summary>Which marketplaces and ERPs do you work with?</summary><p>The approach is the same on NetSuite, SAP, Oracle, Odoo and others; what changes is the connector. If a system's API is a poor fit, we say so up front.</p></details>
+    <details><summary>How do you stop bad data reaching a live listing?</summary><p>Every change is tested against a sandbox first. In our case study that caught a validation gap that would have put the wrong product image on a live listing.</p></details>
+    <details><summary>What happens when something fails?</summary><p>Failures are logged and alerted, and orders aren't silently dropped. You see which order or file failed, so the fix starts at the cause.</p></details>
+    <details><summary>How long does it take to add another marketplace?</summary><p>Less than the first one. In our case study the second marketplace was onboarded in a fraction of the time, because the architecture was reused.</p></details>
+  </div>
+
+  <h2>Keep reading</h2>
+  <div class="sv-rel" style="margin-top:6px">
+    <a href="/guide-data-pipelines"><span class="k">Guide</span><span class="t">Revenue pipelines that survive production</span></a>
+    <a href="/blog-monitoring-and-alerting-for-data-pipelines-in-production"><span class="k">Article</span><span class="t">Monitoring and alerting for data pipelines in production</span></a>
+    <a href="/blog-when-to-move-from-spreadsheets-to-a-data-warehouse"><span class="k">Article</span><span class="t">When to move from spreadsheets to a data warehouse</span></a>
+  </div>
+
+  <h2>Other services</h2>
+  <div class="sv-other" style="margin-top:6px">
+      <a href="/marketing-analytics">Marketing analytics &amp; true ROAS</a>
+      <a href="/ai-agents-automation">AI agents &amp; automation</a>
+      <a href="/data-engineering">Data engineering &amp; pipeline reliability</a>
+      <a href="/seo-systems">SEO systems &amp; content operations</a>
   </div>
 </div>
 
-<script>
-(function(){
-  var ids = ["spend","reported","overlap","refund","untracked"];
-  var el = {};
-  ids.forEach(function(i){ el[i] = document.getElementById(i); });
-  var out = {
-    reported: document.getElementById("outReported"),
-    truth: document.getElementById("outTrue"),
-    gap: document.getElementById("outGap"),
-    gapSub: document.getElementById("outGapSub"),
-    trueSub: document.getElementById("outTrueSub"),
-    verdict: document.getElementById("verdict")
-  };
-
-  function num(v, min, max){
-    var n = parseFloat(String(v).replace(/[^0-9.\-]/g, ""));
-    if (!isFinite(n)) return null;
-    if (typeof min === "number" && n < min) n = min;
-    if (typeof max === "number" && n > max) n = max;
-    return n;
-  }
-  function money(n){
-    var abs = Math.abs(n);
-    if (abs >= 1e6) return (n/1e6).toFixed(2).replace(/\.00$/,"") + "M";
-    if (abs >= 1e3) return (n/1e3).toFixed(1).replace(/\.0$/,"") + "k";
-    return String(Math.round(n));
-  }
-
-  function calc(){
-    var spend = num(el.spend.value, 0);
-    var reported = num(el.reported.value, 0);
-    var overlap = num(el.overlap.value, 0, 90);
-    var refund = num(el.refund.value, 0, 90);
-    var untracked = num(el.untracked.value, 0);
-
-    if (spend === null || reported === null || spend <= 0) {
-      out.reported.textContent = "—";
-      out.truth.textContent = "—";
-      out.gap.textContent = "—";
-      out.gapSub.textContent = "";
-      out.trueSub.textContent = "";
-      out.verdict.textContent = "Enter ad spend and platform-reported revenue to see the gap.";
-      return;
-    }
-    overlap = overlap || 0; refund = refund || 0; untracked = untracked || 0;
-
-    var deduped = reported * (1 - overlap/100);
-    var netOfRefunds = deduped * (1 - refund/100);
-    var trueRevenue = netOfRefunds + untracked;
-
-    var reportedRoas = reported / spend;
-    var trueRoas = trueRevenue / spend;
-    var delta = trueRoas - reportedRoas;
-    var pct = reportedRoas > 0 ? (delta / reportedRoas) * 100 : 0;
-
-    out.reported.textContent = reportedRoas.toFixed(2) + "x";
-    out.truth.textContent = trueRoas.toFixed(2) + "x";
-    out.trueSub.textContent = money(trueRevenue) + " of closed revenue";
-    out.gap.textContent = (pct >= 0 ? "+" : "") + pct.toFixed(0) + "%";
-    out.gapSub.textContent = (delta >= 0 ? "+" : "") + delta.toFixed(2) + "x vs reported";
-
-    var breakeven = trueRoas < 1;
-    var msg;
-    if (breakeven) {
-      msg = "At these inputs the campaign returns less than it costs once overlap, refunds and untracked revenue are applied. Reported ROAS of " + reportedRoas.toFixed(2) + "x is hiding a loss.";
-    } else if (pct <= -10) {
-      msg = "Reported ROAS overstates return by roughly " + Math.abs(pct).toFixed(0) + "%. Decisions made on the platform number are being made on the wrong figure.";
-    } else if (pct >= 10) {
-      msg = "True ROAS is higher than reported — untracked revenue is carrying real return the platforms never see, so this channel is likely underfunded.";
-    } else {
-      msg = "Reported and true ROAS are within " + Math.abs(pct).toFixed(0) + "% of each other. Your measurement is roughly honest at this level of spend.";
-    }
-    out.verdict.textContent = msg;
-  }
-
-  ids.forEach(function(i){
-    el[i].addEventListener("input", calc);
-  });
-  calc();
-})();
-</script>
-
+<div class="sv-end">
+  <div class="endcta" style="margin:0 auto">
+    <div class="ctaproof">From $5,000 · ~4 weeks</div>
+    <h3>Want to see where you'd land?</h3>
+    <p>Tell us what hurts and we'll say honestly whether we're the right fit, and what it would cost.</p>
+    <div class="ctabtns">
+      <a href="/pricing#marketplace-erp" class="btn btn-secondary">Get an estimate</a>
+      <a href="/#contact" class="btn btn-primary">Book a call</a>
+    </div>
+  </div>
+</div>
 </main>
 <footer class="sf">
   <div class="sf-in">

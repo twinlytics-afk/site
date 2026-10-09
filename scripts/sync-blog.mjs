@@ -163,6 +163,7 @@ function ensurePopup(file) {
 // to the guides and tools from every page.
 const FOOTER_T = {
   en: { home: "/", tag: "Data infrastructure that drives revenue. Three engineers, no handoffs.", cta: "Book a call",
+    svcLinks: [["/marketing-analytics", "Marketing analytics"], ["/ai-agents-automation", "AI agents & automation"], ["/marketplace-erp-integration", "Marketplace & ERP"], ["/data-engineering", "Data engineering"], ["/seo-systems", "SEO systems"]],
     company: "Company", work: "Work", services: "Services", pricing: "Pricing", team: "Team", contact: "Contact",
     resources: "Resources", blog: "Blog", allWork: "Case studies", report: "Live report example", calc: "True ROAS calculator",
     reach: "Get in touch" },
@@ -179,12 +180,18 @@ function footerHtml(lang) {
     : `<span class="on">EN</span> / <a href="/ua">UA</a>`;
   return `<footer class="sf">
   <div class="sf-in">
-    <div class="sf-grid">
+    <div class="sf-grid${t.svcLinks ? " sf-5" : ""}">
       <div class="sf-brand">
         <a class="sf-logo" href="${h}"><img src="/logo-icon.png" alt="" width="48" height="24" loading="lazy" />Twinslytics</a>
         <p>${t.tag}</p>
         <a class="sf-cta" href="${h}#contact">${t.cta}</a>
       </div>
+      ${t.svcLinks ? `<div>
+        <h4>${t.services}</h4>
+        <ul>
+          ${t.svcLinks.map(([href, label]) => `<li><a href="${href}">${label}</a></li>`).join("\n          ")}
+        </ul>
+      </div>` : ""}
       <div>
         <h4>${t.company}</h4>
         <ul>

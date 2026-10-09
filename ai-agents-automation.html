@@ -11,16 +11,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>True ROAS calculator — Twinslytics</title>
-<meta name="description" content="Free calculator: enter ad spend and platform-reported revenue, apply overlap, refunds and untracked revenue, and see the ROAS you can actually spend against." />
+<title>AI agents &amp; workflow automation — Twinslytics</title>
+<meta name="description" content="Chat-based bots and agents that read, decide and act inside Slack, Teams, your ERP or CRM, with a human approving every write. From $4,000, about 3–4 weeks." />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="canonical" href="https://twinslytics.com/true-roas-calculator" />
+<link rel="canonical" href="https://twinslytics.com/ai-agents-automation" />
 <meta name="robots" content="index, follow" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://twinslytics.com/true-roas-calculator" />
-<meta property="og:title" content="True ROAS calculator" />
-<meta property="og:description" content="Free calculator: enter ad spend and platform-reported revenue, apply overlap, refunds and untracked revenue, and see the ROAS you can actually spend against." />
+<meta property="og:url" content="https://twinslytics.com/ai-agents-automation" />
+<meta property="og:title" content="AI agents &amp; workflow automation" />
+<meta property="og:description" content="Chat-based bots and agents that read, decide and act inside Slack, Teams, your ERP or CRM, with a human approving every write. From $4,000, about 3–4 weeks." />
 <meta property="og:image" content="https://twinslytics.com/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -101,6 +101,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .readitem{display:block;border:1px solid var(--line);border-radius:14px;padding:20px 22px;background:#fff;transition:transform .16s,box-shadow .16s,border-color .16s}
   .readitem:hover{transform:translateY(-2px);border-color:var(--line-2);box-shadow:0 18px 40px -28px rgba(108,76,240,.5)}
   .readitem .rtag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--v);display:block;margin-bottom:9px}
+  .readgroup{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin:30px 0 -12px}
   .readitem p{font-size:15.5px !important;color:var(--body) !important;margin:0 !important}
   .endcta{max-width:860px;margin:44px auto 90px;padding:34px 32px;background:linear-gradient(180deg,#faf8ff,#f5f2ff);border:1px solid var(--line);border-radius:16px;text-align:center}
   .endcta h3{font-family:var(--disp);font-weight:600;font-size:24px;margin-bottom:10px}
@@ -127,84 +128,93 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .faqitem p{color:var(--body);font-size:15.5px;margin:0}
   @media(max-width:760px){.calcgrid{grid-template-columns:1fr}.calcout{grid-template-columns:1fr}}
 </style>
+<link rel="stylesheet" href="/services.css" />
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "True ROAS calculator",
-  "description": "Free calculator: enter ad spend and platform-reported revenue, apply overlap, refunds and untracked revenue, and see the ROAS you can actually spend against.",
-  "url": "https://twinslytics.com/true-roas-calculator",
-  "applicationCategory": "BusinessApplication",
-  "operatingSystem": "Any",
-  "isAccessibleForFree": true,
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
-  "publisher": {
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Service",
+   "name": "AI agents & automation",
+   "serviceType": "AI agents & automation",
+   "description": "Chat-based bots and agents that read, decide and act inside Slack, Teams, your ERP or CRM, with a human approving every write. From $4,000, about 3–4 weeks.",
+   "url": "https://twinslytics.com/ai-agents-automation",
+   "provider": {
     "@type": "Organization",
     "name": "Twinslytics",
     "url": "https://twinslytics.com"
+   },
+   "offers": {
+    "@type": "Offer",
+    "priceCurrency": "USD",
+    "priceSpecification": {
+     "@type": "PriceSpecification",
+     "minPrice": 4000,
+     "priceCurrency": "USD"
+    }
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What stops an agent doing something wrong?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing is written until a person approves it. Campaigns are created paused, invoices wait for sign-off, and every API call is logged so a run can be traced and reversed."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How is this different from a chatbot?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A chatbot answers questions. These agents act in your systems: they read a document, look up real records and create the entry or campaign for approval."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can it read PDFs and emails?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. In our invoice case a document-AI step extracts the vendor and line items from an uploaded PDF into a pre-filled form."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which chat tools and ERPs does it work with?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "We built the invoice bot on Slack, and it works the same on Teams. The method is the same on NetSuite, SAP, QuickBooks and most other ERPs; what changes is the connector."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://twinslytics.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Services",
+     "item": "https://twinslytics.com/#services"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "AI agents & automation",
+     "item": "https://twinslytics.com/ai-agents-automation"
+    }
+   ]
   }
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://twinslytics.com/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Guides",
-      "item": "https://twinslytics.com/blog"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "True ROAS calculator",
-      "item": "https://twinslytics.com/true-roas-calculator"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Where do the overlap and refund percentages actually come from?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Overlap comes from counting orders claimed by more than one ad platform in the same window — if you've never measured it, don't assume zero for a multi-channel account. Refund rate comes from your payment processor, attributed to the cohort that generated the order rather than the month the refund landed."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Why include untracked revenue in a ROAS calculation?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Because pixels only see what happens in a browser. Offline closes, phone orders, and anything finished outside the checkout flow are real revenue that platform-reported ROAS never had a chance to count — leaving it out understates channels that drive real, if invisible, demand."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Is this the same as what an agency or platform reports?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No — this is deliberately the number after de-duplication, refunds, and untracked revenue are applied, which is usually lower than what any single platform reports on its own. That's the point: it's the version you can safely spend against."
-      }
-    }
-  ]
+ ]
 }
 </script>
 <link rel="stylesheet" href="/footer.css" />
@@ -227,7 +237,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="langdd" id="langdd">
         <button type="button" class="langdd-btn" aria-haspopup="true" aria-expanded="false">EN <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 1l4 4 4-4"/></svg></button>
         <div class="langdd-menu" role="menu">
-          <a href="/true-roas-calculator" class="on" role="menuitem">English</a>
+          <a href="/guide-attribution" class="on" role="menuitem">English</a>
           <a href="/ua" role="menuitem">Українська</a>
         </div>
       </div>
@@ -238,215 +248,88 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </header>
 <main>
 
-<div class="hubwrap">
-  <a class="back" href="/blog">← All writing</a>
-  <span class="eyebrow">Free tool</span>
-  <h1>True ROAS calculator</h1>
-  <div class="hubmeta">Runs in your browser · nothing is sent anywhere · Twinslytics</div>
 
-  <p class="lede">Platform-reported ROAS is gross, de-duplicated by nobody, and blind to refunds.
-  Put your own numbers in and see what is left.</p>
+<section class="sv-hero">
+  <span class="crumb"><a href="/#services">Services</a> / AI agents &amp; automation</span>
+  <span class="eyebrow">Service · AI agents</span>
+  <h1>AI agents that act inside your tools, with a human in the loop</h1>
+  <p>Bots and ops agents that read the PDF, build the campaign or draft the entry, then wait for a person to approve before anything is written.</p>
+  <div class="sv-cta">
+    <a class="btn btn-primary" href="/pricing#ai-agents">Get an estimate</a>
+    <a class="btn btn-secondary" href="/#contact">Book a call</a>
+  </div>
+  <div class="sv-fact"><b>From $4,000</b> · ~3–4 weeks</div>
+</section>
 
-  <div class="calc">
-    <div class="calcgrid">
-      <div class="field">
-        <label for="spend">Ad spend</label>
-        <input id="spend" type="text" inputmode="decimal" value="50000" aria-describedby="spendHint" />
-        <span class="hint" id="spendHint">Total spend for the period, all channels.</span>
-      </div>
-      <div class="field">
-        <label for="reported">Platform-reported revenue</label>
-        <input id="reported" type="text" inputmode="decimal" value="220000" aria-describedby="repHint" />
-        <span class="hint" id="repHint">Sum of what every platform claims. Yes, it double-counts — that's the next field.</span>
-      </div>
-      <div class="field">
-        <label for="overlap">Cross-platform overlap %</label>
-        <input id="overlap" type="text" inputmode="decimal" value="18" aria-describedby="ovHint" />
-        <span class="hint" id="ovHint">Share of conversions claimed by more than one platform.</span>
-      </div>
-      <div class="field">
-        <label for="refund">Refunds &amp; chargebacks %</label>
-        <input id="refund" type="text" inputmode="decimal" value="9" aria-describedby="refHint" />
-        <span class="hint" id="refHint">Of gross revenue, including cancelled renewals.</span>
-      </div>
-      <div class="field">
-        <label for="untracked">Untracked closed revenue</label>
-        <input id="untracked" type="text" inputmode="decimal" value="15000" aria-describedby="untHint" />
-        <span class="hint" id="untHint">Offline closes, phone orders — real money no pixel saw.</span>
-      </div>
-    </div>
-
-    <div class="calcout">
-      <div class="stat">
-        <span class="k">Reported ROAS</span>
-        <span class="v" id="outReported">—</span>
-        <span class="s">what the platforms claim</span>
-      </div>
-      <div class="stat key">
-        <span class="k">True ROAS</span>
-        <span class="v" id="outTrue">—</span>
-        <span class="s" id="outTrueSub"></span>
-      </div>
-      <div class="stat">
-        <span class="k">Gap</span>
-        <span class="v" id="outGap">—</span>
-        <span class="s" id="outGapSub"></span>
-      </div>
-    </div>
-    <p class="verdict" id="verdict"></p>
+<div class="sv-sec">
+  <div class="sv-two" style="margin-top:8px">
+    <div class="sv-box sym"><h3>Sounds familiar?</h3><ul>
+      <li>Someone re-keys data from PDFs, emails or chat into the ERP by hand.</li>
+      <li>A chatbot demo worked on stage and nowhere else.</li>
+      <li>Campaigns, invoices or reports are assembled manually, with the predictable human errors in names and numbers.</li>
+      <li>You want software that can act, but nothing should change until a person has approved it.</li>
+    </ul></div>
+    <div class="sv-box get"><h3>What you get</h3><ul>
+      <li>An agent or bot inside the chat tool you already use: Slack, Teams or email</li>
+      <li>Connected to your ERP, CRM or ad platforms, with real lookups so it can't pick something that doesn't exist</li>
+      <li>An approval step before every write: drafts and paused objects, not live changes</li>
+      <li>A full audit log, so any run can be traced and reversed</li>
+    </ul></div>
   </div>
 
-  <h2>How the number is built</h2>
-  <p>Reported revenue is de-duplicated by the overlap you enter, then reduced by refunds and
-  cancelled renewals, then increased by revenue that closed where no pixel could see it. The result
-  is divided by spend:</p>
-  <ul>
-    <li><strong>De-duplicated</strong> = reported × (1 − overlap%)</li>
-    <li><strong>Net of refunds</strong> = de-duplicated × (1 − refund%)</li>
-    <li><strong>True revenue</strong> = net of refunds + untracked</li>
-    <li><strong>True ROAS</strong> = true revenue ÷ spend</li>
-  </ul>
-  <p>The arithmetic is the easy half. The hard half is knowing your real overlap and your real
-  refund rate by cohort — which is a data problem, not a spreadsheet problem.</p>
-
-  <h2>Where the inputs come from</h2>
-  <ul>
-    <li><strong>Overlap</strong>: count orders claimed by more than one platform in the same window.
-    If you can't, the honest starting assumption for a multi-channel account is not zero.</li>
-    <li><strong>Refund rate</strong>: from your payment processor, attributed to the cohort that
-    generated the order rather than the month the refund landed.</li>
-    <li><strong>Untracked revenue</strong>: total closed revenue minus what your analytics recorded.</li>
-  </ul>
-
-  <h2>Questions people ask</h2>
-  <div class="faq">
-    <div class="faqitem">
-      <h3>Where do the overlap and refund percentages actually come from?</h3>
-      <p>Overlap comes from counting orders claimed by more than one ad platform in the same window — if you&#x27;ve never measured it, don&#x27;t assume zero for a multi-channel account. Refund rate comes from your payment processor, attributed to the cohort that generated the order rather than the month the refund landed.</p>
-    </div>
-    <div class="faqitem">
-      <h3>Why include untracked revenue in a ROAS calculation?</h3>
-      <p>Because pixels only see what happens in a browser. Offline closes, phone orders, and anything finished outside the checkout flow are real revenue that platform-reported ROAS never had a chance to count — leaving it out understates channels that drive real, if invisible, demand.</p>
-    </div>
-    <div class="faqitem">
-      <h3>Is this the same as what an agency or platform reports?</h3>
-      <p>No — this is deliberately the number after de-duplication, refunds, and untracked revenue are applied, which is usually lower than what any single platform reports on its own. That&#x27;s the point: it&#x27;s the version you can safely spend against.</p>
-    </div>
+  <h2>Proof it works</h2>
+  <p class="sub">Real engagements, with the clients anonymized.</p>
+  <div class="sv-proof">
+      <a class="sv-pcard" href="/case-invoice-automation"><div class="tag">AI agent · Finance ops</div><h3>Turn a chat message into an approved invoice</h3><p>A bot reads a PDF, extracts the line items and routes an ERP invoice for approval before anything is written.</p><div class="stat"><b>1 of 5</b><span>steps left for a human</span></div><span class="go">Read the case study →</span></a>
+      <a class="sv-pcard" href="/case-campaign-launch-automation"><div class="tag">AI agent · Media buying</div><h3>Automated campaign launches across dozens of countries</h3><p>An agent scans Drive and a spreadsheet and builds the full campaign: paused, logged and one click from live.</p><div class="stat"><b>20+</b><span>countries, one pipeline</span></div><span class="go">Read the case study →</span></a>
   </div>
 
-  <h2>Read next</h2>
-  <div class="readlist">
-    <a class="readitem" href="/blog-ga4-roas-lying">
-      <span class="rtag">Attribution</span>
-      <h3>Why your GA4 ROAS is lying to you — and how to find the real number</h3>
-      <p>Why the dashboard number and the bank number disagree in the first place.</p>
-    </a>
-    <a class="readitem" href="/blog-why-offline-conversions-beat-pixel-based-roas">
-      <span class="rtag">Attribution</span>
-      <h3>Why offline conversions beat pixel-based ROAS</h3>
-      <p>Feeding closed revenue back to the platforms so they optimise on real money.</p>
-    </a>
-    <a class="readitem" href="/blog-how-dtc-brands-should-measure-blended-roas">
-      <span class="rtag">Marketing analytics</span>
-      <h3>How DTC brands should measure blended ROAS</h3>
-      <p>The blended check that catches channel-level numbers overstating themselves.</p>
-    </a>
+  <h2>Price and timeline</h2>
+  <div class="sv-price">
+    <div><div class="from">From</div><div class="amt">$4,000</div><div class="plus">~3–4 weeks</div></div>
+    <div class="txt"><b>Typically ~3–4 weeks.</b> Covers one well-defined workflow end to end. Each extra system or workflow adds scope; the estimator shows the range.</div>
+    <a class="btn btn-primary" href="/pricing#ai-agents">Open the estimator</a>
   </div>
 
-</div>
+  <h2>Works with your stack</h2>
+  <p class="sub">The method stays the same; the connector changes.</p>
+  <div class="sv-chips"><span class="sv-chip">Slack</span><span class="sv-chip">Microsoft Teams</span><span class="sv-chip">Document AI</span><span class="sv-chip">Google Drive &amp; Sheets</span><span class="sv-chip">Google Ads</span><span class="sv-chip">Meta Ads</span><span class="sv-chip">X Ads</span><span class="sv-chip">BigQuery</span><span class="sv-chip">NetSuite</span><span class="sv-chip">SAP</span><span class="sv-chip">QuickBooks</span></div>
 
-  <div class="endcta">
-  <div class="ctaproof">400% blended ROAS target — Diagnosed a ROAS collapse, mapped the path to 400%</div>
-  <h3>Want to know what your ROAS is actually doing?</h3>
-  <p>We reconcile ad spend, platform conversions, and closed revenue into one number your team can spend against.</p>
-  <div class="ctabtns">
-    <a href="/#work" class="btn btn-secondary">See more work</a>
-    <a href="/#contact" class="btn btn-primary">Book a call</a>
+  <h2>Questions</h2>
+  <div class="sv-faq" style="margin-top:18px">
+    <details><summary>What stops an agent doing something wrong?</summary><p>Nothing is written until a person approves it. Campaigns are created paused, invoices wait for sign-off, and every API call is logged so a run can be traced and reversed.</p></details>
+    <details><summary>How is this different from a chatbot?</summary><p>A chatbot answers questions. These agents act in your systems: they read a document, look up real records and create the entry or campaign for approval.</p></details>
+    <details><summary>Can it read PDFs and emails?</summary><p>Yes. In our invoice case a document-AI step extracts the vendor and line items from an uploaded PDF into a pre-filled form.</p></details>
+    <details><summary>Which chat tools and ERPs does it work with?</summary><p>We built the invoice bot on Slack, and it works the same on Teams. The method is the same on NetSuite, SAP, QuickBooks and most other ERPs; what changes is the connector.</p></details>
+  </div>
+
+  <h2>Keep reading</h2>
+  <div class="sv-rel" style="margin-top:6px">
+    <a href="/blog-build-an-ai-agent-that-allocates-ad-spend-by-contribution-ma"><span class="k">Article</span><span class="t">Build an AI agent that allocates ad spend by margin, not ROAS</span></a>
+    <a href="/blog-build-an-ai-agent-that-flags-creative-fatigue-before-roas-dr"><span class="k">Article</span><span class="t">Build an AI agent that catches creative fatigue before ROAS falls</span></a>
+    <a href="/blog-what-ai-ready-data-actually-means-a-practical-checklist"><span class="k">Article</span><span class="t">What AI-ready data actually means: a practical checklist</span></a>
+  </div>
+
+  <h2>Other services</h2>
+  <div class="sv-other" style="margin-top:6px">
+      <a href="/marketing-analytics">Marketing analytics &amp; true ROAS</a>
+      <a href="/marketplace-erp-integration">Marketplace &amp; ERP integration</a>
+      <a href="/data-engineering">Data engineering &amp; pipeline reliability</a>
+      <a href="/seo-systems">SEO systems &amp; content operations</a>
   </div>
 </div>
 
-<script>
-(function(){
-  var ids = ["spend","reported","overlap","refund","untracked"];
-  var el = {};
-  ids.forEach(function(i){ el[i] = document.getElementById(i); });
-  var out = {
-    reported: document.getElementById("outReported"),
-    truth: document.getElementById("outTrue"),
-    gap: document.getElementById("outGap"),
-    gapSub: document.getElementById("outGapSub"),
-    trueSub: document.getElementById("outTrueSub"),
-    verdict: document.getElementById("verdict")
-  };
-
-  function num(v, min, max){
-    var n = parseFloat(String(v).replace(/[^0-9.\-]/g, ""));
-    if (!isFinite(n)) return null;
-    if (typeof min === "number" && n < min) n = min;
-    if (typeof max === "number" && n > max) n = max;
-    return n;
-  }
-  function money(n){
-    var abs = Math.abs(n);
-    if (abs >= 1e6) return (n/1e6).toFixed(2).replace(/\.00$/,"") + "M";
-    if (abs >= 1e3) return (n/1e3).toFixed(1).replace(/\.0$/,"") + "k";
-    return String(Math.round(n));
-  }
-
-  function calc(){
-    var spend = num(el.spend.value, 0);
-    var reported = num(el.reported.value, 0);
-    var overlap = num(el.overlap.value, 0, 90);
-    var refund = num(el.refund.value, 0, 90);
-    var untracked = num(el.untracked.value, 0);
-
-    if (spend === null || reported === null || spend <= 0) {
-      out.reported.textContent = "—";
-      out.truth.textContent = "—";
-      out.gap.textContent = "—";
-      out.gapSub.textContent = "";
-      out.trueSub.textContent = "";
-      out.verdict.textContent = "Enter ad spend and platform-reported revenue to see the gap.";
-      return;
-    }
-    overlap = overlap || 0; refund = refund || 0; untracked = untracked || 0;
-
-    var deduped = reported * (1 - overlap/100);
-    var netOfRefunds = deduped * (1 - refund/100);
-    var trueRevenue = netOfRefunds + untracked;
-
-    var reportedRoas = reported / spend;
-    var trueRoas = trueRevenue / spend;
-    var delta = trueRoas - reportedRoas;
-    var pct = reportedRoas > 0 ? (delta / reportedRoas) * 100 : 0;
-
-    out.reported.textContent = reportedRoas.toFixed(2) + "x";
-    out.truth.textContent = trueRoas.toFixed(2) + "x";
-    out.trueSub.textContent = money(trueRevenue) + " of closed revenue";
-    out.gap.textContent = (pct >= 0 ? "+" : "") + pct.toFixed(0) + "%";
-    out.gapSub.textContent = (delta >= 0 ? "+" : "") + delta.toFixed(2) + "x vs reported";
-
-    var breakeven = trueRoas < 1;
-    var msg;
-    if (breakeven) {
-      msg = "At these inputs the campaign returns less than it costs once overlap, refunds and untracked revenue are applied. Reported ROAS of " + reportedRoas.toFixed(2) + "x is hiding a loss.";
-    } else if (pct <= -10) {
-      msg = "Reported ROAS overstates return by roughly " + Math.abs(pct).toFixed(0) + "%. Decisions made on the platform number are being made on the wrong figure.";
-    } else if (pct >= 10) {
-      msg = "True ROAS is higher than reported — untracked revenue is carrying real return the platforms never see, so this channel is likely underfunded.";
-    } else {
-      msg = "Reported and true ROAS are within " + Math.abs(pct).toFixed(0) + "% of each other. Your measurement is roughly honest at this level of spend.";
-    }
-    out.verdict.textContent = msg;
-  }
-
-  ids.forEach(function(i){
-    el[i].addEventListener("input", calc);
-  });
-  calc();
-})();
-</script>
-
+<div class="sv-end">
+  <div class="endcta" style="margin:0 auto">
+    <div class="ctaproof">From $4,000 · ~3–4 weeks</div>
+    <h3>Want to see where you'd land?</h3>
+    <p>Tell us what hurts and we'll say honestly whether we're the right fit, and what it would cost.</p>
+    <div class="ctabtns">
+      <a href="/pricing#ai-agents" class="btn btn-secondary">Get an estimate</a>
+      <a href="/#contact" class="btn btn-primary">Book a call</a>
+    </div>
+  </div>
+</div>
 </main>
 <footer class="sf">
   <div class="sf-in">
