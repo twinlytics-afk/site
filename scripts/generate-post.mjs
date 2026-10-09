@@ -11,7 +11,7 @@ if (!KEY) { console.error("Set ANTHROPIC_API_KEY"); process.exit(1); }
 const QUEUE = "content/topics.txt";
 const SITE = "https://twinslytics.com";
 const TEMPLATE = "blog-ga4-roas-lying.html";
-const NICHE = "data engineering for ecommerce/DTC revenue teams — attribution, true ROAS, data pipelines and warehousing, AI agents/automation, and marketing analytics";
+const NICHE = "data and automation engineering for ecommerce/DTC and operations teams — attribution and true ROAS, data pipelines and reliability, AI agents and workflow automation, marketplace/ERP integration, SEO systems, and marketing analytics";
 
 async function claude(system, user, max = 3000) {
   const res = await fetch("https://api.anthropic.com/v1/messages", {
@@ -100,7 +100,7 @@ function relatedTo(category, arts, n = 2) {
 
 async function searchDemand() {
   try {
-    const rows = await fetchQueries({ siteUrl: process.env.GSC_SITE_URL || SITE + "/", days: 90 });
+    const rows = await fetchQueries({ siteUrl: SITE + "/", days: 90, withPages: true });
     if (!rows) { console.log("GSC: no GSC_SA_KEY, skipping search-demand topics"); return []; }
     const opp = opportunities(rows);
     console.log(`GSC: ${rows.length} queries, ${opp.length} opportunities`);
@@ -122,13 +122,19 @@ async function pickTopic() {
   const opp = await searchDemand();
 
   if (opp.length) {
-    const demand = opp.map(r =>
-      `- "${r.query}" — ${r.impressions} impressions, ${r.clicks} clicks, avg position ${r.position.toFixed(1)}`
-    ).join("\n");
+    // Which of our pages Google shows for each query, with its title — so the model can
+    // tell a direct match (don't duplicate it) from a tangential one (the real gap).
+    const titleOf = Object.fromEntries(arts.map(a => ["/" + a.file.replace(/\.html$/, ""), a.title]));
+    const demand = opp.map(r => {
+      const pg = r.pages?.[0];
+      const shown = pg ? `shown via ${pg.page}${titleOf[pg.page] ? ` ("${titleOf[pg.page]}")` : ""} at position ${pg.position.toFixed(1)}` : "no page of ours shown";
+      return `- "${r.query}" — ${r.impressions} impressions, ${r.clicks} clicks, avg position ${r.position.toFixed(1)}; ${shown}`;
+    }).join("\n");
     const sys = `You plan SEO blog topics for Twinslytics, ${NICHE}.
 These are real Google Search Console queries the site already appears for but does not rank well on — existing demand that is winnable with a dedicated article.
 Pick the single highest-value cluster of related queries and return ONE topic line that targets it head-on: lowercase, no quotes, no numbering, under 12 words. It must not duplicate an already-published article.
 Prefer queries with high impressions and weak position, but judge relevance before volume. IGNORE any query that is a company or product name rather than a question — this site ranks incidentally for other vendors whose names also end in "lytics", and an article about a competitor's brand is worthless. Also ignore anything that looks like a scraper's query or an internal hostname.
+Each query lists the page of ours Google currently shows for it. If that page is already a direct, on-topic answer, writing another article would compete with it — skip that query. The opportunity is where the page shown is only tangentially related (a different angle than the query asks for): there, a dedicated article that answers the query head-on is what is missing.
 Long conversational queries are valuable: they come from AI search and state the reader's problem in their own words. Prefer them over short generic head terms when the intent is clearer.
 When two clusters are close in value, prefer one that fits the "${TARGET}" category — the blog has had little of it lately.
 ${diversityRules}`;

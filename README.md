@@ -14,6 +14,7 @@ Static site (HTML/CSS/JS, no build step) + blog. Hosted for **$0** on Cloudflare
 - `scripts/generate-post.mjs` — generate a new SEO article with Claude
 - `scripts/diagram.mjs` — renders article diagrams as inline SVG
 - `scripts/gsc.mjs` — reads Search Console (no dependencies)
+- `scripts/gsc-report.mjs` — prints what Search Console shows: top pages, new-article candidates, quick wins (`node scripts/gsc-report.mjs`)
 - `.github/workflows/generate-post.yml` — run the generator on schedule or on demand
 - `favicon.svg`, `robots.txt`, `sitemap.xml`, `og.png`
 
