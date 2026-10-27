@@ -159,6 +159,17 @@ const END_CTA = {
   "Data engineering": ["Is your pipeline quietly breaking?", "We look at freshness, schema drift and failure handling in your reporting stack and show you what to fix first."],
   "AI & automation": ["Find the workflows worth automating first", "We look at where your team copies data between systems and tell you which agent or automation pays back fastest."],
 };
+// Structured data must describe the page it sits on: older posts were cloned from one
+// template and kept its headline and mainEntityOfPage (SEO audit, Oct 2026).
+function ensureArticleLd(p) {
+  const s = fs.readFileSync(p.file, "utf-8");
+  const q = v => JSON.stringify(v).slice(1, -1);
+  const next = s
+    .replace(/("@type":"BlogPosting"[\s\S]*?"headline":")[^"]*(")/, (_, a, b) => a + q(p.title) + b)
+    .replace(/("@type":"BlogPosting"[\s\S]*?"description":")[^"]*(")/, (_, a, b) => a + q(p.desc) + b)
+    .replace(/("@type":"BlogPosting"[\s\S]*?"mainEntityOfPage":")[^"]*(")/, (_, a, b) => a + `https://twinslytics.com/${noExt(p.file)}` + b);
+  if (next !== s) fs.writeFileSync(p.file, next);
+}
 const SVC_FOR = {
   "Attribution": ["/marketing-analytics", "Marketing analytics & true ROAS"],
   "Marketing analytics": ["/marketing-analytics", "Marketing analytics & true ROAS"],
@@ -285,7 +296,7 @@ export function sync() {
   syncBlog(posts);
   for (const g of new Set(Object.values(PILLARS).map(v => v[0]))) syncGuide(g, posts);
   for (const f of fs.readdirSync(".").filter(f => f.endsWith(".html"))) { ensureDock(f); ensureFooter(f); ensurePopup(f); ensureLang(f); if (!/<html lang="uk"/.test(fs.readFileSync(f, "utf-8"))) ensureNav(f); }
-  for (const p of posts) ensureEndCta(p.file, p.category);
+  for (const p of posts) { ensureEndCta(p.file, p.category); ensureArticleLd(p); }
   console.log(`Synced ${posts.length} posts.`);
 }
 
