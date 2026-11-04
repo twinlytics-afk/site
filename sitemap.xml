@@ -11,6 +11,7 @@
   <url><loc>https://twinslytics.com/case-ad-spend-reconciliation</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://twinslytics.com/case-campaign-launch-automation</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://twinslytics.com/case-hourly-ad-reporting</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://twinslytics.com/case-ai-kpi-dashboard</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://twinslytics.com/case-bigquery-scan-reduction</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://twinslytics.com/blog-ga4-roas-lying</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
   <url><loc>https://twinslytics.com/blog-why-offline-conversions-beat-pixel-based-roas</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
