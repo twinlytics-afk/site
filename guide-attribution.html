@@ -11,16 +11,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Marketing attribution for ecommerce: a practical guide — Twinslytics</title>
-<meta name="description" content="Where ecommerce attribution actually breaks — redirects, payment domains, app tracking, and refunds — and the order to fix it in so your channel numbers stop disagreeing." />
+<title>Ecommerce attribution: what breaks, how to fix — Twinslytics</title>
+<meta name="description" content="What ecommerce attribution is, where it breaks (redirects, payment domains, app tracking, refunds) and the order to fix it in so channel numbers agree." />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="canonical" href="https://twinslytics.com/guide-attribution" />
 <meta name="robots" content="index, follow" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://twinslytics.com/guide-attribution" />
-<meta property="og:title" content="Marketing attribution for ecommerce: a practical guide" />
-<meta property="og:description" content="Where ecommerce attribution actually breaks — redirects, payment domains, app tracking, and refunds — and the order to fix it in so your channel numbers stop disagreeing." />
+<meta property="og:title" content="Ecommerce attribution: a practical guide" />
+<meta property="og:description" content="What ecommerce attribution is, where it breaks (redirects, payment domains, app tracking, refunds) and the order to fix it in so channel numbers agree." />
 <meta property="og:image" content="https://twinslytics.com/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -132,8 +132,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Marketing attribution for ecommerce: a practical guide",
-  "description": "Where ecommerce attribution actually breaks — redirects, payment domains, app tracking, and refunds — and the order to fix it in so your channel numbers stop disagreeing.",
+  "headline": "Ecommerce attribution: a practical guide",
+  "description": "What ecommerce attribution is, where it breaks (redirects, payment domains, app tracking, refunds) and the order to fix it in so channel numbers agree.",
   "author": {
     "@type": "Organization",
     "name": "Twinslytics"
@@ -209,6 +209,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         "@type": "Answer",
         "text": "Identifier and server-side fixes show up within days, once the new events start flowing. Attribution model changes take longer to read cleanly, because you're comparing against a cohort that matured under the old, broken measurement — give it at least one full cohort cycle before judging the before/after."
       }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the best attribution model for ecommerce?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "There is no universally best one. For most stores, start with last-click on first-party, server-side data, compare it with platform-reported numbers, and move to multi-touch only once the click-to-order join is reliable. A clean join beats a sophisticated model on dirty data."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I attribute sales to specific products?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Join line-item order data to the click or session identifier in your warehouse, then report revenue and margin per SKU by campaign. This needs the identifier to survive checkout and refunds to be netted out at the same level."
+      }
     }
   ]
 }
@@ -247,12 +263,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="hubwrap">
   <a class="back" href="/blog">← All writing</a>
   <span class="eyebrow">Guide</span>
-  <h1>Marketing attribution for ecommerce</h1>
+  <h1>Ecommerce attribution: a practical guide</h1>
   <div class="hubmeta">Guide · Attribution · Twinslytics</div>
 
   <p class="lede">Attribution arguments are rarely about models. They are about a broken chain
   between the click you paid for and the money that finally cleared. Fix the chain and most of the
   model debate evaporates.</p>
+
+  <h2>What is ecommerce attribution?</h2>
+  <p>Ecommerce attribution is the process of assigning the revenue from an order to the marketing touchpoints (ads, emails, organic visits) that led to it, so you know which spend to scale and which to cut. In practice it means connecting three records that live in different systems: the <strong>click or visit</strong>, the <strong>order</strong>, and the <strong>money that cleared</strong>.</p>
+  <p>The common models are last-click (all credit to the final touchpoint), data-driven (platform-estimated shares across touchpoints) and multi-touch (credit split by rules). Which model you pick matters less than whether the click can be matched to the order at all. See <a href="/blog-multi-touch-vs-last-click-a-teardown-of-what-each-one-hides">what each model hides</a>.</p>
+
+  <h2>Product-level attribution: which ads sell which products</h2>
+  <p>Ecommerce product attribution answers a narrower question: which campaign or creative drove sales of a specific SKU or category, and at what margin. It needs line-item order data joined to the click identifier, not just an order total. Without that join, a campaign that sells your best-margin product and one that sells your worst look identical in ROAS. The starting point is the same as for channel attribution: keep the identifier alive through checkout (<a href="/blog-why-utm-parameters-break-at-checkout-redirects-and-how-to-fi">why UTMs break at checkout</a>) and join orders to clicks in the warehouse.</p>
 
   <h2>What attribution has to answer</h2>
   <p>Every useful attribution setup answers one question: <strong>for this unit of spend, how much
@@ -314,6 +337,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="faqitem">
       <h3>How long before a fix shows up in reported ROAS?</h3>
       <p>Identifier and server-side fixes show up within days, once the new events start flowing. Attribution model changes take longer to read cleanly, because you&#x27;re comparing against a cohort that matured under the old, broken measurement — give it at least one full cohort cycle before judging the before/after.</p>
+    </div>
+    <div class="faqitem">
+      <h3>What is the best attribution model for ecommerce?</h3>
+      <p>There is no universally best one. For most stores, start with last-click on first-party, server-side data, compare it with platform-reported numbers, and move to multi-touch only once the click-to-order join is reliable. A clean join beats a sophisticated model on dirty data.</p>
+    </div>
+    <div class="faqitem">
+      <h3>How do I attribute sales to specific products?</h3>
+      <p>Join line-item order data to the click or session identifier in your warehouse, then report revenue and margin per SKU by campaign. This needs the identifier to survive checkout and refunds to be netted out at the same level.</p>
     </div>
   </div>
 
