@@ -118,7 +118,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p>New to the metric? Blended ROAS is total revenue divided by total marketing spend; <a href="/blog-how-dtc-brands-should-measure-blended-roas">here is the formula and how DTC brands measure it</a>. This post covers what breaks when the revenue is recurring.</p>
 
-<h2>Blended roas hides two different businesses</h2>
+<h2>In a subscription model, blended ROAS hides two businesses</h2>
 <p>Subscription DTC brands run two revenue engines at once: new customer acquisition and recurring billing on existing subscribers. Blended ROAS mashes both into one ratio and reports it against a single spend line. The problem isn't that this is wrong exactly — it's that it answers a question nobody asked.</p>
 <p>New customer revenue is the thing your ad spend actually influenced this week. Recurring subscription revenue is the thing your retention rate, your churn curve, and decisions made months ago influenced. When you divide total revenue by this week's ad spend, you're crediting your Meta campaign for a renewal charge that had zero exposure to that campaign. The subscriber didn't see an ad. They got charged because they didn't cancel.</p>
 
@@ -126,6 +126,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>Here's the part that trips up finance teams: blended ROAS mechanically improves as your subscriber base grows, independent of whether your acquisition is working. More subscribers on file means more recurring charges each month, which means more revenue in the numerator, which means a better-looking ratio — even if new customer acquisition is flat or declining.</p>
 <p>This creates a dangerous incentive loop. A team can pull back on top-of-funnel spend, watch blended ROAS climb because the denominator shrank while recurring revenue stayed put, and read that as "efficiency improved." It didn't. Acquisition just went quiet while the existing base kept paying bills. You've made the metric look better by starving the thing that generates future subscribers.</p>
 <p>Run this forward two or three years and you get a business with a shrinking new customer cohort, propped up by legacy subscribers who will eventually churn, with a ROAS chart that told leadership everything was fine the whole time.</p>
+
+<h2>The same month, two readings</h2>
+<p>A subscription brand spends $50,000 on ads in a month and books $300,000 of revenue. Split that revenue by whether the customer is new:</p>
+<div class="tbl"><table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody><tr><td>Total revenue</td><td>$300,000</td></tr><tr><td>Renewals (existing subscribers)</td><td>$180,000</td></tr><tr><td>New-customer revenue (first orders)</td><td>$120,000</td></tr><tr><td>Ad spend</td><td>$50,000</td></tr><tr><td>Blended ROAS</td><td>6.0x</td></tr><tr><td>New-customer ROAS</td><td>2.4x</td></tr></tbody></table></div>
+<p class="tblnote">Illustrative numbers to show the mechanics, not client data.</p>
+<p>Blended ROAS says 6.0x and the dashboard is green. But the ads only produced the $120,000 of first orders: 2.4x. With a 40% gross margin the break-even point is 1 ÷ 0.40 = 2.5x on the first order, so on the first purchase this spend loses money and is only rescued by renewals that have not happened yet. That can be a perfectly good bet if retention holds, but it is a bet you should be making on purpose, with a retention number next to it.</p>
+<p>The monthly split is one query:</p>
+<pre><code class="lang-sql">SELECT
+  DATE_TRUNC(o.order_date, MONTH)                         AS month,
+  SUM(IF(o.is_first_order, o.net_revenue, 0))            AS new_customer_revenue,
+  SUM(IF(NOT o.is_first_order, o.net_revenue, 0))        AS renewal_revenue,
+  ANY_VALUE(s.ad_spend)                                  AS ad_spend,
+  SAFE_DIVIDE(SUM(o.net_revenue), ANY_VALUE(s.ad_spend)) AS blended_roas,
+  SAFE_DIVIDE(SUM(IF(o.is_first_order, o.net_revenue, 0)),
+              ANY_VALUE(s.ad_spend))                     AS new_customer_roas
+FROM marts.orders o
+JOIN (
+  SELECT DATE_TRUNC(date, MONTH) AS month, SUM(cost) AS ad_spend
+  FROM marts.ad_spend_daily
+  GROUP BY month
+) s ON s.month = DATE_TRUNC(o.order_date, MONTH)
+GROUP BY month
+ORDER BY month;</code></pre>
+<p>Track the two ROAS columns side by side and a growing gap tells you that your growth is leaning on the existing base, not on acquisition.</p>
 
 <h2>What to measure instead</h2>
 <p>Split the P&amp;L the same way your business actually operates: acquisition spend against new customer revenue, and everything else against retention and reactivation efforts.</p>

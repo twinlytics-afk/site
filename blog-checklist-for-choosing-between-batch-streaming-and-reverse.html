@@ -184,6 +184,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p>The mistake is letting these patterns blur into each other without clear ownership. If three different syncs are writing to the same customer record on three different schedules, you'll get race conditions and conflicting data, and nobody will be able to explain why the numbers don't match. Document which pipeline owns which field, and make sure there's one source of truth per data type, even when multiple pipelines touch it.</p>
 
+<h2>Rule of thumb: freshness tiers</h2>
+<p>If you cannot decide, match the use case to a tier. These are rules of thumb, not benchmarks:</p>
+<div class="tbl"><table><thead><tr><th>Use case</th><th>Freshness the decision needs</th><th>Pattern</th></tr></thead><tbody><tr><td>Daily budget and ROAS report</td><td>24 hours</td><td>Batch (nightly)</td></tr><tr><td>Pacing alert that someone checks each morning</td><td>1 to 4 hours</td><td>Frequent batch or micro-batch</td></tr><tr><td>Sync customer lists to ad platforms</td><td>1 hour or less</td><td>Reverse ETL on a schedule</td></tr><tr><td>Suppress a buyer from ads before the next impression</td><td>Minutes</td><td>Streaming plus reverse ETL</td></tr><tr><td>Fraud block or live stock check at checkout</td><td>Seconds</td><td>Streaming</td></tr></tbody></table></div>
+<p class="tblnote">Pick the slowest tier whose delay does not change the decision. Every tier up adds cost and failure modes.</p>
+<p>Most marketing analytics sits in the first three rows. Streaming earns its complexity only where a late answer is a wrong answer.</p>
+
 <h2>The actual checklist</h2>
 
 <p>Before building anything, answer these in order:</p>

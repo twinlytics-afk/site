@@ -310,6 +310,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   The only durable fix is to hold the join yourself, in a warehouse, keyed on an identifier you
   control, with revenue that reconciles to your payment processor.</p>
 
+  <h2>Example: one $100 order, three claims</h2>
+  <p>A customer sees a Meta ad on Monday, clicks a Google branded search ad on Wednesday, and buys through a payment provider redirect. Here is who takes credit for the same $100:</p>
+  <div class="tbl"><table><thead><tr><th>Tool</th><th>Credits the order to</th><th>Revenue claimed</th></tr></thead><tbody><tr><td>Meta Ads</td><td>Meta (view-through, 1-day window)</td><td>$100</td></tr><tr><td>Google Ads</td><td>Google (last paid click)</td><td>$100</td></tr><tr><td>GA4</td><td>Direct, or the payment domain</td><td>$100</td></tr><tr><td>Bank / CRM</td><td>One order</td><td>$100</td></tr></tbody></table></div>
+<p class="tblnote">Illustrative numbers to show the mechanics, not client data. Each tool reports a different channel for the same $100, so adding the platform columns gives $300 of "attributed" revenue for $100 that actually cleared.</p>
+  <p>This is why the fix starts with the order record and not with the model: the bank row is the only one that is true, and every attribution method is a way of explaining it. Match the click to that row first, then choose how to split credit.</p>
+
   <h2>What to fix first</h2>
   <p>In order, because each step makes the next one measurable:</p>
   <ul>

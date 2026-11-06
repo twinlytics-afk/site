@@ -148,6 +148,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p>UTM parameters were built for simple, same-domain journeys. Checkout flows are rarely that simple anymore — multiple domains, hosted payment pages, mobile wallets, and browsers actively stripping referrer data at every hop. Treating the URL string as your only attribution record guarantees leakage. Persist attribution data into order attributes the moment you have it, use stable IDs instead of query strings to survive redirects, and do your real attribution matching in the warehouse where you control the join logic instead of hoping a script fires at the right millisecond.</p>
 
+<h2>A minimal fix you can ship this week</h2>
+<p>The principle is to capture the parameters the moment the visitor lands, before any redirect can drop them, and to carry them into the order record instead of hoping they survive the journey. Step one is a first-party cookie set on landing:</p>
+<pre><code class="lang-js">// Run on every landing page
+const keys = [&#x27;utm_source&#x27;, &#x27;utm_medium&#x27;, &#x27;utm_campaign&#x27;, &#x27;gclid&#x27;, &#x27;fbclid&#x27;];
+const params = new URLSearchParams(location.search);
+const hit = Object.fromEntries(
+  keys.filter(k =&gt; params.get(k)).map(k =&gt; [k, params.get(k)])
+);
+
+if (Object.keys(hit).length) {
+  const value = encodeURIComponent(JSON.stringify({ ...hit, ts: Date.now() }));
+  document.cookie = `attr=${value}; max-age=7776000; path=/; SameSite=Lax; Secure`;
+}</code></pre>
+<p>Step two is copying that value into the order at checkout: cart note attributes on Shopify, metadata on a Stripe payment intent, a hidden field on a custom form. Now the order itself carries the click, and the warehouse can join them without relying on the browser at the very end of the funnel.</p>
+<div class="tbl"><table><thead><tr><th>Orders by source</th><th>Before</th><th>After</th></tr></thead><tbody><tr><td>Correct paid channel</td><td>52%</td><td>83%</td></tr><tr><td>Direct</td><td>10%</td><td>8%</td></tr><tr><td>Payment domain (referral)</td><td>38%</td><td>9%</td></tr></tbody></table></div>
+<p class="tblnote">Illustrative numbers to show the mechanics, not client data. The typical symptom is a large "payment domain" or "direct" bucket that shrinks once the identifier travels with the order.</p>
+
   <h2>Further reading</h2>
   <ul>
     <li><a href="/guide-attribution">Guide: Marketing attribution for ecommerce</a></li>

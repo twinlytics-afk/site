@@ -153,6 +153,42 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p>The goal isn't perfect precision — that's impossible with cross-device behavior and privacy restrictions limiting what you can track. The goal is a directionally honest number you can use to make budget decisions without lying to yourself.</p>
 
+<h2>A worked example</h2>
+<p>Take 30 days for a store that spends $100,000 across Meta and Google and books $400,000 of paid, refund-adjusted revenue in the CRM. Each platform reports its own number:</p>
+<div class="tbl"><table><thead><tr><th>Source</th><th>Spend</th><th>Claimed revenue</th><th>ROAS</th></tr></thead><tbody><tr><td>Meta</td><td>$60,000</td><td>$270,000</td><td>4.5x</td></tr><tr><td>Google</td><td>$40,000</td><td>$210,000</td><td>5.3x</td></tr><tr><td>Platforms combined</td><td>$100,000</td><td>$480,000</td><td>4.8x</td></tr><tr><td>CRM (reality)</td><td>$100,000</td><td>$400,000</td><td>4.0x</td></tr></tbody></table></div>
+<p class="tblnote">Illustrative numbers to show the mechanics, not client data.</p>
+<p>The platforms together claim $480,000 against $400,000 of real revenue, so about 20% of what they report is the same sale counted twice. A 4.8x blended view would say you are comfortably profitable; the real number is 4.0x, and the gap is not spread evenly: it usually sits in prospecting campaigns that touch a customer shortly before a branded search closes the order.</p>
+<p>The query that produces this table from three warehouse tables:</p>
+<pre><code class="lang-sql">WITH orders AS (
+  SELECT SUM(net_revenue) AS crm_revenue
+  FROM crm.orders
+  WHERE status = &#x27;paid&#x27;
+    AND created_at &gt;= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
+),
+spend AS (
+  SELECT platform, SUM(cost) AS spend
+  FROM marts.ad_spend_daily
+  WHERE date &gt;= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
+  GROUP BY platform
+),
+claimed AS (
+  SELECT platform, SUM(conversion_value) AS claimed_revenue
+  FROM marts.platform_conversions_daily
+  WHERE date &gt;= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
+  GROUP BY platform
+)
+SELECT
+  s.platform,
+  s.spend,
+  c.claimed_revenue,
+  SAFE_DIVIDE(c.claimed_revenue, s.spend)                  AS platform_roas,
+  SUM(c.claimed_revenue) OVER () / o.crm_revenue           AS overclaim_ratio,
+  o.crm_revenue / SUM(s.spend) OVER ()                     AS blended_roas
+FROM spend s
+JOIN claimed c USING (platform)
+CROSS JOIN orders o;</code></pre>
+<p>Replace the table names with your own. Run it on a schedule and alert when <code>overclaim_ratio</code> moves more than a few points, because that is the signal that an attribution window or a tracking setup changed.</p>
+
 <h2>Use a data warehouse to automate it</h2>
 
 <p>Doing this reconciliation by hand in spreadsheets works for one month. It falls apart the moment you're running five ad accounts, two CRMs from an acquisition, and a subscription platform with its own revenue events. This is where a proper data pipeline earns its keep.</p>
