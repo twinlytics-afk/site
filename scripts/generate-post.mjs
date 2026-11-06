@@ -261,19 +261,19 @@ const furtherReading = `\n  <h2>Further reading</h2>\n  <ul>\n${links.join("\n")
 const tpl = fs.readFileSync(TEMPLATE, "utf-8");
 let html = tpl
   .replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(title)} — Twinslytics</title>`)
-  .replace(/(name="description" content=")[^"]*(")/, `$1${escAttr(desc)}$2`)
-  .replace(/(canonical" href=")[^"]*(")/, `$1${url}$2`)
-  .replace(/(og:url" content=")[^"]*(")/, `$1${url}$2`)
-  .replace(/(og:title" content=")[^"]*(")/, `$1${escAttr(title)}$2`)
-  .replace(/(og:description" content=")[^"]*(")/, `$1${escAttr(desc)}$2`)
-  .replace(/("headline":")[^"]*(")/, `$1${escAttr(title)}$2`)
-  .replace(/("datePublished":")[^"]*(")/, `$1${isoDate}$2`)
-  .replace(/("mainEntityOfPage":")[^"]*(")/, `$1${url}$2`)
+  .replace(/(name="description" content=")[^"]*(")/, (_, a, b) => a + escAttr(desc) + b)
+  .replace(/(canonical" href=")[^"]*(")/, (_, a, b) => a + url + b)
+  .replace(/(og:url" content=")[^"]*(")/, (_, a, b) => a + url + b)
+  .replace(/(og:title" content=")[^"]*(")/, (_, a, b) => a + escAttr(title) + b)
+  .replace(/(og:description" content=")[^"]*(")/, (_, a, b) => a + escAttr(desc) + b)
+  .replace(/("headline":")[^"]*(")/, (_, a, b) => a + escAttr(title) + b)
+  .replace(/("datePublished":")[^"]*(")/, (_, a, b) => a + isoDate + b)
+  .replace(/("mainEntityOfPage":")[^"]*(")/, (_, a, b) => a + url + b)
   .replace('<span class="eyebrow">Attribution</span>', `<span class="eyebrow">${esc(category)}</span>`);
 
 // The JSON-LD description is a separate field from the meta tag; replace it after
 // the meta tag above so the two stay in sync.
-html = html.replace(/("description":")[^"]*(")/, `$1${escAttr(desc)}$2`);
+html = html.replace(/("description":")[^"]*(")/, (_, a, b) => a + escAttr(desc) + b);
 
 // The template's breadcrumb still names itself; retarget its last item to this post.
 html = html.replace(
