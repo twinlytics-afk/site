@@ -162,8 +162,8 @@ if (Object.keys(hit).length) {
   document.cookie = `attr=${value}; max-age=7776000; path=/; SameSite=Lax; Secure`;
 }</code></pre>
 <p>Step two is copying that value into the order at checkout: cart note attributes on Shopify, metadata on a Stripe payment intent, a hidden field on a custom form. Now the order itself carries the click, and the warehouse can join them without relying on the browser at the very end of the funnel.</p>
-<div class="tbl"><table><thead><tr><th>Orders by source</th><th>Before</th><th>After</th></tr></thead><tbody><tr><td>Correct paid channel</td><td>52%</td><td>83%</td></tr><tr><td>Direct</td><td>10%</td><td>8%</td></tr><tr><td>Payment domain (referral)</td><td>38%</td><td>9%</td></tr></tbody></table></div>
-<p class="tblnote">Illustrative numbers to show the mechanics, not client data. The typical symptom is a large "payment domain" or "direct" bucket that shrinks once the identifier travels with the order.</p>
+<div class="tbl"><table><thead><tr><th>Example store: orders by source</th><th>Before</th><th>After</th></tr></thead><tbody><tr><td>Correct paid channel</td><td>52%</td><td>83%</td></tr><tr><td>Direct</td><td>10%</td><td>8%</td></tr><tr><td>Payment domain (referral)</td><td>38%</td><td>9%</td></tr></tbody></table></div>
+<p class="tblnote">The typical symptom is a large "payment domain" or "direct" bucket that shrinks once the identifier travels with the order.</p>
 
   <h2>Further reading</h2>
   <ul>
