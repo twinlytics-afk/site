@@ -693,7 +693,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const form=document.getElementById('leadForm');
-  if(form){form.addEventListener('submit',async(e)=>{e.preventDefault();const btn=form.querySelector('button');btn.textContent='Sending…';btn.disabled=true;try{await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});}catch(_){}form.hidden=true;document.getElementById('formOk').hidden=false;});}
+  if(form){form.addEventListener('submit',async(e)=>{e.preventDefault();const btn=form.querySelector('button');btn.textContent='Sending…';btn.disabled=true;try{const r=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});if(r.ok){window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'generate_lead',lead_source:'home_form'});}}catch(_){}form.hidden=true;document.getElementById('formOk').hidden=false;});}
 
   // proof stats: count up when they scroll into view
   const proofRow=document.getElementById('proofRow');
