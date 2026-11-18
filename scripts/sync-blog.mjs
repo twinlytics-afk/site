@@ -189,7 +189,10 @@ function ensureEndCta(file, category) {
   <a class="ctasvc" href="${(SVC_FOR[category] || SVC_FOR["Attribution"])[0]}">Related service: ${(SVC_FOR[category] || SVC_FOR["Attribution"])[1].replace(/&/g, "&amp;")} →</a>
 </div>`;
   const s = fs.readFileSync(file, "utf-8");
-  const re = /<div class="endcta">[\s\S]*?<div class="ctabtns">[\s\S]*?<\/div>\s*<\/div>/;
+  // The trailing ctasvc link is optional: without it here, every post already carrying
+  // one (i.e. every post cloned from the template) never matched and kept the
+  // template's Attribution CTA whatever its category.
+  const re = /<div class="endcta">[\s\S]*?<div class="ctabtns">[\s\S]*?<\/div>\s*(?:<a class="ctasvc"[^>]*>[^<]*<\/a>\s*)?<\/div>/;
   const next = re.test(s) ? s.replace(re, () => block) : s.replace("</main>", () => `${block}\n\n</main>`);
   if (next !== s) fs.writeFileSync(file, next);
 }
